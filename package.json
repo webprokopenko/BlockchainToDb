@@ -1,0 +1,20 @@
+{
+  "name": "ethtodb",
+  "version": "1.0.0",
+  "description": "scan transaction on ETH",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Prokopenko Ivan",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^5.0.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "json-rpc2": "^1.0.2",
+    "mongoose": "^5.0.1",
+    "node-json-rpc": "0.0.1",
+    "web3": "^0.20.4"
+  }
+}
