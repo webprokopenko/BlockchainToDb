@@ -3,10 +3,11 @@ let Schema = mongoose.Schema;
 
 let BlockTransaction = new Schema({
     block:{
-        type: Number
+        type: Number,
+        index: { unique: true }
     },
     timestamp:{
-        type: Timestamp
+        type: String
     },
     transactions:[{ 
         from:       String, 
