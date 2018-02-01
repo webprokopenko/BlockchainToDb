@@ -35,7 +35,7 @@ function getGasFromTransactionHash(hash){
                     return reject(new Error(`Result body empty`))
                 if(!res.result.gasUsed)
                     return reject(new Error('Result gasUsed from transaction empty'))
-
+                
                 resolve(convertHexToInt(res.result.gasUsed));
             }
         )
@@ -68,36 +68,28 @@ function getBlockData(numBlock){
 async function getTransactionFromETH(numBlock){
         try{
             const blockData = await getBlockData(numBlock);
+            let blockTransaction = {
+                block:      convertHexToInt(blockData.number),
+                timestamp:  convertHexToInt(blockData.timestamp),
+                transactions:[] 
+            };
             await Promise.all(blockData.transactions.map(async (element, i) => {
                 console.log(convertHexToInt(element.gas));
-                let transaction = {};
-                transaction.block = convertHexToInt(blockData.number);
-                transaction.timestamp = convertHexToInt(blockData.timestamp);
+                let transaction={};
                 transaction.from = element.from;
                 transaction.to = element.to;
                 transaction.value = Units.convert(convertHexToInt(element.value),'wei','eth');
                 transaction.fee = Units.convert((convertHexToInt(element.gas) * convertHexToInt(element.gasPrice)),'wei','eth');
                 transaction.hash = element.hash;
-                transaction.gasUse = await getGasFromTransactionHash(element.hash);
-                GasPrice = Units.convert(convertHexToInt(element.gasPrice), 'wei', 'eth');
-                // GasPrice = parseFloat(GasPrice);
-                // transaction.gas = parseFloat(transaction.gas);
-                let gp = math.bignumber(GasPrice);
-                let gu = math.bignumber(transaction.gasUse);
-                
-                
-                transaction.fee = math.multiply(gp,gu);
-            
-                console.log(`GasPrice : ${(gp)}`);
-                console.log(`GasUse : ${(gu)}`);
-                console.log(`Fee Transaction: ${(( transaction.fee.toFixed()))}`);
-                console.log('---------------------------');
-                //console.log(`${Units.convert(element.gas * element.gasPrice, 'wei', 'eth')}`);
-                //Transactions.push(transaction);
+                transaction.gasUse = math.bignumber(await getGasFromTransactionHash(element.hash));
+                transaction.gasPrice = math.bignumber(Units.convert(convertHexToInt(element.gasPrice), 'wei', 'eth'));
+                transaction.fee = math.multiply(transaction.gasPrice, transaction.gasUse).toFixed();
+                transaction.gasUse = transaction.gasUse.toFixed();
+                transaction.gasPrice = transaction.gasPrice.toFixed();
+
+                blockTransaction.transactions.push(transaction);
             }));
-             //console.log(Transactions);
-          
-            //console.log(res.result.transactions);
+             console.log(blockTransaction);
             
         }catch(e){
             console.log(e);
