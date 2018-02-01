@@ -63,18 +63,16 @@ function getBlockData(numBlock){
             }        
         )
     })
-    
 }
-async function getTransactionFromETH(numBlock){
+module.exports = async function getTransactionFromETH(numBlock){
         try{
             const blockData = await getBlockData(numBlock);
             let blockTransaction = {
-                block:      convertHexToInt(blockData.number),
+                block:      parseInt(convertHexToInt(blockData.number)),
                 timestamp:  convertHexToInt(blockData.timestamp),
                 transactions:[] 
             };
             await Promise.all(blockData.transactions.map(async (element, i) => {
-                console.log(convertHexToInt(element.gas));
                 let transaction={};
                 transaction.from = element.from;
                 transaction.to = element.to;
@@ -89,12 +87,11 @@ async function getTransactionFromETH(numBlock){
 
                 blockTransaction.transactions.push(transaction);
             }));
-             console.log(blockTransaction);
+             return blockTransaction;
             
         }catch(e){
             console.log(e);
-        }
-            
+        }           
 }
-getTransactionFromETH(405755);
+
 

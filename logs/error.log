@@ -1,0 +1,198 @@
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 1 }","op":{"transactions":[],"_id":"5a73241ef1e64a9620508ec5","block":1,"timestamp":"1492010458","__v":0}})
+Bad block: 1
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 2 }","op":{"transactions":[],"_id":"5a73241ef1e64a9620508ec6","block":2,"timestamp":"1492010474","__v":0}})
+Bad block: 2
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 3 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ec7","block":3,"timestamp":"1492010489","__v":0}})
+Bad block: 3
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 4 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ec8","block":4,"timestamp":"1492010504","__v":0}})
+Bad block: 4
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 5 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ec9","block":5,"timestamp":"1492010519","__v":0}})
+Bad block: 5
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 6 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508eca","block":6,"timestamp":"1492010534","__v":0}})
+Bad block: 6
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 7 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ecb","block":7,"timestamp":"1492010549","__v":0}})
+Bad block: 7
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 8 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ecc","block":8,"timestamp":"1492010564","__v":0}})
+Bad block: 8
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 9 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ecd","block":9,"timestamp":"1492010579","__v":0}})
+Bad block: 9
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 10 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ece","block":10,"timestamp":"1492010594","__v":0}})
+Bad block: 10
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 11 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ecf","block":11,"timestamp":"1492010609","__v":0}})
+Bad block: 11
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 12 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed0","block":12,"timestamp":"1492010624","__v":0}})
+Bad block: 12
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 13 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed1","block":13,"timestamp":"1492010639","__v":0}})
+Bad block: 13
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 14 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed2","block":14,"timestamp":"1492010654","__v":0}})
+Bad block: 14
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 15 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed3","block":15,"timestamp":"1492010669","__v":0}})
+Bad block: 15
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 16 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed4","block":16,"timestamp":"1492010684","__v":0}})
+Bad block: 16
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 17 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed5","block":17,"timestamp":"1492010699","__v":0}})
+Bad block: 17
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 18 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed6","block":18,"timestamp":"1492010714","__v":0}})
+Bad block: 18
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 19 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed7","block":19,"timestamp":"1492010729","__v":0}})
+Bad block: 19
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 20 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed8","block":20,"timestamp":"1492010744","__v":0}})
+Bad block: 20
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 21 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508ed9","block":21,"timestamp":"1492010759","__v":0}})
+Bad block: 21
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 22 }","op":{"transactions":[],"_id":"5a73241ff1e64a9620508eda","block":22,"timestamp":"1492010774","__v":0}})
+Bad block: 22
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 23 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508edb","block":23,"timestamp":"1492010789","__v":0}})
+Bad block: 23
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 24 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508edc","block":24,"timestamp":"1492010804","__v":0}})
+Bad block: 24
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 25 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508edd","block":25,"timestamp":"1492010819","__v":0}})
+Bad block: 25
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 26 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ede","block":26,"timestamp":"1492010834","__v":0}})
+Bad block: 26
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 27 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508edf","block":27,"timestamp":"1492010849","__v":0}})
+Bad block: 27
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 28 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee0","block":28,"timestamp":"1492010864","__v":0}})
+Bad block: 28
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 29 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee1","block":29,"timestamp":"1492010879","__v":0}})
+Bad block: 29
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 30 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee2","block":30,"timestamp":"1492010894","__v":0}})
+Bad block: 30
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 31 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee3","block":31,"timestamp":"1492010909","__v":0}})
+Bad block: 31
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 32 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee4","block":32,"timestamp":"1492010924","__v":0}})
+Bad block: 32
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 33 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee5","block":33,"timestamp":"1492010939","__v":0}})
+Bad block: 33
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 34 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee6","block":34,"timestamp":"1492010954","__v":0}})
+Bad block: 34
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 35 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee7","block":35,"timestamp":"1492010969","__v":0}})
+Bad block: 35
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 36 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee8","block":36,"timestamp":"1492010984","__v":0}})
+Bad block: 36
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 37 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ee9","block":37,"timestamp":"1492010999","__v":0}})
+Bad block: 37
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 38 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508eea","block":38,"timestamp":"1492011014","__v":0}})
+Bad block: 38
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 39 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508eeb","block":39,"timestamp":"1492011029","__v":0}})
+Bad block: 39
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 40 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508eec","block":40,"timestamp":"1492011044","__v":0}})
+Bad block: 40
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 41 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508eed","block":41,"timestamp":"1492011059","__v":0}})
+Bad block: 41
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 42 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508eee","block":42,"timestamp":"1492011074","__v":0}})
+Bad block: 42
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 43 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508eef","block":43,"timestamp":"1492011089","__v":0}})
+Bad block: 43
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 44 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ef0","block":44,"timestamp":"1492011104","__v":0}})
+Bad block: 44
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 45 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ef1","block":45,"timestamp":"1492011119","__v":0}})
+Bad block: 45
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 46 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ef2","block":46,"timestamp":"1492011134","__v":0}})
+Bad block: 46
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 47 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ef3","block":47,"timestamp":"1492011149","__v":0}})
+Bad block: 47
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 48 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ef4","block":48,"timestamp":"1492011164","__v":0}})
+Bad block: 48
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 49 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ef5","block":49,"timestamp":"1492011179","__v":0}})
+Bad block: 49
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 50 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ef6","block":50,"timestamp":"1492011194","__v":0}})
+Bad block: 50
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 51 }","op":{"transactions":[],"_id":"5a732420f1e64a9620508ef7","block":51,"timestamp":"1492011209","__v":0}})
+Bad block: 51
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 52 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508ef8","block":52,"timestamp":"1492011224","__v":0}})
+Bad block: 52
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 53 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508ef9","block":53,"timestamp":"1492011239","__v":0}})
+Bad block: 53
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 54 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508efa","block":54,"timestamp":"1492011254","__v":0}})
+Bad block: 54
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 56 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508efd","block":56,"timestamp":"1492011284","__v":0}})
+Bad block: 56
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 55 }","op":{"transactions":[{"_id":"5a732421f1e64a9620508efc","from":"0x31b98d14007bdee637298086988a0bbd31184523","to":"0x2ed530faddb7349c1efdbf4410db2de835a004e4","value":"1","fee":"0.00042","hash":"0x2dd50756cfd189177d0de4d65b7926459d7bb01de197c26517d05cd2b1c77ebc","gasUse":"21000","gasPrice":"0.00000002"}],"_id":"5a732421f1e64a9620508efb","block":55,"timestamp":"1492011269","__v":0}})
+Bad block: 55
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 57 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508efe","block":57,"timestamp":"1492011299","__v":0}})
+Bad block: 57
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 58 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508eff","block":58,"timestamp":"1492011314","__v":0}})
+Bad block: 58
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 59 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f00","block":59,"timestamp":"1492011329","__v":0}})
+Bad block: 59
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 60 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f01","block":60,"timestamp":"1492011344","__v":0}})
+Bad block: 60
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 61 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f02","block":61,"timestamp":"1492011359","__v":0}})
+Bad block: 61
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 62 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f03","block":62,"timestamp":"1492011374","__v":0}})
+Bad block: 62
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 63 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f04","block":63,"timestamp":"1492011389","__v":0}})
+Bad block: 63
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 64 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f05","block":64,"timestamp":"1492011404","__v":0}})
+Bad block: 64
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 65 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f06","block":65,"timestamp":"1492011419","__v":0}})
+Bad block: 65
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 66 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f07","block":66,"timestamp":"1492011434","__v":0}})
+Bad block: 66
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 67 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f08","block":67,"timestamp":"1492011449","__v":0}})
+Bad block: 67
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 68 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f09","block":68,"timestamp":"1492011464","__v":0}})
+Bad block: 68
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 69 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f0a","block":69,"timestamp":"1492011479","__v":0}})
+Bad block: 69
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 70 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f0b","block":70,"timestamp":"1492011494","__v":0}})
+Bad block: 70
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 71 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f0c","block":71,"timestamp":"1492011509","__v":0}})
+Bad block: 71
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 72 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f0d","block":72,"timestamp":"1492011524","__v":0}})
+Bad block: 72
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 73 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f0e","block":73,"timestamp":"1492011539","__v":0}})
+Bad block: 73
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 74 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f0f","block":74,"timestamp":"1492011554","__v":0}})
+Bad block: 74
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 75 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f10","block":75,"timestamp":"1492011569","__v":0}})
+Bad block: 75
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 76 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f11","block":76,"timestamp":"1492011584","__v":0}})
+Bad block: 76
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 77 }","op":{"transactions":[],"_id":"5a732421f1e64a9620508f12","block":77,"timestamp":"1492011599","__v":0}})
+Bad block: 77
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 78 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f13","block":78,"timestamp":"1492011614","__v":0}})
+Bad block: 78
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 79 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f14","block":79,"timestamp":"1492011629","__v":0}})
+Bad block: 79
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 80 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f15","block":80,"timestamp":"1492011644","__v":0}})
+Bad block: 80
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 81 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f16","block":81,"timestamp":"1492011659","__v":0}})
+Bad block: 81
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 82 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f17","block":82,"timestamp":"1492011674","__v":0}})
+Bad block: 82
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 83 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f18","block":83,"timestamp":"1492011689","__v":0}})
+Bad block: 83
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 84 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f19","block":84,"timestamp":"1492011704","__v":0}})
+Bad block: 84
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 85 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f1a","block":85,"timestamp":"1492011719","__v":0}})
+Bad block: 85
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 86 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f1b","block":86,"timestamp":"1492011734","__v":0}})
+Bad block: 86
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 87 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f1c","block":87,"timestamp":"1492011749","__v":0}})
+Bad block: 87
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 88 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f1d","block":88,"timestamp":"1492011764","__v":0}})
+Bad block: 88
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 89 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f1e","block":89,"timestamp":"1492011779","__v":0}})
+Bad block: 89
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 90 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f1f","block":90,"timestamp":"1492011794","__v":0}})
+Bad block: 90
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 91 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f20","block":91,"timestamp":"1492011809","__v":0}})
+Bad block: 91
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 92 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f21","block":92,"timestamp":"1492011824","__v":0}})
+Bad block: 92
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 93 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f22","block":93,"timestamp":"1492011839","__v":0}})
+Bad block: 93
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 94 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f23","block":94,"timestamp":"1492011854","__v":0}})
+Bad block: 94
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 95 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f24","block":95,"timestamp":"1492011869","__v":0}})
+Bad block: 95
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 96 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f25","block":96,"timestamp":"1492011884","__v":0}})
+Bad block: 96
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 97 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f26","block":97,"timestamp":"1492011899","__v":0}})
+Bad block: 97
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 98 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f27","block":98,"timestamp":"1492011914","__v":0}})
+Bad block: 98
+Error from SaveTransactionToMongo: WriteError({"code":11000,"index":0,"errmsg":"E11000 duplicate key error index: eth_scan.blocktransactions.$block_1 dup key: { : 99 }","op":{"transactions":[],"_id":"5a732422f1e64a9620508f28","block":99,"timestamp":"1492011929","__v":0}})
+Bad block: 99
