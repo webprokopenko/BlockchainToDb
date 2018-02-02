@@ -3,7 +3,16 @@ require('../models/BlockTransactionModel.js');
 const BlockTransaction = mongoose.model('blockTransaction');
 const getETHRpc = require('../controllers/getETHRpc');
 const Quequ = require('../lib/TaskQueue');
+
+//Intel logger setup
 const intel = require('intel');
+let LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
+let LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
+
+LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('../logs/transactionsToDb/badblock.log'));
+LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('../logs/transactionsToDb/eror.log'));
+//End Intel logger setup
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://root:root@ds211588.mlab.com:11588/eth_scan');
@@ -28,14 +37,8 @@ function saveBlockTransactionToMongoDb(blockData){
         })
 }
 async function saveBlockTransactionFromTo(from, to, order){
-    intel.basicConfig({
-        'file': '../logs/error.log', 
-        'format': '%(message)s',
-        'level': intel.ERROR
-      });
-
     const taskQue = new Quequ(order);
-    for (let i = from; i < to; i++) {
+    for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done=>{  
             try {
                 blockData = await getETHRpc(i);
@@ -43,8 +46,8 @@ async function saveBlockTransactionFromTo(from, to, order){
                 console.log(` Write OK! ${i}`);
                 done();    
             } catch (error) {
-                intel.error('Error from SaveTransactionToMongo: ' + error );
-                intel.error('Bad block: ' + i);
+                LoggerTransactionToDbBadBlock.error(i);
+                LoggerTransactionToDbError.error(error);
                 done();
             }
         })
