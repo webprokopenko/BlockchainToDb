@@ -88,6 +88,11 @@ if(argv){
             console.log(block);
         })
     }
+    if(argv.getblock && argv.getblock>0){
+        getETHRpc.getBlockData(argv.getblock).then(block=>{
+            console.log(block);
+        })
+    }
 }
 
 

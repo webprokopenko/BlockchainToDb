@@ -41,29 +41,6 @@ function getGasFromTransactionHash(hash){
         )
     })
 }
-function getBlockData(numBlock){
-    return new Promise((resolve,reject)=>{
-        clientRPC.call(
-            {   'jsonrpc': '2.0',
-                'method':'eth_getBlockByNumber',
-                'params':[convertNumberToHex(numBlock), true],
-                'id':1
-            },
-            (err,res)=>{
-                if(err)
-                    return reject(new Error(`Error from geth: ${err}`));
-                if(!res)
-                    return reject(new Error(`Response body empty`));
-                if(res.error)
-                    return reject(new Error(`Error from command geth  Message: '${res.error.message}'  Code: ${res.error.code}`));
-                if(!res.result.transactions)
-                    return reject(new Error(`Transactions empty`))
-                
-                resolve(res.result);
-            }        
-        )
-    })
-}
 module.exports = async function getTransactionFromETH(numBlock){
         try{
             const blockData = await getBlockData(numBlock);
@@ -118,4 +95,26 @@ module.exports.getBlockNumber = function getBlockNumber(param){
         )
     })
 }
-
+module.exports.getBlockData = function getBlockData(numBlock){
+    return new Promise((resolve,reject)=>{
+        clientRPC.call(
+            {   'jsonrpc': '2.0',
+                'method':'eth_getBlockByNumber',
+                'params':[convertNumberToHex(numBlock), true],
+                'id':1
+            },
+            (err,res)=>{
+                if(err)
+                    return reject(new Error(`Error from geth: ${err}`));
+                if(!res)
+                    return reject(new Error(`Response body empty`));
+                if(res.error)
+                    return reject(new Error(`Error from command geth  Message: '${res.error.message}'  Code: ${res.error.code}`));
+                if(!res.result.transactions)
+                    return reject(new Error(`Transactions empty`))
+                
+                resolve(res.result);
+            }        
+        )
+    })
+}
