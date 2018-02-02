@@ -1,23 +1,20 @@
-const mongoose = require('mongoose');
+
 require('../models/BlockTransactionModel.js');
-const BlockTransaction = mongoose.model('blockTransaction');
 const getETHRpc = require('../controllers/getETHRpc');
 const Quequ = require('../lib/TaskQueue');
 
 //Intel logger setup
 const intel = require('intel');
-let LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
-let LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
-
+const LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
+const LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
 LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('../logs/transactionsToDb/badblock.log'));
 LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('../logs/transactionsToDb/eror.log'));
-//End Intel logger setup
-
-
-mongoose.Promise = global.Promise;
+//Mongoose
+const mongoose = require('mongoose');
+const BlockTransaction = mongoose.model('blockTransaction');
 mongoose.connect('mongodb://root:root@ds211588.mlab.com:11588/eth_scan');
-
-var argv = require('minimist')(process.argv.slice(2));
+//Arguments listener
+const argv = require('minimist')(process.argv.slice(2));
 
 
 function saveBlockTransactionToMongoDb(blockData){
@@ -35,6 +32,32 @@ function saveBlockTransactionToMongoDb(blockData){
                 reject(error)
             }
         })
+}
+function getLastBlockTransactionMongoDb(){
+    return new Promise((resolve,reject)=>{
+        try{
+            BlockTransaction
+                .findOne({})
+                .sort({block:-1})
+                .then(res=>{
+                    res.block ? resolve(res.block) : reject(new Error(`function getLastBlockTransactionMongoDb no block number`));
+                })
+                .catch(e=>reject(e));
+        } catch(error){
+            reject(error);
+        }
+    });
+}
+async function saveBlockTransactionLastinMongoDb(order){
+    if(!order) return LoggerTransactionToDbError.error('function saveBlockTransactionLastinMongoDb order is empty');
+    try {
+        let lastBlockInMongoDb = await getLastBlockTransactionMongoDb();
+        let lastBlockInEthereum = await getETHRpc.getBlockNumber('latest');
+        saveBlockTransactionFromTo(lastBlockInMongoDb+1, lastBlockInEthereum, order);
+    } catch (error) {
+        LoggerTransactionToDbError.error('function saveBlockTransactionLastinMongoDb ' + error);
+    }
+    
 }
 async function saveBlockTransactionFromTo(from, to, order){
     const taskQue = new Quequ(order);
@@ -54,9 +77,12 @@ async function saveBlockTransactionFromTo(from, to, order){
     }
 }
 if(argv){
-    console.log(argv);
     if(argv.from && argv.to && argv.order){
         saveBlockTransactionFromTo(argv.from,argv.to, argv.order);
+    }
+    if(argv.latest && argv.order){
+        console.log();
+        //saveBlockTransactionLastinMongoDb(argv.order);
     }
 }
 

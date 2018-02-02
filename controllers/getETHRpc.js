@@ -93,5 +93,29 @@ module.exports = async function getTransactionFromETH(numBlock){
             console.log(e);
         }           
 }
-
+module.exports.getBlockNumber = function getBlockNumber(param){
+    return new Promise((resolve,reject)=>{
+        if(!param || (param!=='latest' && param!='pending'))
+            return reject(new Error(`function getBlockNumber missin param`));
+        clientRPC.call(
+            {   'jsonrpc': '2.0',
+                'method':'eth_getBlockByNumber',
+                'params':[param, true],
+                'id':1
+            },
+            (err,res)=>{
+                if(err)
+                    return reject(new Error(`getBlockNumber Error from geth: ${err}`));
+                if(!res)
+                    return reject(new Error(`getBlockNumber Response body empty`));
+                if(res.error)
+                    return reject(new Error(`getBlockNumber Error from command geth  Message: '${res.error.message}'  Code: ${res.error.code}`));
+                if(!res.result.number)
+                    return reject(new Error(`getBlockNumber Block number empty`))
+                
+                resolve(parseInt(convertHexToInt(res.result.number)));
+            }        
+        )
+    })
+}
 
