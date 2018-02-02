@@ -81,8 +81,12 @@ if(argv){
         saveBlockTransactionFromTo(argv.from,argv.to, argv.order);
     }
     if(argv.latest && argv.order){
-        console.log();
-        //saveBlockTransactionLastinMongoDb(argv.order);
+        saveBlockTransactionLastinMongoDb(argv.order);
+    }
+    if(argv.getlastblock){
+        getETHRpc.getBlockNumber('latest').then(block=>{
+            console.log(block);
+        })
     }
 }
 
