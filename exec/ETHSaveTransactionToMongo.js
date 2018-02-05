@@ -1,6 +1,6 @@
 
 require('../models/BlockTransactionModel.js');
-const getETHRpc = require('../controllers/getETHRpc').getTransactionFromETH;
+const getETHRpc = require('../controllers/getETHRpc');
 const Quequ = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 
@@ -66,7 +66,7 @@ async function saveBlockTransactionFromTo(from, to, order){
     for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done=>{  
             try {
-                blockData = await getETHRpc(i);
+                blockData = await getETHRpc.getTransactionFromETH(i);
                 await saveBlockTransactionToMongoDb(blockData);
                 console.log(` Write OK! ${i}`);
                 done();    

@@ -1,5 +1,5 @@
 {
-    "mongodbConnectionString" : "mongodb://user:password@ethereumtransactionreal-shard-00-00-dndam.mongodb.net:27017,ethereumtransactionreal-shard-00-01-dndam.mongodb.net:27017,ethereumtransactionreal-shard-00-02-dndam.mongodb.net:27017/etherum_transactions?ssl=true&replicaSet=EthereumTransactionReal-shard-0&authSource=admin",
+    "mongodbConnectionString" : "mongodb://root:root@ethereumtransactionreal-shard-00-00-dndam.mongodb.net:27017,ethereumtransactionreal-shard-00-01-dndam.mongodb.net:27017,ethereumtransactionreal-shard-00-02-dndam.mongodb.net:27017/etherum_transactions?ssl=true&replicaSet=EthereumTransactionReal-shard-0&authSource=admin",
     "ETHRpc": {
         "port":8545,
         "host":"127.0.0.1",
