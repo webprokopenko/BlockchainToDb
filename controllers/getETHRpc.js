@@ -2,13 +2,8 @@ const rpc = require('node-json-rpc');
 const util = require('util');
 const Units = require('ethereumjs-units');
 const math = require('mathjs');
-opts = {
-    port:8546,
-    host:'127.0.0.1',
-    path:'/',
-    strict:true
-},
-clientRPC = new rpc.Client(opts);
+const RpcConnectOption = require('../config/config.json').ETHRpc
+clientRPC = new rpc.Client(RpcConnectOption);
 
 function convertNumberToHex(num){
     return `0x${num.toString(16)}`
@@ -41,7 +36,31 @@ function getGasFromTransactionHash(hash){
         )
     })
 }
-module.exports = async function getTransactionFromETH(numBlock){
+module.exports.getBlockData = getBlockData;
+    function getBlockData(numBlock){
+    return new Promise((resolve,reject)=>{
+        clientRPC.call(
+            {   'jsonrpc': '2.0',
+                'method':'eth_getBlockByNumber',
+                'params':[convertNumberToHex(numBlock), true],
+                'id':1
+            },
+            (err,res)=>{
+                if(err)
+                    return reject(new Error(`Error from geth: ${err}`));
+                if(!res)
+                    return reject(new Error(`Response body empty`));
+                if(res.error)
+                    return reject(new Error(`Error from command geth  Message: '${res.error.message}'  Code: ${res.error.code}`));
+                if(!res.result.transactions)
+                    return reject(new Error(`Transactions empty`))
+                
+                resolve(res.result);
+            }        
+        )
+    })
+}
+module.exports.getTransactionFromETH = async function getTransactionFromETH(numBlock){
         try{
             const blockData = await getBlockData(numBlock);
             let blockTransaction = {
@@ -91,29 +110,6 @@ module.exports.getBlockNumber = function getBlockNumber(param){
                     return reject(new Error(`getBlockNumber Block number empty`))
                 
                 resolve(parseInt(convertHexToInt(res.result.number)));
-            }        
-        )
-    })
-}
-module.exports.getBlockData = function getBlockData(numBlock){
-    return new Promise((resolve,reject)=>{
-        clientRPC.call(
-            {   'jsonrpc': '2.0',
-                'method':'eth_getBlockByNumber',
-                'params':[convertNumberToHex(numBlock), true],
-                'id':1
-            },
-            (err,res)=>{
-                if(err)
-                    return reject(new Error(`Error from geth: ${err}`));
-                if(!res)
-                    return reject(new Error(`Response body empty`));
-                if(res.error)
-                    return reject(new Error(`Error from command geth  Message: '${res.error.message}'  Code: ${res.error.code}`));
-                if(!res.result.transactions)
-                    return reject(new Error(`Transactions empty`))
-                
-                resolve(res.result);
             }        
         )
     })

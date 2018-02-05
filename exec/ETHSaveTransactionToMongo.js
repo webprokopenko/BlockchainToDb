@@ -1,7 +1,8 @@
 
 require('../models/BlockTransactionModel.js');
-const getETHRpc = require('../controllers/getETHRpc');
+const getETHRpc = require('../controllers/getETHRpc').getTransactionFromETH;
 const Quequ = require('../lib/TaskQueue');
+const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 
 //Intel logger setup
 const intel = require('intel');
@@ -12,7 +13,8 @@ LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler
 //Mongoose
 const mongoose = require('mongoose');
 const BlockTransaction = mongoose.model('blockTransaction');
-mongoose.connect('mongodb://root:root@ds211588.mlab.com:11588/eth_scan');
+mongoose.connect(mongodbConnectionString);
+
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
 
