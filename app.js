@@ -15,8 +15,8 @@ app.use(bodyParser.json({ type: 'text/plain' }));
 app.use(bodyParser.urlencoded({extended: false}));
 //static file
 app.use(express.static(path.join(__dirname, 'public')));
-//routes require
-app.use('/', require('./routes/index'));
+// add routes
+require('./routes')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
