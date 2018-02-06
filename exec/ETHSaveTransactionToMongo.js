@@ -128,6 +128,8 @@ async function scanBadBlockfromMongoDbAndSave(){
                         done();
                     }
                 })
+            }else{
+                console.log(` Block exist ${i}`)
             }
         }
     } catch (error) {
