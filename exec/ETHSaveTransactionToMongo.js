@@ -1,6 +1,6 @@
 
 require('../models/BlockTransactionModel.js');
-const getETHRpc = require('../controllers/getETHRpc');
+const getETHRpc = require('../lib/ethereum/getETHRpc');
 const Quequ = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 
