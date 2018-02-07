@@ -73,7 +73,15 @@ if (argv) {
         })
     }
     if (argv.saveblock && argv.saveblock > 0) {
-           
+        getETHRpc.getBlockData(argv.saveblock).then(block => {
+            saveBlockTransactionToMongoDb(block)
+                .then(res=>{
+                    console.log(res);
+                })
+                .catch(e=>{
+                    console.log('Error ' + e);
+                })
+        })
     }
 }
 
