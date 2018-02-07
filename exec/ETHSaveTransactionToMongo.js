@@ -12,7 +12,7 @@ LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHa
 LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('../logs/transactionsToDb/eror.log'));
 //Mongoose
 const mongoose = require('mongoose');
-const BlockTransaction = mongoose.model('ethereumTransactions');
+const BlockTransaction = mongoose.model('ethtransactions');
 mongoose.connect(mongodbConnectionString);
 
 //Arguments listener

@@ -13,4 +13,4 @@ let BlockTransaction = new Schema({
     fee:        String,
 });
 
-mongoose.model('ethereumTransactions', BlockTransaction);
+mongoose.model('ethtransactions', BlockTransaction);
