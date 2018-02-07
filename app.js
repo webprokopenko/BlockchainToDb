@@ -6,10 +6,7 @@ const http = require('http');
 const server = http.createServer(app);
 const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://root:root@ds211588.mlab.com:11588/eth_scan');
-
-
+global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection('mongodb://root:root@ds211588.mlab.com:11588/eth_scan'));
 // body parser set
 app.use(bodyParser.json({ type: 'text/plain' }));
 app.use(bodyParser.urlencoded({extended: false}));
