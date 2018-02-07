@@ -1,5 +1,6 @@
 {
     "mongodbConnectionString" : "mongodb://root:root@ds211588.mlab.com:11588/eth_scan",
+    "mDbConnStrReadTransaction" : "mongodb://root:root@ds211588.mlab.com:11588/eth_scan",
     "ETHRpc": {
         "port":8545,
         "host":"127.0.0.1",
