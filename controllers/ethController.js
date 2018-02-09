@@ -1,4 +1,5 @@
 const ethTransaction = require('../lib/mongodb/ethtransactions');
+const gethETH = require('../lib/ethereum/getETHRpc');
 
 async function getTransactionList(address){
     try {
@@ -9,7 +10,12 @@ async function getTransactionList(address){
         console.log('Error getTransaction List ' + error)
     }
 }
+async function getGasPrice(){
+    let gasPrice = await gethETH.getGasPrice();
+    return gasPrice
+}
 
  module.exports = {
-     getTransactionlist: getTransactionList
+     getTransactionlist: getTransactionList,
+     getGasPrice:getGasPrice
 }
