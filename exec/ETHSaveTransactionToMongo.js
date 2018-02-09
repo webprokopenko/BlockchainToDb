@@ -48,27 +48,28 @@ async function saveBlockTransactionFromTo(from, to, order) {
                         await saveBlockTransactionToMongoDb(element)
                     }));
                 }
-                //console.log(` Write OK! ${i}`);
                 done();
             } catch (error) {
-                //LoggerTransactionToDbBadBlock.error(i);
-                //LoggerTransactionToDbError.error(error);
-                console.error(`Bad block ${i}`);
+                LoggerTransactionToDbBadBlock.error(i);
+                console.error(`Bad block ${i} Error: ${error}`);
                 done();
             }
         })
     }
 }
-async function calculateCountTransactionFromTo(from, to, callback){
+async function calculateCountTransactionFromTo(from, to, callback) {
     const taskQue = new Quequ(10);
     let count = 0;
     for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done => {
             try {
-                trnCountinBlock = await getETHRpc.getTransactionCountETH(i);
-                count = count + trnCountinBlock;
-                callback(count);
-                done();
+                getETHRpc.getTransactionCountETH(i).then(trnCountinBlock => {
+                    count = count + trnCountinBlock;
+                    if (i == to) {
+                        callback(count);
+                    }
+                    done();
+                });
             } catch (error) {
                 console.error(`Bad Calculate block: ${i} ${error}`);
                 done();
@@ -81,9 +82,10 @@ if (argv) {
         console.log('Scan and save from to Started ..... ');
         saveBlockTransactionFromTo(argv.from, argv.to, argv.order);
     }
-    if(argv.calculatecount && argv.from && argv.to){
-        console.log('Calculate start');
-        calculateCountTransactionFromTo(argv.from, argv.to, count=>{
+    if (argv.calculatecount && argv.from && argv.to) {
+        console.log('Calculate transaction start ....');
+        calculateCountTransactionFromTo(argv.from, argv.to, count => {
+            console.log(`Calculate transaction done`)
             console.log('Count transaction: ' + count);
         });
     }
@@ -99,18 +101,18 @@ if (argv) {
     }
     if (argv.saveblock && argv.saveblock > 0) {
         getETHRpc.getBlockData(argv.saveblock)
-        .then(block => {
-            saveBlockTransactionToMongoDb(block)
-                .then(res=>{
-                    console.log(res);
-                })
-                .catch(e=>{
-                    console.error('Error ' + e);
-                })
-        })
-        .catch(e=>{
-            console.log(e);
-        })
+            .then(block => {
+                saveBlockTransactionToMongoDb(block)
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(e => {
+                        console.error('Error ' + e);
+                    })
+            })
+            .catch(e => {
+                console.log(e);
+            })
     }
 }
 
