@@ -2,11 +2,9 @@ const ethTransaction = require('../lib/mongodb/ethtransactions');
 
 async function getTransactionList(address){
     try {
-        let listIn = await ethTransaction.getTransactionlistIn(address);
-        let listOut = await ethTransaction.getTransactionlistOut(address);
-        console.log(listIn);
-        console.log(listOut);
-        return {listIn, listOut};
+        let     TraisactionIn  = await ethTransaction.getTransactionlistIn(address);
+        let     TransactionOut = await ethTransaction.getTransactionlistOut(address);
+        return {'in':TraisactionIn, 'out':TransactionOut};
     } catch (error) {
         console.log('Error getTransaction List ' + error)
     }

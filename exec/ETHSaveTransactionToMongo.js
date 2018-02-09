@@ -1,6 +1,7 @@
 
 require('../models/EthereumTransactionModel.js');
 const getETHRpc = require('../lib/ethereum/getETHRpc');
+
 const Quequ = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 
@@ -11,15 +12,14 @@ const LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock'
 LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('../logs/transactionsToDb/badblock.log'));
 LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('../logs/transactionsToDb/eror.log'));
 //Mongoose
-const mongoose = require('mongoose');
-const BlockTransaction = mongoose.model('ethtransactions');
+global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
+//dbEthertransactionsLib
+const dbEthertransactionsLib = require('../lib/mongodb/ethtransactions.js');
+
 
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
-
-const fs = require('fs');
-const path = require('path');
 
 function saveBlockTransactionToMongoDb(blockData) {
     return new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ async function saveBlockTransactionFromTo(from, to, order) {
                 blockData = await getETHRpc.getTransactionFromETH(i);
                 if (blockData) {
                     await Promise.all(blockData.map(async (element, i) => {
-                        await saveBlockTransactionToMongoDb(element)
+                        await dbEthertransactionsLib.saveBlockTransactionToMongoDb(element)
                     }));
                 }
                 done();
