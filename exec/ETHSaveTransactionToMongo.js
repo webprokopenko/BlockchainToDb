@@ -87,6 +87,7 @@ if (argv) {
         calculateCountTransactionFromTo(argv.from, argv.to, count => {
             console.log(`Calculate transaction done`)
             console.log('Count transaction: ' + count);
+            process.exit(1);
         });
     }
     if (argv.getlastblock) {
