@@ -48,11 +48,33 @@ async function saveBlockTransactionFromTo(from, to, order) {
                         await saveBlockTransactionToMongoDb(element)
                     }));
                 }
-                console.log(` Write OK! ${i}`);
+                //console.log(` Write OK! ${i}`);
                 done();
             } catch (error) {
-                LoggerTransactionToDbBadBlock.error(i);
-                LoggerTransactionToDbError.error(error);
+                //LoggerTransactionToDbBadBlock.error(i);
+                //LoggerTransactionToDbError.error(error);
+                console.error(`Bad block ${i}`);
+                done();
+            }
+        })
+    }
+}
+async function calculateCountTransactionFromTo(from, to, callback){
+    const taskQue = new Quequ(10);
+    let count = 0;
+    for (let i = from; i <= to; i++) {
+        taskQue.pushTask(async done => {
+            try {
+                blockData = await getETHRpc.getTransactionFromETH(i);
+                if (blockData) {
+                    await Promise.all(blockData.map(async (element, i) => {
+                        count++;
+                        callback(count);
+                    }));
+                }
+                done();
+            } catch (error) {
+                console.error(`Bad Calculate block: ${i}`);
                 done();
             }
         })
@@ -60,7 +82,14 @@ async function saveBlockTransactionFromTo(from, to, order) {
 }
 if (argv) {
     if (argv.from && argv.to && argv.order) {
+        console.log('Scan and save from to Started ..... ');
         saveBlockTransactionFromTo(argv.from, argv.to, argv.order);
+    }
+    if(argv.calculatecount && argv.from && argv.to){
+        console.log('Calculate start');
+        calculateCountTransactionFromTo(argv.from, argv.to, count=>{
+            console.log('Count transaction: ' + count);
+        });
     }
     if (argv.getlastblock) {
         getETHRpc.getBlockNumber('latest').then(block => {
@@ -80,7 +109,7 @@ if (argv) {
                     console.log(res);
                 })
                 .catch(e=>{
-                    console.log('Error ' + e);
+                    console.error('Error ' + e);
                 })
         })
         .catch(e=>{

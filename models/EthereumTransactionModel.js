@@ -11,6 +11,7 @@ let BlockTransaction = new Schema({
     to:         String,
     value:      String,
     fee:        String,
+    blockNum:   Number
 });
 
 mongoose.model('ethtransactions', BlockTransaction);
