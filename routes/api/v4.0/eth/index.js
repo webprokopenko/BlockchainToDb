@@ -24,3 +24,12 @@ app.get('/getGasPrice', (req,res)=>{
          console.error(error);
      })
 });
+app.get('/getGasLimit', (req,res)=>{
+    ethController.getGasLimit()
+    .then(gasLimit=>{
+        res.send(gasLimit);
+    })
+    .catch(error=>{
+        console.error(error);
+    })
+});
