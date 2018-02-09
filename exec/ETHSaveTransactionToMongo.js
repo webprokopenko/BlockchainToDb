@@ -65,16 +65,12 @@ async function calculateCountTransactionFromTo(from, to, callback){
     for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done => {
             try {
-                blockData = await getETHRpc.getTransactionFromETH(i);
-                if (blockData) {
-                    await Promise.all(blockData.map(async (element, i) => {
-                        count++;
-                        callback(count);
-                    }));
-                }
+                trnCountinBlock = await getETHRpc.getTransactionCountETH(i);
+                count = count + trnCountinBlock;
+                callback(count);
                 done();
             } catch (error) {
-                console.error(`Bad Calculate block: ${i}`);
+                console.error(`Bad Calculate block: ${i} ${error}`);
                 done();
             }
         })
