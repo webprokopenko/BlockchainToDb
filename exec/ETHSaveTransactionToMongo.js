@@ -50,8 +50,13 @@ async function saveBlockTransactionFromTo(from, to, order) {
                 }
                 done();
             } catch (error) {
-                LoggerTransactionToDbBadBlock.error(i);
+                if(error.code != 11000){
+                    LoggerTransactionToDbBadBlock.error(i);
+                    LoggerTransactionToDbError.error(`Error: saveBlockTransactionFromTo: ${error}`)
+                    process.exit(1);
+                }
                 console.error(`Bad block ${i} Error: ${error}`);
+                
                 done();
             }
         })
