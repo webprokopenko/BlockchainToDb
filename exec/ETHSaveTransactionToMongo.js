@@ -21,30 +21,14 @@ const dbEthertransactionsLib = require('../lib/mongodb/ethtransactions.js');
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
 
-function saveBlockTransactionToMongoDb(blockData) {
-    return new Promise((resolve, reject) => {
-        try {
-            blockData = new BlockTransaction(blockData);
-            blockData.save()
-                .then(item => {
-                    resolve(true);
-                })
-                .catch(e => {
-                    reject(e);
-                });
-        } catch (error) {
-            reject(error)
-        }
-    })
-}
 async function saveBlockTransactionFromTo(from, to, order) {
     const taskQue = new Quequ(order);
     for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done => {
             try {
-                blockData = await getETHRpc.getTransactionFromETH(i);
+                let blockData = await getETHRpc.getTransactionFromETH(i);
                 if (blockData) {
-                    await Promise.all(blockData.map(async (element, i) => {
+                    await Promise.all(blockData.map(async (element) => {
                         await dbEthertransactionsLib.saveBlockTransactionToMongoDb(element)
                     }));
                 }
@@ -108,7 +92,7 @@ if (argv) {
     if (argv.saveblock && argv.saveblock > 0) {
         getETHRpc.getBlockData(argv.saveblock)
             .then(block => {
-                saveBlockTransactionToMongoDb(block)
+                dbEthertransactionsLib.saveBlockTransactionToMongoDb(block)
                     .then(res => {
                         console.log(res);
                     })

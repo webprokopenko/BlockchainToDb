@@ -14,4 +14,4 @@ let BlockTransaction = new Schema({
     blockNum:   Number
 });
 
-mongoose.model('ethtransactions', BlockTransaction);
+module.export = mongoose.model('ethtransactions', BlockTransaction);

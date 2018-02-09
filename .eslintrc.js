@@ -13,20 +13,24 @@ module.exports = {
     },
     "rules": {
         "indent": [
-            "error",
+            "warn",
             "tab"
         ],
         "linebreak-style": [
             "error",
             "unix"
         ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-        ]
+        "quotes": ["error", "single", {
+            avoidEscape: true,
+            allowTemplateLiterals: true
+        }]
+    },
+     "parserOptions": {
+         "ecmaVersion": 2017
+    },
+    "globals": {
+        "appRoot": true,
+        "mongoose": false
     }
+ 
 };
