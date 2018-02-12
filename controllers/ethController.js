@@ -29,10 +29,15 @@ async function getPriceLimit(){
 
     return {'gasLimit':gasLimit.gasLimit,'gasLimitHex':gasLimit.gasLimitHex, 'gasPrice':gasPrice.gasPrice, 'gasPriceHex':gasPrice.gasPriceHex};
 }
+async function getBalance(address){
+    balance = await gethETH.getBalance(address);
+    return {'balance':convertHexToInt(balance)}
+}
 
 module.exports = {
     getTransactionlist: getTransactionList,
-    getGasPrice: getGasPrice,
-    getGasLimit: getGasLimit,
-    getPriceLimit: getPriceLimit
+    getGasPrice:        getGasPrice,
+    getGasLimit:        getGasLimit,
+    getPriceLimit:      getPriceLimit,
+    getBalance:         getBalance
 }
