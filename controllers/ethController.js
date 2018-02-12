@@ -37,6 +37,10 @@ async function getTransactionCount(address){
     transactionCount = await gethETH.getTransactionCount(address);
     return {'TransactionCount':convertHexToInt(transactionCount)}
 }
+async function sendRawTransaction(rawTransaction){
+    transactionHash = await gethETH.sendRawTransaction(rawTransaction);
+    return {transactionHash}
+}
 
 module.exports = {
     getTransactionlist:     getTransactionList,
@@ -44,5 +48,6 @@ module.exports = {
     getGasLimit:            getGasLimit,
     getPriceLimit:          getPriceLimit,
     getBalance:             getBalance,
-    getTransactionCount:    getTransactionCount
+    getTransactionCount:    getTransactionCount,
+    sendRawTransaction:     sendRawTransaction
 }

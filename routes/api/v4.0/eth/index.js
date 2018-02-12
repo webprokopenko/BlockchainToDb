@@ -65,3 +65,14 @@ app.get('/getTransactionCount/:address', (req, res) => {
             console.error(error);
         })
 });
+app.get('/sendRawTransaction/:rawTransaction', (req, res)=>{
+    const rawTransaction = req.params.rawTransaction;
+    console.log(rawTransaction);
+    ethController.sendRawTransaction(rawTransaction)
+        .then(transactonHash=>{
+            res.send(transactonHash)
+        })
+        .catch(error=>{
+            console.error(error);
+        })
+})
