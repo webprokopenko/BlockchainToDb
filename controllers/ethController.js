@@ -33,11 +33,16 @@ async function getBalance(address){
     balance = await gethETH.getBalance(address);
     return {'balance':convertHexToInt(balance)}
 }
+async function getTransactionCount(address){
+    transactionCount = await gethETH.getTransactionCount(address);
+    return {'TransactionCount':convertHexToInt(transactionCount)}
+}
 
 module.exports = {
-    getTransactionlist: getTransactionList,
-    getGasPrice:        getGasPrice,
-    getGasLimit:        getGasLimit,
-    getPriceLimit:      getPriceLimit,
-    getBalance:         getBalance
+    getTransactionlist:     getTransactionList,
+    getGasPrice:            getGasPrice,
+    getGasLimit:            getGasLimit,
+    getPriceLimit:          getPriceLimit,
+    getBalance:             getBalance,
+    getTransactionCount:    getTransactionCount
 }

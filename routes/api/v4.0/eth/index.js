@@ -55,3 +55,13 @@ app.get('/getBalance/:address', (req, res) => {
             console.error(error);
         })
 });
+app.get('/getTransactionCount/:address', (req, res) => {
+    const address = req.params.address;
+    ethController.getTransactionCount(address)
+        .then(transactionCount => {
+            res.send(transactionCount)
+        })
+        .catch(error => {
+            console.error(error);
+        })
+});
