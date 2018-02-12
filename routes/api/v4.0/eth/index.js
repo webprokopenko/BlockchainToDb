@@ -24,6 +24,7 @@ app.get('/getGasPrice', (req,res)=>{
          console.error(error);
      })
 });
+//get gasLimit
 app.get('/getGasLimit', (req,res)=>{
     ethController.getGasLimit()
     .then(gasLimit=>{
@@ -32,4 +33,15 @@ app.get('/getGasLimit', (req,res)=>{
     .catch(error=>{
         console.error(error);
     })
+});
+//get gasPrice and gasLimit
+app.get('/getPriceLimit', (req,res)=>{
+    try {
+        ethController.getPriceLimit()
+        .then(gasPriceLimit=>{
+            res.send(gasPriceLimit);
+        })
+    } catch (error) {
+     console.error(error);   
+    }
 });

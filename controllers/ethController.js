@@ -16,16 +16,23 @@ async function getTransactionList(address) {
 }
 async function getGasPrice() {
     let gasPrice = await gethETH.getGasPrice();
-    return gasPrice
+    return { 'gasPrice': convertHexToInt(gasPrice), 'gasPriceHex': gasPrice }
 }
 async function getGasLimit(){
     let block = await gethETH.getLatestBlock();
 
     return {'gasLimit':convertHexToInt(block.gasLimit),'gasLimitHex':block.gasLimit}
 }
+async function getPriceLimit(){
+    gasLimit = await this.getGasLimit();
+    gasPrice = await this.getGasPrice();
+
+    return {'gasLimit':gasLimit.gasLimit,'gasLimitHex':gasLimit.gasLimitHex, 'gasPrice':gasPrice.gasPrice, 'gasPriceHex':gasPrice.gasPriceHex};
+}
 
 module.exports = {
     getTransactionlist: getTransactionList,
     getGasPrice: getGasPrice,
-    getGasLimit: getGasLimit
+    getGasLimit: getGasLimit,
+    getPriceLimit: getPriceLimit
 }
