@@ -11,7 +11,9 @@ app.get('/getTransactionsList/:address', (req, res) => {
             res.send(transactions);
         })
         .catch(error => {
-            console.error(error);
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.send(`${error}`);
         })
 });
 // get gasPrice
@@ -52,7 +54,9 @@ app.get('/getBalance/:address', (req, res) => {
             res.send(balance)
         })
         .catch(error => {
-            console.error(error);
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.send(`${error}`);
         })
 });
 app.get('/getTransactionCount/:address', (req, res) => {
@@ -62,7 +66,9 @@ app.get('/getTransactionCount/:address', (req, res) => {
             res.send(transactionCount)
         })
         .catch(error => {
-            console.error(error);
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.send(`${error}`);
         })
 });
 app.get('/sendRawTransaction/:rawTransaction', (req, res)=>{
@@ -73,6 +79,8 @@ app.get('/sendRawTransaction/:rawTransaction', (req, res)=>{
             res.send(transactonHash)
         })
         .catch(error=>{
-            console.error(error);
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.send(`${error}`);
         })
 })
