@@ -83,4 +83,3 @@ if (argv.savegdax && argv.from && argv.to) {
     saveHRBtcUsd(argv.from, argv.to);
     saveHRBtcEur(argv.from, argv.to);
 }
-
