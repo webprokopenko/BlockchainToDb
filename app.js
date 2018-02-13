@@ -31,6 +31,6 @@ app.use(function(err, req, res, next) {
   res.json(err.message); 
 });
 
-server.listen(process.env.PORT || 2343, function() {
+server.listen(process.env.PORT || 2344, function() {
   console.log('Сервер запущен на порте: ' + server.address().port);
 });
