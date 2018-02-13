@@ -55,7 +55,20 @@ async function sendRawTransaction(rawTransaction){
     transactionHash = await gethETH.sendRawTransaction(rawTransaction);
     return {transactionHash}
 }
+async function getTransactionFromHash(txHash){
+    try {
+        txData = await gethETH.getTransactionFromHash(txHash);    
+        txData.blockNumber = utils.convertHexToInt(txData.blockNumber);
+        txData.transactionIndex = utils.convertHexToInt(txData.transactionIndex);
+        txData.value = utils.convertHexToInt(txData.value);
+        txData.gas = utils.convertHexToInt(txData.gas);
+        txData.gasPrice = utils.convertHexToInt(txData.gasPrice);
 
+        return txData
+    } catch (error) {
+        console.error(error);
+    }
+}
 module.exports = {
     getTransactionlist:     getTransactionList,
     getGasPrice:            getGasPrice,
@@ -63,5 +76,6 @@ module.exports = {
     getPriceLimit:          getPriceLimit,
     getBalance:             getBalance,
     getTransactionCount:    getTransactionCount,
-    sendRawTransaction:     sendRawTransaction
+    sendRawTransaction:     sendRawTransaction,
+    getTransactionFromHash: getTransactionFromHash
 }

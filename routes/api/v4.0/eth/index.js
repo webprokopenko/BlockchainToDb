@@ -73,10 +73,21 @@ app.get('/getTransactionCount/:address', (req, res) => {
 });
 app.get('/sendRawTransaction/:rawTransaction', (req, res)=>{
     const rawTransaction = req.params.rawTransaction;
-    console.log(rawTransaction);
     ethController.sendRawTransaction(rawTransaction)
         .then(transactonHash=>{
             res.send(transactonHash)
+        })
+        .catch(error=>{
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.send(`${error}`);
+        })
+})
+app.get('/getTransactionByHash/:hashTransaction', (req,res)=>{
+    const hashTransaction = req.params.hashTransaction;
+    ethController.getTransactionFromHash(hashTransaction)
+        .then(txData=>{
+            res.send(txData)
         })
         .catch(error=>{
             res.setHeader('Content-Type', 'application/json');
