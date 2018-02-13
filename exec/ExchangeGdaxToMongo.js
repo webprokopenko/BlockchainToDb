@@ -78,8 +78,28 @@ async function saveHRBtcEur(from, to){
         console.error(error);
     }
 }
+async function saveHREthUsd(from, to){
+    try {
+        let rates = await getHRates('ETH-USD',from, to);
+        saveHistoricRates('ETH-USD',rates);
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function saveHREthEur(from, to){
+    try {
+        let rates = await getHRates('ETH-EUR',from, to);
+        saveHistoricRates('ETH-EUR',rates);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 if (argv.savegdax && argv.from && argv.to) {
     console.log('GDAX Scan and save from to Started ..... ');
     saveHRBtcUsd(argv.from, argv.to);
     saveHRBtcEur(argv.from, argv.to);
+    saveHREthUsd(argv.from, argv.to);
+    saveHREthEur(argv.from, argv.to);
 }

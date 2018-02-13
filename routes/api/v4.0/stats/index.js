@@ -26,3 +26,28 @@ app.get('/BTC-EUR/GDAX/:countMonths', (req, res) => {
             res.send(`${error}`);
         })
 });
+app.get('/ETH-USD/GDAX/:countMonths', (req, res) => {
+    const countMonths = req.params.countMonths;
+    statsController.getGdaxEthUsd(countMonths)
+        .then(list => {
+            res.send(list);
+        })
+        .catch(error => {
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.send(`${error}`);
+        })
+});
+app.get('/ETH-EUR/GDAX/:countMonths', (req, res) => {
+    const countMonths = req.params.countMonths;
+    statsController.getGdaxEthEur(countMonths)
+        .then(list => {
+            res.send(list);
+        })
+        .catch(error => {
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.send(`${error}`);
+        })
+});
+
