@@ -82,4 +82,14 @@ app.get('/ETH-EUR/BITFINEX/:countMonths', (req, res, next) => {
             next(error);
         })
 });
-
+app.get('/markets', (req, res, next)=>{
+    let markets = [
+        {"market":"BITFINEX","pair":"BTC-USD"},
+        {"market":"BITFINEX","pair":"ETH-USD"},
+        {"market":"GDAX","pair":"BTC-USD"},
+        {"market":"GDAX","pair":"BTC-EUR"},
+        {"market":"GDAX","pair":"ETH-USD"},
+        {"market":"GDAX","pair":"ETH-EUR"},
+    ]
+    res.send(markets);
+})

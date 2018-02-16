@@ -22,10 +22,10 @@ async function getBitnifexCurrency(urlApi, pair1, pair2, from, to){
 
         async (error, response, body) => {
             if(!body || body.length<2){
-                console.log('Error: Body empty' + body);    
+                console.error('Error: Body empty' + body);    
             }
             if(error){
-                console.log('Error: request get ' + error);    
+                console.error('Error: request get ' + error);    
             }
             body  = JSON.parse(body) || {};
             
@@ -60,9 +60,9 @@ async function getBitnifexCurrency(urlApi, pair1, pair2, from, to){
 if (argv.savebitnifex && argv.from && argv.to) {
     console.log('Bitnifex Scan and save from to Started ..... ');
     getBitnifexCurrency(url,'BTC','USD', new Date(argv.from), new Date(argv.to));
-    getBitnifexCurrency(url,'BTC','EUR', new Date(argv.from), new Date(argv.to));
+    //getBitnifexCurrency(url,'BTC','EUR', new Date(argv.from), new Date(argv.to));
     getBitnifexCurrency(url,'ETH','USD', new Date(argv.from), new Date(argv.to));
-    getBitnifexCurrency(url,'ETH','EUR', new Date(argv.from), new Date(argv.to));
+    //getBitnifexCurrency(url,'ETH','EUR', new Date(argv.from), new Date(argv.to));
 }
 
 
