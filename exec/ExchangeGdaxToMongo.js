@@ -50,48 +50,52 @@ async function saveHistoricRates(pair, rates) {
             rateData.close = element[4];
 
             dbExchangeLib.saveExchangeToMongoDb(rateData)
-            .then(save => {
-                done();
-            })
-            .catch(error=>{
-                if(error.code!=11000)
-                    console.error('Error saveHistoricRates' + error);
-                done();
-            })
+                .then(save => {
+                    done();
+                })
+                .catch(error => {
+                    if (error.code != 11000)
+                        console.error('Error saveHistoricRates' + error);
+                    done();
+                })
         })
     }))
 }
-async function saveHRBtcUsd(from , to){
-    try {
-        let rates = await getHRates('BTC-USD',from, to);
-        saveHistoricRates('BTC-USD',rates);
-    } catch (error) {
-        console.error(error)
-    }
+async function saveHRBtcUsd(from, to) {
+    getHRates('BTC-USD', from, to)
+        .then(rates => {
+            saveHistoricRates('BTC-USD', rates);
+        })
+        .catch(error => {
+            saveHRBtcUsd(from, to);
+        })
 }
-async function saveHRBtcEur(from, to){
-    try {
-        let rates = await getHRates('BTC-EUR',from, to);
-        saveHistoricRates('BTC-EUR',rates);
-    } catch (error) {
-        console.error(error);
-    }
+async function saveHRBtcEur(from, to) {
+    getHRates('BTC-EUR', from, to)
+        .then(rates => {
+            saveHistoricRates('BTC-EUR', rates);
+        })
+        .catch(error => {
+            saveHRBtcUsd(from, to);
+        })
 }
-async function saveHREthUsd(from, to){
-    try {
-        let rates = await getHRates('ETH-USD',from, to);
-        saveHistoricRates('ETH-USD',rates);
-    } catch (error) {
-        console.error(error);
-    }
+async function saveHREthUsd(from, to) {
+    getHRates('ETH-USD', from, to)
+        .then(rates => {
+            saveHistoricRates('ETH-USD', rates);
+        })
+        .catch(error => {
+            saveHRBtcUsd(from, to);
+        })
 }
-async function saveHREthEur(from, to){
-    try {
-        let rates = await getHRates('ETH-EUR',from, to);
-        saveHistoricRates('ETH-EUR',rates);
-    } catch (error) {
-        console.error(error);
-    }
+async function saveHREthEur(from, to) {
+    getHRates('ETH-EUR', from, to)
+        .then(rates => {
+            saveHistoricRates('ETH-EUR', rates);
+        })
+        .catch(error => {
+            saveHRBtcUsd(from, to);
+        })
 }
 
 
