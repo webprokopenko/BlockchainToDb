@@ -37,7 +37,7 @@ async function getHRates(pair, from, to) {
 }
 async function saveHistoricRates(pair, rates) {
     const taskQue = new Quequ(5);
-
+    console.log(rates.length);
     await Promise.all(rates.map(async (element) => {
         taskQue.pushTask(async done => {
             let rateData = {};
@@ -51,7 +51,6 @@ async function saveHistoricRates(pair, rates) {
 
             dbExchangeLib.saveExchangeToMongoDb(rateData)
             .then(save => {
-                console.log(save);
                 done();
             })
             .catch(error=>{
