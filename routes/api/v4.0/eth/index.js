@@ -3,7 +3,7 @@ const app = module.exports = express();
 const ethController = require(`${appRoot}/controllers/ethController`);
 
 // get list transaction by address
-app.get('/getTransactionsList/:address', (req, res) => {
+app.get('/getTransactionsList/:address', (req, res, next) => {
     const address = req.params.address;
 
     ethController.getTransactionlist(address)
@@ -11,87 +11,77 @@ app.get('/getTransactionsList/:address', (req, res) => {
             res.send(transactions);
         })
         .catch(error => {
-            res.setHeader('Content-Type', 'application/json');
-            res.statusCode = 400;
-            res.send(`${error}`);
+            next(error)
         })
 });
 // get gasPrice
-app.get('/getGasPrice', (req, res) => {
+app.get('/getGasPrice', (req, res, next) => {
     ethController.getGasPrice()
         .then(gasPrice => {
             res.send(gasPrice);
         })
-        .catch(error => {
-            console.error(error);
+        .catch(() => {
+            next(new Error('Internal Server Error'));
         })
 });
 //get gasLimit
-app.get('/getGasLimit', (req, res) => {
+app.get('/getGasLimit', (req, res, next) => {
     ethController.getGasLimit()
         .then(gasLimit => {
             res.send(gasLimit);
         })
-        .catch(error => {
-            console.error(error);
+        .catch(() => {
+            next(new Error('Internal Server Error'));
         })
 });
 //get gasPrice and gasLimit
-app.get('/getPriceLimit', (req, res) => {
+app.get('/getPriceLimit', (req, res, next) => {
     ethController.getPriceLimit()
         .then(gasPriceLimit => {
             res.send(gasPriceLimit);
         })
-        .catch(error => {
-            console.error(error);
+        .catch(() => {
+            next(new Error('Internal Server Error'));
         })
 });
 //get balance from address
-app.get('/getBalance/:address', (req, res) => {
+app.get('/getBalance/:address', (req, res, next) => {
     const address = req.params.address;
     ethController.getBalance(address)
         .then(balance => {
             res.send(balance)
         })
         .catch(error => {
-            res.setHeader('Content-Type', 'application/json');
-            res.statusCode = 400;
-            res.send(`${error}`);
+            next(error);
         })
 });
-app.get('/getTransactionCount/:address', (req, res) => {
+app.get('/getTransactionCount/:address', (req, res, next) => {
     const address = req.params.address;
     ethController.getTransactionCount(address)
         .then(transactionCount => {
             res.send(transactionCount)
         })
         .catch(error => {
-            res.setHeader('Content-Type', 'application/json');
-            res.statusCode = 400;
-            res.send(`${error}`);
+            next(error);
         })
 });
-app.get('/sendRawTransaction/:rawTransaction', (req, res)=>{
+app.get('/sendRawTransaction/:rawTransaction', (req, res, next) => {
     const rawTransaction = req.params.rawTransaction;
     ethController.sendRawTransaction(rawTransaction)
-        .then(transactonHash=>{
+        .then(transactonHash => {
             res.send(transactonHash)
         })
-        .catch(error=>{
-            res.setHeader('Content-Type', 'application/json');
-            res.statusCode = 400;
-            res.send(`${error}`);
+        .catch(() => {
+            next(new Error('Internal Server Error'));
         })
 })
-app.get('/getTransactionByHash/:hashTransaction', (req,res)=>{
+app.get('/getTransactionByHash/:hashTransaction', (req, res, next) => {
     const hashTransaction = req.params.hashTransaction;
     ethController.getTransactionFromHash(hashTransaction)
-        .then(txData=>{
+        .then(txData => {
             res.send(txData)
         })
-        .catch(error=>{
-            res.setHeader('Content-Type', 'application/json');
-            res.statusCode = 400;
-            res.send(`${error}`);
+        .catch(() => {
+            next(new Error('Internal Server Error'));
         })
 })

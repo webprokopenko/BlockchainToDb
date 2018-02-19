@@ -2,41 +2,58 @@ const ethTransaction = require(`${appRoot}/lib/mongodb/ethtransactions`);
 const gethETH = require(`${appRoot}/lib/ethereum/getETHRpc`);
 const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
 
+//Intel logger setup
+const intel = require('intel');
+const EthError = intel.getLogger('EthError');
+EthError.setLevel(EthError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/eth/eror.log`));
+
+
 async function getTransactionList(address) {
     if(!utils.isAddress(address))
-        throw new Error('address not valid in ETH');
+        throw new Error('Address not valid in Ethereum');
     try {
         let TraisactionIn = await ethTransaction.getTransactionlistIn(address);
         let TransactionOut = await ethTransaction.getTransactionlistOut(address);
         return { 'in': TraisactionIn, 'out': TransactionOut };    
     } catch (error) {
-        console.error(error);
+        EthError.error(`${new Date()} Error: getTransactionList: ${error}`);
     }
     
 }
 async function getGasPrice() {
-    let gasPrice = await gethETH.getGasPrice();
-    return { 'gasPrice': utils.convertHexToInt(gasPrice), 'gasPriceHex': gasPrice }
+    try{
+        let gasPrice = await gethETH.getGasPrice();
+        return { 'gasPrice': utils.convertHexToInt(gasPrice), 'gasPriceHex': gasPrice }
+    } catch(error){
+        EthError.error(`${new Date()} Error: getGasPrice: ${error}`);
+    }
+    
 }
 async function getGasLimit(){
-    let block = await gethETH.getLatestBlock();
-
-    return {'gasLimit':utils.convertHexToInt(block.gasLimit),'gasLimitHex':block.gasLimit}
+    try{
+        let block = await gethETH.getLatestBlock();
+        return {'gasLimit':utils.convertHexToInt(block.gasLimit),'gasLimitHex':block.gasLimit}
+    } catch(error){
+        EthError.error(`${new Date()} Error: getGasLimit: ${error}`);
+    }
 }
 async function getPriceLimit(){
-    gasLimit = await this.getGasLimit();
-    gasPrice = await this.getGasPrice();
-
-    return {'gasLimit':gasLimit.gasLimit,'gasLimitHex':gasLimit.gasLimitHex, 'gasPrice':gasPrice.gasPrice, 'gasPriceHex':gasPrice.gasPriceHex};
+    try{
+        let gasLimit = await this.getGasLimit();
+        let gasPrice = await this.getGasPrice();
+        return {'gasLimit':gasLimit.gasLimit,'gasLimitHex':gasLimit.gasLimitHex, 'gasPrice':gasPrice.gasPrice, 'gasPriceHex':gasPrice.gasPriceHex};
+    } catch(error){
+        EthError.error(`${new Date()} Error: getPriceLimit: ${error}`);
+    }
 }
 async function getBalance(address){
     if(!utils.isAddress(address))
         throw new Error('address not valid in ETH');
     try {
-        balance = await gethETH.getBalance(address);
+        let balance = await gethETH.getBalance(address);
         return {'balance':utils.convertHexToInt(balance)}
     } catch (error) {
-        console.error(error);
+        EthError.error(`${new Date()} Error: getBalance: ${error}`);
     }
    
 }
@@ -44,20 +61,23 @@ async function getTransactionCount(address){
     if(!utils.isAddress(address))
         throw new Error('address not valid in ETH');
     try {
-        transactionCount = await gethETH.getTransactionCount(address);
+        let transactionCount = await gethETH.getTransactionCount(address);
         return {'TransactionCount':utils.convertHexToInt(transactionCount)}    
     } catch (error) {
-        console.error(error);
+        EthError.error(`${new Date()} Error: getTransactionCount: ${error}`);
     }    
-    
 }
 async function sendRawTransaction(rawTransaction){
-    transactionHash = await gethETH.sendRawTransaction(rawTransaction);
-    return {transactionHash}
+    try{
+        let transactionHash = await gethETH.sendRawTransaction(rawTransaction);
+        return {transactionHash}
+    } catch (error){
+        EthError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
+    }
 }
 async function getTransactionFromHash(txHash){
     try {
-        txData = await gethETH.getTransactionFromHash(txHash);    
+        let txData = await gethETH.getTransactionFromHash(txHash);    
         txData.blockNumber = utils.convertHexToInt(txData.blockNumber);
         txData.transactionIndex = utils.convertHexToInt(txData.transactionIndex);
         txData.value = utils.convertHexToInt(txData.value);
@@ -66,7 +86,7 @@ async function getTransactionFromHash(txHash){
 
         return txData
     } catch (error) {
-        console.error(error);
+        EthError.error(`${new Date()} Error: getTransactionFromHash: ${error}`);
     }
 }
 module.exports = {
