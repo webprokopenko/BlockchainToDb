@@ -34,13 +34,10 @@ async function saveBlockTransactionFromTo(from, to, order) {
                 }
                 done();
             } catch (error) {
-                if(error.code != 11000){
+                if(parseInt(error.code) !== 11000){
                     LoggerTransactionToDbBadBlock.error(i);
-                    LoggerTransactionToDbError.error(`Error: saveBlockTransactionFromTo: ${error}`)
-                    process.exit(1);
+                    LoggerTransactionToDbError.error(`Bad block ${i} Error: saveBlockTransactionFromTo: ${error}`);
                 }
-                console.error(`Bad block ${i} Error: ${error}`);
-                
                 done();
             }
         })
