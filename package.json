@@ -9,6 +9,7 @@
   "author": "Prokopenko Ivan",
   "license": "ISC",
   "dependencies": {
+    "bitcoin": "^3.0.1",
     "body-parser": "^1.18.2",
     "ethereumjs-units": "^0.2.0",
     "express": "^4.16.2",
