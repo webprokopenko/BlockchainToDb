@@ -1,5 +1,4 @@
 const gethBTC = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`);
-const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
 
 //Intel logger setup
 const intel = require('intel');
@@ -11,8 +10,7 @@ async function getBalance(address){
         let balance = await gethBTC.getBalance(address);
         return {'balance':balance}
     } catch (error) {
-        //BtcError.error(`${new Date()} Error: getBalance: ${error}`);
-        console.log(error);
+        BtcError.error(`${new Date()} Error: getBalance: ${error}`);
     }
 }
 module.exports = {
