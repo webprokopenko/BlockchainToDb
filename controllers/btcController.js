@@ -7,7 +7,7 @@ BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`${appRoot}
 
 async function getBalance(address){
     try {
-        let balance = await gethBTC.getBalance(address);
+        let balance = await gethBTC.getBalanceCmd(address);
         return {'balance':balance}
     } catch (error) {
         BtcError.error(`${new Date()} Error: getBalance: ${error}`);
