@@ -25,6 +25,42 @@ async function getGdax(pair, countMonths){
         StatsError.error(`Error: getGdax: ${error}`)
     }
 }
+async function getGdaxDay(pair){
+    try {
+        let from = new Date();
+        let to = new Date();
+        to = to.setMonth(to.getDay() - 1);
+        from = Math.floor(from/1000);
+        to = Math.floor(to/1000);
+        let list = await exchange.getExchangeList(1, pair, from, to);
+        return list;
+    } catch (error) {
+        StatsError.error(`Error: getBitfinex: ${error}`)
+    }
+}
+async function getGdaxWeek(pair){
+    try {
+        let from = new Date();
+        let to = new Date();
+        to = to.setMonth(to.getDay() - 7);
+        from = Math.floor(from/1000);
+        to = Math.floor(to/1000);
+        let list = await exchange.getExchangeList(1, pair, from, to);
+        return list;
+    } catch (error) {
+        StatsError.error(`Error: getBitfinex: ${error}`)
+    }
+}
+async function getGdaxAll(pair){
+    try{
+        let from = Math.floor(new Date() / 1000)
+        let to = Math.floor(new Date('01-01-2004') / 1000);
+        let list = await exchange.getExchangeList(1, pair, from, to);
+        return list;
+    } catch (error) {
+        StatsError.error(`Error: getGdaxAll: ${error}`)
+    }
+}
 /**
  * Return exchange Bitfinex from mongodb from now DateTime to - countMonths
  * @param {string} pair pairs for exchange like BTC-USD
@@ -46,7 +82,49 @@ async function getBitfinex(pair, countMonths){
         StatsError.error(`Error: getBitfinex: ${error}`)
     }
 }
+async function getBitfinexDay(pair){
+    try {
+        let from = new Date();
+        let to = new Date();
+        to = to.setMonth(to.getDay() - 1);
+        from = Math.floor(from/1000);
+        to = Math.floor(to/1000);
+        let list = await exchange.getExchangeList(2, pair, from, to);
+        return list;
+    } catch (error) {
+        StatsError.error(`Error: getBitfinex: ${error}`)
+    }
+}
+async function getBitfinexWeek(pair){
+    try {
+        let from = new Date();
+        let to = new Date();
+        to = to.setMonth(to.getDay() - 7);
+        from = Math.floor(from/1000);
+        to = Math.floor(to/1000);
+        let list = await exchange.getExchangeList(2, pair, from, to);
+        return list;
+    } catch (error) {
+        StatsError.error(`Error: getBitfinex: ${error}`)
+    }
+}
+async function getBitfinexAll(pair){
+    try{
+        let from = Math.floor(new Date() / 1000)
+        let to = Math.floor(new Date('01-01-2004') / 1000);
+        let list = await exchange.getExchangeList(2, pair, from, to);
+        return list;
+    } catch (error) {
+        StatsError.error(`Error: getBitfinexAll: ${error}`)
+    }
+}
 module.exports = {
-    getGdax:        getGdax,
-    getBitfinex:    getBitfinex
+    getGdax:            getGdax,
+    getGdaxDay:         getGdaxDay,
+    getGdaxWeek:        getGdaxWeek,
+    getGdaxAll:         getGdaxAll,
+    getBitfinex:        getBitfinex,
+    getBitfinexDay:     getBitfinexDay,
+    getBitfinexWeek:    getBitfinexWeek,
+    getBitfinexAll:     getBitfinexAll
 }
