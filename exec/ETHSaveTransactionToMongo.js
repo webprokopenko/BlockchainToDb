@@ -24,7 +24,7 @@ const argv = require('minimist')(process.argv.slice(2));
 async function saveBlockTransactionFromTo(from, to, order) {
     const taskQue = new Quequ(order);
     for (let i = from; i <= to; i++) {
-        taskQue.pushTask(async done => {
+            taskQue.pushTask(async done => {
             try {
                 let blockData = await getETHRpc.getTransactionFromETH(i);
                 if (blockData) {
@@ -32,6 +32,7 @@ async function saveBlockTransactionFromTo(from, to, order) {
                         await dbEthertransactionsLib.saveBlockTransactionToMongoDb(element)
                     }));
                 }
+                console.log(`BlockNum: ${i}`)
                 done();
             } catch (error) {
                 if(parseInt(error.code) !== 11000){

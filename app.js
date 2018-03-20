@@ -6,7 +6,7 @@ const http = require('http');
 const server = http.createServer(app);
 const mongoose = require('mongoose');
 //set global mongoose
-global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection('mongodb://root:root@ds211588.mlab.com:11588/eth_scan'));
+global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(require('./config/config.json').mongodbConnectionString));
 //set global AppDirectory
 global.appRoot = path.resolve(__dirname);
 // body parser set

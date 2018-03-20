@@ -1,9 +1,18 @@
 const exchange = require(`${appRoot}/lib/mongodb/exchange`);
+const dbHotExchangeLib = require(`${appRoot}/lib/mongodb/hot_exchange.js`);
 //Intel logger setup
 const intel = require('intel');
 const StatsError = intel.getLogger('StatsError');
-StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/stats/eror.log`));
+StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/stats/error.log`));
 
+async function getHotExchange(pair){
+    try{
+        return await dbHotExchangeLib.getHotExchange('ETH-USD');
+    }
+    catch(error){
+        throw new Error(`Error: getHotExchange: ${error}`);
+    }
+}
 /**
  * Return exchange Gdax from mongodb from now DateTime to - countMonths
  * @param {string} pair pairs for exchange like BTC-USD
@@ -35,7 +44,7 @@ async function getGdaxDay(pair){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinex: ${error}`)
+        StatsError.error(`Error: getGdaxDay: ${error}`)
     }
 }
 async function getGdaxWeek(pair){
@@ -48,7 +57,7 @@ async function getGdaxWeek(pair){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinex: ${error}`)
+        StatsError.error(`Error: getGdaxWeek: ${error}`)
     }
 }
 async function getGdaxAll(pair){
@@ -92,7 +101,7 @@ async function getBitfinexDay(pair){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinex: ${error}`)
+        StatsError.error(`Error: getBitfinexDay: ${error}`)
     }
 }
 async function getBitfinexWeek(pair){
@@ -105,7 +114,7 @@ async function getBitfinexWeek(pair){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinex: ${error}`)
+        StatsError.error(`Error: getBitfinexWeek: ${error}`)
     }
 }
 async function getBitfinexAll(pair){
@@ -119,6 +128,7 @@ async function getBitfinexAll(pair){
     }
 }
 module.exports = {
+    getHotExchange:     getHotExchange,
     getGdax:            getGdax,
     getGdaxDay:         getGdaxDay,
     getGdaxWeek:        getGdaxWeek,

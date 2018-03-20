@@ -1,7 +1,17 @@
 const express = require('express');
+const request = require('request');
 const app = module.exports = express();
 const statsController = require(`../../../../controllers/statsController`);
 
+app.get('/ETH-USD', (req, res, next) => {
+    statsController.getHotExchange('ETH-USD')
+        .then((data) => {
+            res.send(data);
+        })
+        .catch(error => {
+            next(error);
+        });
+});
 app.get('/BTC-USD/GDAX/all', (req, res, next) => {
     statsController.getGdaxAll('BTC-USD')
     .then(list => {
