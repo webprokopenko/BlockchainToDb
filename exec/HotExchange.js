@@ -4,7 +4,7 @@ const mongodbConnectionString = require('../config/config.json').mongodbConnecti
 //Intel logger setup
 const intel = require('intel');
 const StatsError = intel.getLogger('StatsError');
-StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`../logs/stats/error.log`));
+StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`./logs/stats/error.log`));
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
@@ -26,20 +26,18 @@ function parseAndSaveETHUSD() {
             if (!body[0].price_usd) {
                 return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
             }
-            try {
-                dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'ETH-USD', 'value': body[0].price_usd })
-            } catch (error) {
-                StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
-            }
+            dbHotExchangeLib.removeAllHotExchange()
+                .then(() => {
+                    dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'ETH-USD', 'value': body[0].price_usd })
+                    .then(()=>console.log('saveHotExchangeToMongoDb done!!'))
+                    .catch(e=>console.log(`saveHotExchangeToMongoDb ${e}`))
+                })
+                .catch(error => {
+                    StatsError.error(`removeAllHotExchange Error: ${error}`)
+                });
         }
     );
 }
-parseAndSaveETHUSD();
-
-function getHotExchange() {
-    dbHotExchangeLib.getHotExchange('ETH-USD')
-        .then((data) => {
-            console.log(data);
-        })
+module.exports = {
+    parseAndSaveETHUSD: parseAndSaveETHUSD
 }
-getHotExchange();

@@ -5,6 +5,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const mongoose = require('mongoose');
+const crontab = require('./crontab');
 //set global mongoose
 global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(require('./config/config.json').mongodbConnectionString));
 //set global AppDirectory
@@ -31,6 +32,8 @@ app.use(function(err, req, res, next) {
   res.json(err.message); 
 });
 
-server.listen(process.env.PORT || 2344, function() {
+server.listen(process.env.PORT || 2345, function() {
   console.log('Сервер запущен на порте: ' + server.address().port);
+  //crontab run
+  crontab.run();
 });
