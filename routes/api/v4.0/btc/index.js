@@ -51,4 +51,4 @@ app.get('/gettxout/:txid', (req,res, next) => {
     .catch(error => {
         next(error)
     })
-})
+});
