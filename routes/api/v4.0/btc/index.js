@@ -5,19 +5,17 @@ const btcController = require(`${appRoot}/controllers/btcController`);
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{
     const raw = req.params.raw;
-    console.log('sendRaw');
     btcController.sendRawTransaction(raw)
         .then(response => {
             res.send(response);
         })
         .catch(error => {
-            nex(error);
+            next(error);
         })
 });
 // get balance by address
 app.get('/getBalance/:address', (req, res, next) => {
     const address = req.params.address;
-
     btcController.getBalance(address)
         .then(balance => {
             res.send(balance);
@@ -43,7 +41,7 @@ app.get('/listUnspent/:address', (req, res, next) => {
 //get txout by txid
 app.get('/gettxout/:txid', (req,res, next) => {
     const txid = req.params.txid;
-    btcController.gettxout(address)
+    btcController.gettxout(txid)
     .then(txout => {
         res.send(txout);
         
