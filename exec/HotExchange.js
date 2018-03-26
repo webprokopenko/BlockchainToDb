@@ -29,8 +29,7 @@ function parseAndSaveETHUSD() {
             dbHotExchangeLib.removeAllHotExchange()
                 .then(() => {
                     dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'ETH-USD', 'value': body[0].price_usd })
-                    .then(()=>console.log('saveHotExchangeToMongoDb done!!'))
-                    .catch(e=>console.log(`saveHotExchangeToMongoDb ${e}`))
+                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
                 })
                 .catch(error => {
                     StatsError.error(`removeAllHotExchange Error: ${error}`)
