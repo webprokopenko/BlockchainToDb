@@ -5,7 +5,7 @@ const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
 //Intel logger setup
 const intel = require('intel');
 const EthError = intel.getLogger('EthError');
-EthError.setLevel(EthError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/eth/eror.log`));
+EthError.setLevel(EthError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/eth/error.log`));
 
 
 async function getTransactionList(address) {
@@ -18,7 +18,6 @@ async function getTransactionList(address) {
     } catch (error) {
         EthError.error(`${new Date()} Error: getTransactionList: ${error}`);
     }
-    
 }
 async function getGasPrice() {
     try{
@@ -27,7 +26,6 @@ async function getGasPrice() {
     } catch(error){
         EthError.error(`${new Date()} Error: getGasPrice: ${error}`);
     }
-    
 }
 async function getGasLimit(){
     try{
@@ -55,7 +53,6 @@ async function getBalance(address){
     } catch (error) {
         EthError.error(`${new Date()} Error: getBalance: ${error}`);
     }
-   
 }
 async function getTransactionCount(address){
     if(!utils.isAddress(address))
