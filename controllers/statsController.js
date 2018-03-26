@@ -7,7 +7,7 @@ StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${appR
 
 async function getHotExchange(pair){
     try{
-        return await dbHotExchangeLib.getHotExchange('ETH-USD');
+        return await dbHotExchangeLib.getHotExchange(pair);
     }
     catch(error){
         throw new Error(`Error: getHotExchange: ${error}`);
