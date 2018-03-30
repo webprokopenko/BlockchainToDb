@@ -23,10 +23,10 @@ async function savebitfinexToday(){
     let tomorrow = new Date();
     tomorrow.setDate(today.getDate()-1);
     try {
-        Bitfinex.getBitfinexCurrency(url,'BTC','USD', today, tomorrow);
-        Bitfinex.getBitfinexCurrency(url,'BTC','EUR', today, tomorrow);
-        Bitfinex.getBitfinexCurrency(url,'ETH','USD', today, tomorrow);
-        Bitfinex.getBitfinexCurrency(url,'ETH','EUR', today, tomorrow);    
+        Bitfinex.getBitfinexCurrency(url,'BTC','USD', tomorrow, today);
+        Bitfinex.getBitfinexCurrency(url,'BTC','EUR', tomorrow, today);
+        Bitfinex.getBitfinexCurrency(url,'ETH','USD', tomorrow, today);
+        Bitfinex.getBitfinexCurrency(url,'ETH','EUR', tomorrow, today);    
     } catch (error) {
         StatsError.error(`${new Date()} Error: savebitfinexToday: ${error}`);
     }

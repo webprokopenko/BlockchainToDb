@@ -1,14 +1,14 @@
-//Mongoose
-mongoose = require('mongoose');
-const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
-mongoose.connect(mongodbConnectionString);
-//dbEthertransactionsLib
 const dbExchangeLib = require('../lib/mongodb/exchange.js');
 //Quequ
 const Quequ = require('../lib/TaskQueue');
 
 const Gdax = require('gdax');
 const publicClient = new Gdax.PublicClient();
+
+//Intel logger setup
+const intel = require('intel');
+const StatsError = intel.getLogger('StatsError');
+StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/stats/error.log`));
 
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
@@ -37,7 +37,6 @@ async function getHRates(pair, from, to) {
 }
 async function saveHistoricRates(pair, rates) {
     const taskQue = new Quequ(5);
-    console.log(rates.length);
     await Promise.all(rates.map(async (element) => {
         taskQue.pushTask(async done => {
             let rateData = {};
@@ -55,7 +54,7 @@ async function saveHistoricRates(pair, rates) {
                 })
                 .catch(error => {
                     if (error.code != 11000)
-                        console.error('Error saveHistoricRates' + error);
+                        throw new Error('Error Gdax saveHistoricRates' + error);
                     done();
                 })
         })
@@ -105,4 +104,21 @@ if (argv.savegdax && argv.from && argv.to) {
     saveHRBtcEur(argv.from, argv.to);
     saveHREthUsd(argv.from, argv.to);
     saveHREthEur(argv.from, argv.to);
+}
+async function savegdaxToday(){
+    let today = new Date();
+    let tomorrow = new Date();
+    tomorrow.setDate(today.getDate()-1);
+    try {
+        saveHRBtcUsd(tomorrow, today);
+        saveHRBtcEur(tomorrow, today);
+        saveHREthUsd(tomorrow, today);
+        saveHREthEur(tomorrow, today);    
+    } catch (error) {
+        StatsError.error(`${new Date()} Error: savegdaxToday: ${error}`);
+    }
+}
+
+module.exports = {
+    savegdaxToday : savegdaxToday,
 }
