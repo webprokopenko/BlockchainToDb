@@ -4,12 +4,13 @@ const path = require('path');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
+//set global AppDirectory
+global.appRoot = path.resolve(__dirname);
+
 const mongoose = require('mongoose');
 const crontab = require('./crontab');
 //set global mongoose
 global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(require('./config/config.json').mongodbConnectionString));
-//set global AppDirectory
-global.appRoot = path.resolve(__dirname);
 // body parser set
 app.use(bodyParser.json({ type: 'text/plain' }));
 app.use(bodyParser.urlencoded({extended: false}));
