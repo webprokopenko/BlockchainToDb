@@ -16,7 +16,7 @@ async function getBalance(address){
 }
 async function sendRawTransaction(raw){
     try {
-        let res = await gethBTClocal.sendRawTransaciton(raw);
+        let res = await gethBTClocal.sendRawTransaction(raw);
         return {'res':res};
     } catch (error) {
         BtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
