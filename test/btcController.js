@@ -3,7 +3,7 @@ const should = require('should'),
 
 describe('Testing BTC',()=> {
     it('BTC::getAddressBalance', (done) => {
-        btcController.sendRawTransaction('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+        btcController.getBalance('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
             .then(resp => {
                 console.dir(resp);
                 done();
