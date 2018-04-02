@@ -1,4 +1,5 @@
-const gethBTC = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`);
+const gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`),
+    getBTCremote = require(`${appRoot}/lib/bitcoin/getBTCbitcore.js`);
 
 //Intel logger setup
 const intel = require('intel');
@@ -7,7 +8,7 @@ BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`${appRoot}
 
 async function getBalance(address){
     try {
-        let balance = await gethBTC.getBalanceCmd(address);
+        let balance = await getBTCremote.getBalance(address);
         return {'balance':balance}
     } catch (error) {
         BtcError.error(`${new Date()} Error: getBalance: ${error}`);
@@ -15,24 +16,31 @@ async function getBalance(address){
 }
 async function sendRawTransaction(raw){
     try {
-        let res = await gethBTC.sendRawTransacitonCmd(raw);
+        let res = await gethBTClocal.sendRawTransaciton(raw);
         return {'res':res};
     } catch (error) {
         BtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
     }
 }
-async function listUnspent(addr){
+async function getUTXOs(addr){
     try{
-        return await gethBTC.listUnspentCmd(addr);
+        return await gethBTCremote.getUTXOs(addr);
     }catch (error){
-        BtcError.error(`${new Date()} Error: listUnspen: ${error}`);
+        BtcError.error(`${new Date()} Error: getUTXOs: ${error}`);
     }
 }
-async function gettxout(txid){
+async function getTxList(txid){
     try{
-        return await gethBTC.listUnspentCmd(txid);
+        return await gethBTCremote.getTxList(txid);
     }catch (error){
-        BtcError.error(`${new Date()} Error: gettxout: ${error}`);
+        BtcError.error(`${new Date()} Error: getTxList: ${error}`);
+    }
+}
+async function getTxById(txid){
+    try{
+        return await gethBTCremote.getTxById(txid);
+    }catch (error){
+        BtcError.error(`${new Date()} Error: getTxById: ${error}`);
     }
 }
 module.exports = {
@@ -40,4 +48,4 @@ module.exports = {
     sendRawTransaction:     sendRawTransaction,
     listUnspent:            listUnspent,
     gettxout:               gettxout,
-}
+};

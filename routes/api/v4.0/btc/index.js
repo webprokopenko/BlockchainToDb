@@ -25,11 +25,11 @@ app.get('/getBalance/:address', (req, res, next) => {
             next(error)
         })
 });
-// get listUnspent by address
-app.get('/listUnspent/:address', (req, res, next) => {
+// get listUTXOs by address
+app.get('/getUTXOs/:address', (req, res, next) => {
     const address = req.params.address;
 
-    btcController.listUnspent(address)
+    btcController.getUTXOs(address)
         .then(response => {
             res.send(response);
             
@@ -38,15 +38,27 @@ app.get('/listUnspent/:address', (req, res, next) => {
             next(error)
         })
 });
-//get txout by txid
-app.get('/gettxout/:txid', (req,res, next) => {
+//get tx by txid
+app.get('/getTxById/:txid', (req,res, next) => {
     const txid = req.params.txid;
-    btcController.gettxout(txid)
-    .then(txout => {
-        res.send(txout);
+    btcController.getTxById(txid)
+    .then(tx => {
+        res.send(tx);
         
     })
     .catch(error => {
         next(error)
     })
+});
+//get txs list by address
+app.get('/getTxList/:address', (req,res, next) => {
+    const txid = req.params.address;
+    btcController.getTxList(address)
+        .then(txs => {
+            res.send(txs);
+
+        })
+        .catch(error => {
+            next(error)
+        })
 });
