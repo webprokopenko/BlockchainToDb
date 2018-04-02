@@ -1,10 +1,10 @@
-const gethBTClocal = require(`..//lib/bitcoin/getBTCbitcoin.js`),
+const gethBTClocal = require(`../lib/bitcoin/getBTCbitcoin.js`),
     gethBTCremote = require(`../lib/bitcoin/getBTCbitcore.js`);
 
 //Intel logger setup
 const intel = require('intel');
 const BtcError = intel.getLogger('BtcError');
-BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`../../logs/btc/error.log`));
+BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`./logs/btc/error.log`));
 
 async function getBalance(address){
     try {
@@ -16,7 +16,7 @@ async function getBalance(address){
 }
 async function sendRawTransaction(raw){
     try {
-        let res = await gethBTClocal.sendRawTransaciton(raw);
+        let res = await gethBTClocal.sendRawTransaction(raw);
         return {'res':res};
     } catch (error) {
         BtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
