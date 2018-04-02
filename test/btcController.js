@@ -3,8 +3,8 @@ const should = require('should'),
 
 describe('Testing BTC',()=> {
     it('BTC::getAddressBalance', (done) => {
-        consile.dir(
-            btcController.getBalance('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+        console.dir(
+            btcController.sendRawTransaction('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
         );
         done();
     });
