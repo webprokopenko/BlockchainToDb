@@ -11,8 +11,8 @@ describe('Testing BTC',()=> {
             .catch(err => console.dir(err));
             done();
     });
-    it('BTC::getAddressTxList', (done) => {
-        insight.getTXlist('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+    it('BTC::getTxList', (done) => {
+        insight.getTxList('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
             .then(txList => {
                 console.dir(txList);
             })

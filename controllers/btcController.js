@@ -1,5 +1,5 @@
 const gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`),
-    getBTCremote = require(`${appRoot}/lib/bitcoin/getBTCbitcore.js`);
+    gethBTCremote = require(`${appRoot}/lib/bitcoin/getBTCbitcore.js`);
 
 //Intel logger setup
 const intel = require('intel');
@@ -8,7 +8,7 @@ BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`${appRoot}
 
 async function getBalance(address){
     try {
-        let balance = await getBTCremote.getBalance(address);
+        let balance = await gethBTCremote.getBalance(address);
         return {'balance':balance}
     } catch (error) {
         BtcError.error(`${new Date()} Error: getBalance: ${error}`);
@@ -22,16 +22,16 @@ async function sendRawTransaction(raw){
         BtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
     }
 }
-async function getUTXOs(addr){
+async function getUTXOs(address){
     try{
-        return await gethBTCremote.getUTXOs(addr);
+        return await gethBTCremote.getUTXOs(address);
     }catch (error){
         BtcError.error(`${new Date()} Error: getUTXOs: ${error}`);
     }
 }
-async function getTxList(txid){
+async function getTxList(address){
     try{
-        return await gethBTCremote.getTxList(txid);
+        return await gethBTCremote.getTxList(address);
     }catch (error){
         BtcError.error(`${new Date()} Error: getTxList: ${error}`);
     }
@@ -46,6 +46,7 @@ async function getTxById(txid){
 module.exports = {
     getBalance:             getBalance,
     sendRawTransaction:     sendRawTransaction,
-    listUnspent:            listUnspent,
-    gettxout:               gettxout,
+    getUTXOs:               getUTXOs,
+    getTxList:              getTxList,
+    getTxById:              getTxById
 };

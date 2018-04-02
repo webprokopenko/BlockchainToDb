@@ -28,7 +28,6 @@ app.get('/getBalance/:address', (req, res, next) => {
 // get listUTXOs by address
 app.get('/getUTXOs/:address', (req, res, next) => {
     const address = req.params.address;
-
     btcController.getUTXOs(address)
         .then(response => {
             res.send(response);
@@ -52,7 +51,7 @@ app.get('/getTxById/:txid', (req,res, next) => {
 });
 //get txs list by address
 app.get('/getTxList/:address', (req,res, next) => {
-    const txid = req.params.address;
+    const address = req.params.address;
     btcController.getTxList(address)
         .then(txs => {
             res.send(txs);
