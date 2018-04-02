@@ -1,10 +1,10 @@
-const gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`),
-    gethBTCremote = require(`${appRoot}/lib/bitcoin/getBTCbitcore.js`);
+const gethBTClocal = require(`..//lib/bitcoin/getBTCbitcoin.js`),
+    gethBTCremote = require(`../lib/bitcoin/getBTCbitcore.js`);
 
 //Intel logger setup
 const intel = require('intel');
 const BtcError = intel.getLogger('BtcError');
-BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/btc/error.log`));
+BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`../../logs/btc/error.log`));
 
 async function getBalance(address){
     try {
