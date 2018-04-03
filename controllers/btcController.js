@@ -1,5 +1,5 @@
-const gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`),
-    gethBTCremote = require(`${appRoot}/lib/bitcoin/getBTCbitcore.js`);
+const   gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`),
+        gethBTCremote = require(`${appRoot}/lib/bitcoin/getBTCbitcore.js`);
 
 //Intel logger setup
 const intel = require('intel');
