@@ -33,6 +33,6 @@ async function savebitfinexToday(){
 }
 module.exports = {
     savebitfinexToday: savebitfinexToday
-}
+};
 
 
