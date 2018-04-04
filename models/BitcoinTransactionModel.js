@@ -30,6 +30,7 @@ let BitcoinTransaction = new Schema({
             asm:        String,
             hex:        String
         },
+        coinbase:       String,
         sequence:       Number
     }],
     vout: [{
