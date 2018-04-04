@@ -32,7 +32,7 @@ async function saveBlockTransactionFromTo(from, to, order) {
                         await dbEthertransactionsLib.saveBlockTransactionToMongoDb(element)
                     }));
                 }
-                console.log(`BlockNum: ${i}`)
+                console.log(`BlockNum: ${i}`);
                 done();
             } catch (error) {
                 if(parseInt(error.code) !== 11000){
@@ -72,7 +72,7 @@ if (argv) {
     if (argv.calculatecount && argv.from && argv.to) {
         console.log('Calculate transaction start ....');
         calculateCountTransactionFromTo(argv.from, argv.to, count => {
-            console.log(`Calculate transaction done`)
+            console.log(`Calculate transaction done`);
             console.log('Count transaction: ' + count);
             process.exit(1);
         });

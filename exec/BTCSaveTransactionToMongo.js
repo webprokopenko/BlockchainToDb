@@ -1,33 +1,43 @@
-const   gethBTClocal = require(`../lib/bitcoin/getBTCbitcoin.js`);
-
+require('../models/BitcoinTransactionModel');
+const getRpc = require('../lib/bitcoin/getBTCbitcoin');
+const Quequ = require('../lib/TaskQueue');
+const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 //Intel logger setup
 const intel = require('intel');
-const BtcError = intel.getLogger('BtcError');
-BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`../logs/btc/error.log`));
+const LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
+const LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
+LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('../logs/transactionsToDb/badblock.log'));
+LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('../logs/transactionsToDb/eror.log'));
+//Mongoose
+global.mongoose = require('mongoose');
+mongoose.connect(mongodbConnectionString);
+//dbEthertransactionsLib
+const dbBTCtransactionsLib = require('../lib/mongodb/btctransactions');
 
-function getBlockCount(){
-     gethBTClocal.getBlockCount()
-    .then(count=>count)
-    .catch(error=>{
-        return console.dir('ERROR:' + error);
-    })
-        
-        //BtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
+
+//Arguments listener
+//const argv = require('minimist')(process.argv.slice(2));
+async function saveBlockTransactionFromTo(from, to, order) {
+    const taskQue = new Quequ(order);
+    for (let i = from; i <= to; i++) {
+        taskQue.pushTask(async done => {
+            try {
+                let blockData = await getRpc.getTransactionsFromBTC(i);
+                if (blockData) {
+                    await Promise.all(blockData.map(async (element) => {
+                        await dbBTCtransactionsLib.saveBTCTransactionsToMongoDb(element)
+                    }));
+                }
+                console.log(`BlockNum: ${i}`);
+                done();
+            } catch (error) {
+                if(parseInt(error.code) !== 11000){
+                    LoggerTransactionToDbBadBlock.error(i);
+                    LoggerTransactionToDbError.error(`Bad block ${i} Error: saveBlockTransactionFromTo: ${error}`);
+                }
+                done();
+            }
+        })
+    }
 }
-
-//let resp = getBlockCount();
-gethBTClocal.getBlockHash(300000)
-    .then(hash=>{
-        console.log(hash);
-        gethBTClocal.getBlockData(hash)
-        .then(res=>{
-            console.dir('Data block: ' + res.tx[0]);
-        })
-        .catch(err=>{
-            console.dir('Error data block: ' + error);
-        })
-    })
-    .catch(error=>{
-        return console.dir('ERROR:' + error);
-    })
-        
+saveBlockTransactionFromTo(1200000, 1291000, 500);
