@@ -21,7 +21,7 @@ require('./routes')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err); 
 });
@@ -35,6 +35,5 @@ app.use(function(err, req, res, next) {
 
 server.listen(process.env.PORT || 2345, function() {
   console.log('Сервер запущен на порте: ' + server.address().port);
-  //crontab run
   crontab.run();
 });

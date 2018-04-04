@@ -13,17 +13,6 @@ StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${appR
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
 
-async function getHRBtcUsd(from, to) {
-    try {
-        const rates = await publicClient.getProductHistoricRates('BTC-USD', { start: from, end: to, granularity: '3600' });
-        if (rates.message || rates.length === 0)
-            throw new Error(rates.message);
-
-        return rates;
-    } catch (error) {
-        throw new Error(error)
-    }
-}
 async function getHRates(pair, from, to) {
     try {
         const rates = await publicClient.getProductHistoricRates(pair, { start: from, end: to, granularity: '3600' });
@@ -53,7 +42,7 @@ async function saveHistoricRates(pair, rates) {
                     done();
                 })
                 .catch(error => {
-                    if (error.code != 11000)
+                    if (error.code !== 11000)
                         throw new Error('Error Gdax saveHistoricRates' + error);
                     done();
                 })
@@ -75,7 +64,7 @@ async function saveHRBtcEur(from, to) {
             saveHistoricRates('BTC-EUR', rates);
         })
         .catch(error => {
-            saveHRBtcUsd(from, to);
+            saveHRBtcEur(from, to);
         })
 }
 async function saveHREthUsd(from, to) {
@@ -84,7 +73,7 @@ async function saveHREthUsd(from, to) {
             saveHistoricRates('ETH-USD', rates);
         })
         .catch(error => {
-            saveHRBtcUsd(from, to);
+            saveHREthUsd(from, to);
         })
 }
 async function saveHREthEur(from, to) {
@@ -93,7 +82,7 @@ async function saveHREthEur(from, to) {
             saveHistoricRates('ETH-EUR', rates);
         })
         .catch(error => {
-            saveHRBtcUsd(from, to);
+            saveHREthEur(from, to);
         })
 }
 
@@ -121,4 +110,4 @@ async function savegdaxToday(){
 
 module.exports = {
     savegdaxToday : savegdaxToday,
-}
+};

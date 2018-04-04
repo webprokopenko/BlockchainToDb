@@ -10,7 +10,7 @@ global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
 const dbHotExchangeLib = require('../lib/mongodb/hot_exchange.js');
 
-const url = 'https://api.coinmarketcap.com/v1/ticker/'
+    const url = 'https://api.coinmarketcap.com/v1/ticker/';
 
 function parseAndSaveETHUSD() {
     request.get(url + 'ethereum/?convert=USD',
@@ -39,4 +39,4 @@ function parseAndSaveETHUSD() {
 }
 module.exports = {
     parseAndSaveETHUSD: parseAndSaveETHUSD
-}
+};

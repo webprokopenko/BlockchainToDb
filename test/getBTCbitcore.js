@@ -12,9 +12,18 @@ describe('Testing BTC',()=> {
             done();
     });
     it('BTC::getTxList', (done) => {
-        insight.getTxList('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+        insight.getTxList('ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ')
             .then(txList => {
-                console.dir(txList);
+                //console.dir(txList);
+                txList.items.map(tx => {
+                    console.dir(tx);
+                    console.dir(tx.txid);
+                    tx.vin.map(vn => {
+                        console.dir(vn.txid);
+                        console.dir(vn.scriptSig);
+                    });
+                    //console.dir(tx.vout);
+                });
             })
             .catch(err => console.dir(err));
         done();
@@ -28,9 +37,9 @@ describe('Testing BTC',()=> {
         done();
     });
     it('BTC::getUTXOs', (done) => {
-        insight.getUTXOs('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+        insight.getUTXOs('ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ')
             .then(utxos => {
-                console.dir(utxos);
+                console.dir(JSON.parse(utxos));
             })
             .catch(err => console.dir(err));
         done();
