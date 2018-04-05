@@ -6,8 +6,8 @@ const mongodbConnectionString = require('../config/config.json').mongodbConnecti
 const intel = require('intel');
 const LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
 const LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
-LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('./logs/transactionsToDb/badblock.log'));
-LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('./logs/transactionsToDb/eror.log'));
+LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('../logs/transactionsToDb/badblock.log'));
+LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('../logs/transactionsToDb/eror.log'));
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
@@ -40,4 +40,4 @@ async function saveBlockTransactionFromTo(from, to, order) {
         })
     }
 }
-saveBlockTransactionFromTo(1260000, 1290000, 10);
+saveBlockTransactionFromTo(1200000, 1291000, 500);
