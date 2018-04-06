@@ -3,4 +3,7 @@ package-lock.json
 config
 test
 logs
+models/BitcoinTransactionTestModel.js
+lib/db.js
+exec/BTCSaveTransactionToMongo.js
 .idea
