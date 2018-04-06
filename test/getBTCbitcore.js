@@ -1,8 +1,8 @@
-const should = require('should'),
-    //bitcoin = require('../lib/bitcoin/getBTCbitcoin');
-insight = require('../lib/bitcoin/getBTCbitcore');
+const should = require('should');
+const bitcoin = require('../lib/bitcoin/getBTCbitcoin');
+const insight = require('../lib/bitcoin/getBTCbitcore');
 const db = require('../lib/db');
-const BTCTxs = require('../models/BitcoinTransactionTestModel');
+//const BTCTxs = require('../models/BitcoinTransactionTestModel');
 
 describe('Testing BTC',()=> {
     it('BTC::getAddressBalance', (done) => {
@@ -14,12 +14,16 @@ describe('Testing BTC',()=> {
             done();
     });
     it('BTC::getBalance', (done) => {
-        bitcoin.getBalance('ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ')
+        bitcoin.getBalance('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
             .then(bal => {
-                console.log(`Balance: ${bal}`);
+                console.dir(bal);
+                done();
             })
-            .catch(err => console.dir(err));
-        done();
+            .catch(err => {
+                console.log(err);
+                done();
+            });
+
     });
     it('BTC::getTxList', (done) => {
         insight.getTxList('ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ')
@@ -66,17 +70,9 @@ describe('Testing BTC',()=> {
                 done();
             });
     });
-    // hex 01000000012bd26b8a9b32bb58413ffef8cf515234509a1709afce80287d5a5c103139b1a7010000006a47304402203e1cfa022d78690e2dae3e4c06bffa89db25e394d543a66cee28ed4779a5161502203fa6949ecfce03a78475871dc1a9e45dfa1bcaab999f6716ab656018d6f6e80c01210398198cccc87ec87beae3f3af87458a0331a12ac050ff1852d58fb09d8daf8ad1ffffffff02a0860100000000001976a9142b6168b7002678a25e742149218302ca8e9b36ba88ac0ad7b004000000001976a91458294f2d6c832686bceeeb44987291a1e432dfbb88ac00000000
-    // txid 8924c888c817046d1f69d5bb24ff9de6281bd27bed27460f07f0316860345eca
-
-    //ebbdd217ec6f0842cfadc920a0c0f25f8c2fbac4634cd5abae1e00c0e8a252b9
-
-    //03acdf9d7070a786d232086d33fcec3ea0dee235d88ddf0f435a5a56cdc3ee25
-    //ff8250609db74e7166e0962aa5c6528087f7a0b514bae6d2edb05dc91c0bcb0b
-
     it('BTC::getBalanceLocal', (done) => {
         //insight.getUTXOs('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ
-        const addr = 'moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB';
+        const addr = 'ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ';
         const stateDB = db.connect({
             db: {
                 "name": "triumf",
@@ -120,7 +116,7 @@ describe('Testing BTC',()=> {
                         'vout.scriptPubKey.addresses': addr
                 })
                 //.sort({'blockheight': -1})
-                .limit(30)
+                //.limit(30)
                 .exec()
                 .then(txs => {
                     console.log('Total txs: ' + txs.length);
@@ -142,7 +138,7 @@ describe('Testing BTC',()=> {
                         }
                         if (indCat1) cat1.push(tx);
                     });
-                    console.log('Category 1: ' + cat1.length + ' Category 2:' + cat2.length);
+                    console.log('Category 1:' + cat1.length + ' Category 2:' + cat2.length);
                     let bal = 0;
                     cat1.map(c1 => {
                         BTCTxs.find()
@@ -152,10 +148,15 @@ describe('Testing BTC',()=> {
                             .limit(1)
                             .then(txc1 => {
                                 let indSelf = false;
-                                if (txc1.length > 0) txc1.map(txc => txc.vout.map(txcvout => {
-                                    if(txcvout.scriptPubKey.addresses.indexOf(addr) >= 0)
-                                        indSelf = true;
-                                }));
+                                if (txc1.length > 0) {
+                                    txc1.map(txc => {
+                                        //console.log(txc.txid);
+                                        txc.vout.map(txcvout => {
+                                            if(txcvout.scriptPubKey.addresses.indexOf(addr) >= 0)
+                                                indSelf = true;
+                                        })
+                                    });
+                                }
                                 if (txc1.length === 0 || indSelf) c1.vout.map(c1vout => {
                                     if(c1vout.scriptPubKey.addresses.indexOf(addr) >= 0) {
                                         bal += c1vout.value;
