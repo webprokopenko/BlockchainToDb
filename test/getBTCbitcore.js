@@ -14,8 +14,9 @@ describe('Testing BTC',()=> {
             done();
     });
     it('BTC::getBalance', (done) => {
-        bitcoin.getBalance('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+        bitcoin.getBalance('mkRQ32BEBjuwqztKe1fhSeiKsXg4iGAgtE')
             .then(bal => {
+                console.log('Bal ');
                 console.dir(bal);
                 done();
             })
@@ -50,10 +51,20 @@ describe('Testing BTC',()=> {
             .catch(err => console.dir(err));
         done();
     });
-    it('BTC::getUTXOs', (done) => {
-        insight.getUTXOs('ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ')
+    it('BTC::getUTXOsInsight', (done) => {
+        insight.getUTXOs('mkRQ32BEBjuwqztKe1fhSeiKsXg4iGAgtE')
             .then(utxos => {
-                console.dir(JSON.parse(utxos));
+                const ut = JSON.parse(utxos);
+                ut.map(u => console.dir(ut.length));
+            })
+            .catch(err => console.dir(err));
+        done();
+    });
+    it('BTC::getUTXOs', (done) => {
+        bitcoin.getUTXOs('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+            .then(utxos => {
+                console.dir(utxos[0]);
+                console.dir(utxos.length);
             })
             .catch(err => console.dir(err));
         done();
@@ -71,7 +82,9 @@ describe('Testing BTC',()=> {
             });
     });
     it('BTC::getBalanceLocal', (done) => {
-        //insight.getUTXOs('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ
+        //insight.getUTXOs('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+        // ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ
+        // mkRQ32BEBjuwqztKe1fhSeiKsXg4iGAgtE
         const addr = 'ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ';
         const stateDB = db.connect({
             db: {
@@ -121,7 +134,7 @@ describe('Testing BTC',()=> {
                 .then(txs => {
                     console.log('Total txs: ' + txs.length);
                     let indCat1 = true;
-                    txs.map(tx => {
+                    /*txs.map(tx => {
                         indCat1 = true;
                         //console.dir(tx.txvin.length);
                         for (let i = 0; i < tx.txvin.length; i++) {
@@ -137,10 +150,10 @@ describe('Testing BTC',()=> {
                             })
                         }
                         if (indCat1) cat1.push(tx);
-                    });
+                    });*/
                     console.log('Category 1:' + cat1.length + ' Category 2:' + cat2.length);
                     let bal = 0;
-                    cat1.map(c1 => {
+                    /*cat1.map(c1 => {
                         BTCTxs.find()
                             .where({
                                 'vin.txid':c1.txid
@@ -175,7 +188,7 @@ describe('Testing BTC',()=> {
                                 done();
                             })
                             .catch(e => console.log(e))
-                    });
+                    });*/
                     //done();
                 })
                 .catch(er => {
@@ -188,7 +201,6 @@ describe('Testing BTC',()=> {
         }
     });
     it('BTC::getTxListLocal', (done) => {
-        //insight.getUTXOs('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
         const addr = 'moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB';
         const stateDB = db.connect({
             db: {
@@ -217,6 +229,38 @@ describe('Testing BTC',()=> {
                 })
                 .catch(er => {
                     console.dir(er);
+                    done();
+                });
+        } else {
+            console.log('Db connect error.');
+            done();
+        }
+    });
+    it('BTC::getAllTxsByAddress', (done) => {
+        //insight.getUTXOs('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
+        // ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ
+        // mkRQ32BEBjuwqztKe1fhSeiKsXg4iGAgtE
+        const address = 'ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ';
+        const stateDB = db.connect({
+            db: {
+                "name": "triumf",
+                "user": "",
+                "password": "",
+                "host": "localhost",
+                "port": 27017
+            },
+            log: console.log
+        });
+        if (stateDB) {
+            bitcoin.getTxsByAddress(address)
+                .then(txs => {
+                    console.dir(txs.length);
+                    console.dir(txs[0]);
+                    console.dir(txs[0].vout[0].scriptPubKey);
+                    done();
+                })
+                .catch(err => {
+                    console.dir(err);
                     done();
                 });
         } else {
