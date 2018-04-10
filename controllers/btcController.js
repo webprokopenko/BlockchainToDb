@@ -1,4 +1,6 @@
-const   gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`);
+const   gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`),
+    Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`),
+    btcConfig = require(`${appRoot}/config/config.json`).BTCRpc;
 
 //Intel logger setup
 const intel = require('intel');
@@ -6,30 +8,35 @@ const BtcError = intel.getLogger('BtcError');
 BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/btc/error.log`));
 
 async function getBalance(address){
+    if(!Utils.isAddress(address, btcConfig.network))
+        return {error: 'Incorrect address - ' + address};
     try {
-            let balance = await gethBTClocal.getBalance(address);
-            return balance;
+            return {balance: await gethBTClocal.getBalance(address)};
     } catch (error) {
         BtcError.error(`${new Date()} Error: getBalance: ${error}`);
     }
 }
 async function sendRawTransaction(raw){
     try {
-        return await gethBTClocal.sendRawTransaction(raw);
+        return {txid: await gethBTClocal.sendRawTransaction(raw)};
     } catch (error) {
         BtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
     }
 }
 async function getUTXOs(address){
+    if(!Utils.isAddress(address, btcConfig.network))
+        return {error: 'Incorrect address - ' + address};
     try{
-        return await gethBTClocal.getUTXOs(address);
+        return {utxos: await gethBTClocal.getUTXOs(address)};
     }catch (error){
         BtcError.error(`${new Date()} Error: getUTXOs: ${error}`);
     }
 }
 async function getTxList(address){
+    if(!Utils.isAddress(address, btcConfig.network))
+        return {error: 'Incorrect address - ' + address};
     try{
-        return await gethBTClocal.getTxsByAddress(address);
+        return {txs: await gethBTClocal.getTxsByAddress(address)};
     }catch (error){
         BtcError.error(`${new Date()} Error: getTxList: ${error}`);
     }

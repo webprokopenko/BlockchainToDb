@@ -37,18 +37,6 @@ app.get('/getUTXOs/:address', (req, res, next) => {
             next(error)
         })
 });
-//get tx by txid
-app.get('/getTxById/:txid', (req,res, next) => {
-    const txid = req.params.txid;
-    btcController.getTxById(txid)
-    .then(tx => {
-        res.send(tx);
-        
-    })
-    .catch(error => {
-        next(error)
-    })
-});
 //get txs list by address
 app.get('/getTxList/:address', (req,res, next) => {
     const address = req.params.address;
