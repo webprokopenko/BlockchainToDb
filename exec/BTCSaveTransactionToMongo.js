@@ -1,4 +1,3 @@
-require('../models/BitcoinTransactionModel');
 const getRpc = require('../lib/bitcoin/getBTCbitcoin');
 const Quequ = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;

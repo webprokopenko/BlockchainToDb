@@ -1,4 +1,3 @@
-
 require('../models/EthereumTransactionModel.js');
 const getETHRpc = require('../lib/ethereum/getETHRpc');
 
