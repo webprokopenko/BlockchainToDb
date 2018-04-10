@@ -1,5 +1,4 @@
-const   gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`),
-        gethBTCremote = require(`${appRoot}/lib/bitcoin/getBTCbitcore.js`);
+const   gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`);
 
 //Intel logger setup
 const intel = require('intel');
@@ -8,45 +7,36 @@ BtcError.setLevel(BtcError.ERROR).addHandler(new intel.handlers.File(`${appRoot}
 
 async function getBalance(address){
     try {
-        let balance = await gethBTCremote.getBalance(address);
-        return {'balance':balance}
+            let balance = await gethBTClocal.getBalance(address);
+            return balance;
     } catch (error) {
         BtcError.error(`${new Date()} Error: getBalance: ${error}`);
     }
 }
 async function sendRawTransaction(raw){
     try {
-        let res = await gethBTClocal.sendRawTransaction(raw);
-        return {'res':res};
+        return await gethBTClocal.sendRawTransaction(raw);;
     } catch (error) {
         BtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
     }
 }
 async function getUTXOs(address){
     try{
-        return await gethBTCremote.getUTXOs(address);
+        return await gethBTClocal.getUTXOs(address);
     }catch (error){
         BtcError.error(`${new Date()} Error: getUTXOs: ${error}`);
     }
 }
 async function getTxList(address){
     try{
-        return await gethBTCremote.getTxList(address);
+        return await gethBTClocal.getTxsByAddress(address);
     }catch (error){
         BtcError.error(`${new Date()} Error: getTxList: ${error}`);
-    }
-}
-async function getTxById(txid){
-    try{
-        return await gethBTCremote.getTxById(txid);
-    }catch (error){
-        BtcError.error(`${new Date()} Error: getTxById: ${error}`);
     }
 }
 module.exports = {
     getBalance:             getBalance,
     sendRawTransaction:     sendRawTransaction,
     getUTXOs:               getUTXOs,
-    getTxList:              getTxList,
-    getTxById:              getTxById
+    getTxList:              getTxList
 };

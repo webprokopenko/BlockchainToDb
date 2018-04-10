@@ -40,4 +40,4 @@ async function saveBlockTransactionFromTo(from, to, order) {
         })
     }
 }
-saveBlockTransactionFromTo(1250000, 1259999, 10);
+saveBlockTransactionFromTo(1291441, 1292104, 10);

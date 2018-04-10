@@ -11,6 +11,7 @@
   "dependencies": {
     "base-64": "^0.1.0",
     "bitcoin": "^3.0.1",
+    "bitcoinjs-lib": "^3.3.2",
     "bitcore-explorers": "^1.0.1",
     "body-parser": "^1.18.2",
     "ethereumjs-units": "^0.2.0",

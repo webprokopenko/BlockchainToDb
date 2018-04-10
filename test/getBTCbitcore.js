@@ -1,6 +1,10 @@
+const path = require('path');
+global.appRoot = path.resolve(__dirname);
+global.appRoot = global.appRoot.replace('/test','');
 const should = require('should');
 const bitcoin = require('../lib/bitcoin/getBTCbitcoin');
 const insight = require('../lib/bitcoin/getBTCbitcore');
+const bitController = require('../controllers/btcController');
 const db = require('../lib/db');
 //const BTCTxs = require('../models/BitcoinTransactionTestModel');
 
@@ -235,6 +239,84 @@ describe('Testing BTC',()=> {
             console.log('Db connect error.');
             done();
         }
+    });
+    it('BTCcontroller::getBalance', (done) => {
+        const addr = 'moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB';
+        const stateDB = db.connect({
+            db: {
+                "name": "triumf",
+                "user": "",
+                "password": "",
+                "host": "localhost",
+                "port": 27017
+            },
+            log: console.log
+        });
+        if (stateDB) {
+            bitController.getBalance(addr)
+                .then(balance => console.log(balance))
+                .catch(err => console.log(err));
+            done();
+        } else {
+            console.log('Db connect error.');
+            done();
+        }
+    });
+    it('BTCcontroller::getUTXOs', (done) => {
+        const addr = 'moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB';
+        const stateDB = db.connect({
+            db: {
+                "name": "triumf",
+                "user": "",
+                "password": "",
+                "host": "localhost",
+                "port": 27017
+            },
+            log: console.log
+        });
+        if (stateDB) {
+            bitController.getUTXOs(addr)
+                .then(utxos => console.log(utxos))
+                .catch(err => console.log(err));
+            done();
+        } else {
+            console.log('Db connect error.');
+            done();
+        }
+    });
+    it('BTCcontroller::getTxsByAddress', (done) => {
+        const addr = 'moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB';
+        const stateDB = db.connect({
+            db: {
+                "name": "triumf",
+                "user": "",
+                "password": "",
+                "host": "localhost",
+                "port": 27017
+            },
+            log: console.log
+        });
+        if (stateDB) {
+            bitController.getTxList(addr)
+                .then(txs => console.log(txs))
+                .catch(err => console.log(err));
+            done();
+        } else {
+            console.log('Db connect error.');
+            done();
+        }
+    });
+    it('BTCcontroller::sendRawTx', (done) => {
+        const hex = '010000000230819778b3a3d848ece959fb6249ac30b0a688ac3c79ab116a06d596791f16d8010000006a47304402200fb07dac2bbd525ce3ef30ea796716a72f7f7751184b290373309ea332fba22d02202f7a772c1a9be6138c69d043dbde5746e2730cd546b1fb314ccddba7759b44f301210398198cccc87ec87beae3f3af87458a0331a12ac050ff1852d58fb09d8daf8ad1ffffffff2b3fe690eb955f4c912cfcb4eefe6eab90b2f7a0cb5eaa6a26f592445a33b41d010000006a47304402202af2a017a42ab5cb955f011bfa003e6fa4d1ed7949a4bf3ed06a87b3c1d116a802207bfba70bdc9ff8b216ad32e30f8854e611ceb1f0d373d1390bd9d6e8798bf35e01210398198cccc87ec87beae3f3af87458a0331a12ac050ff1852d58fb09d8daf8ad1ffffffff0280320200000000001976a91435cb9ed8cd75dd3cc7ccb71892b887f102cf1ec688ac70f75b0c000000001976a91458294f2d6c832686bceeeb44987291a1e432dfbb88ac00000000';
+        bitController.sendRawTransaction(hex)
+            .then(txid => {
+                console.dir(txid);
+                done();
+            })
+            .catch(err => {
+                console.dir(err);
+                done();
+            });
     });
     it('BTC::getAllTxsByAddress', (done) => {
         //insight.getUTXOs('moZ7F9vZ9zXXnAZKDhMKFx9e8PYgjvDQbB')
