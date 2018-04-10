@@ -1,4 +1,4 @@
-const getRpc = require('../lib/bitcoin/getBTCbitcoin');
+const getRpc = require('../lib/litecoin/getLTClitecoin');
 const Quequ = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 //Intel logger setup
@@ -11,7 +11,7 @@ LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
 //dbEthertransactionsLib
-const dbBTCtransactionsLib = require('../lib/mongodb/btctransactions');
+const dbLTCtransactionsLib = require('../lib/mongodb/ltctransactions');
 
 
 //Arguments listener
@@ -21,10 +21,10 @@ async function saveBlockTransactionFromTo(from, to, order) {
     for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done => {
             try {
-                let blockData = await getRpc.getTransactionsFromBTC(i);
+                let blockData = await getRpc.getTransactionsFromLTC(i);
                 if (blockData) {
                     await Promise.all(blockData.map(async (element) => {
-                        await dbBTCtransactionsLib.saveBTCTransactionsToMongoDb(element)
+                        await dbLTCtransactionsLib.saveLTCTransactionsToMongoDb(element)
                     }));
                 }
                 console.log(`BlockNum: ${i}`);
@@ -39,13 +39,13 @@ async function saveBlockTransactionFromTo(from, to, order) {
         })
     }
 }
-//saveBlockTransactionFromTo(1291441, 1292104, 10);
 async function saveTxsToMongo() {
-    const lastBlockN = await dbBTCtransactionsLib.getLastBlock();
+    const lastBlockN = await dbLTCtransactionsLib.getLastBlock();
     const highestBlockN = await getRpc.getBlockCount();
     if(highestBlockN > lastBlockN)
         saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10);
 }
+//saveBlockTransactionFromTo(1291441, 1292104, 10);
 module.exports = {
-   saveTxsToMongo:  saveTxsToMongo
+    saveTxsToMongo:  saveTxsToMongo
 };
