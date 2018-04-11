@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   //render the error page
   res.status(err.status || 500);
-  res.json(err.message); 
+  res.json(err.message.toString());
 });
 
 server.listen(process.env.PORT || 2345, function() {

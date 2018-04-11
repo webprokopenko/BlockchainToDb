@@ -4,7 +4,7 @@ global.appRoot = global.appRoot.replace('/test','');
 const bitcoin = require('../lib/bitcoin/getBTCbitcoin');
 const insight = require('../lib/bitcoin/getBTCbitcore');
 const db = require('../lib/db');
-//const BTCTxs = require('../models/BitcoinTransactionTestModel');
+//const BTCTxs = require('../models/BitcoinTransactionModel');
 
 describe('Testing BTC',()=> {
     it('BTC::getAddressBalance', (done) => {
@@ -259,6 +259,33 @@ describe('Testing BTC',()=> {
                     console.dir(txs.length);
                     console.dir(txs[0]);
                     console.dir(txs[0].vout[0].scriptPubKey);
+                    done();
+                })
+                .catch(err => {
+                    console.dir(err);
+                    done();
+                });
+        } else {
+            console.log('Db connect error.');
+            done();
+        }
+    });
+    it('BTC::getBlockCount', (done) => {
+        const address = 'ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ';
+        const stateDB = db.connect({
+            db: {
+                "name": "triumf",
+                "user": "",
+                "password": "",
+                "host": "localhost",
+                "port": 27017
+            },
+            log: console.log
+        });
+        if (stateDB) {
+            bitcoin.getBlockCount()
+                .then(txs => {
+                    console.dir(txs);
                     done();
                 })
                 .catch(err => {

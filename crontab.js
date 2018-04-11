@@ -9,7 +9,7 @@ function run(){
     //setInterval(Gdax.savegdaxToday, 3600000);               //60 minutes
     //BTCTxsToMongoScan();
     //setInterval(BTCTxsToMongoScan, 600000);               //10 minutes
-    LTCTxsToMongoScan();
-    setInterval(LTCTxsToMongoScan, 600000);               //10 minutes
+    //LTCTxsToMongoScan();
+    //setInterval(LTCTxsToMongoScan, 600000);               //10 minutes
 }
 module.exports.run = run;

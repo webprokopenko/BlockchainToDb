@@ -1,4 +1,4 @@
-const getRpc = require('../lib/bitcoin/getBTCbitcoin');
+const getRpc = require('../lib/bitcoin/getBCHbitcoin_cash');
 const Quequ = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 //Intel logger setup
@@ -11,7 +11,7 @@ LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
 //dbEthertransactionsLib
-const dbBTCtransactionsLib = require('../lib/mongodb/btctransactions');
+const dbBCHtransactionsLib = require('../lib/mongodb/bchtransactions');
 
 
 //Arguments listener
@@ -21,10 +21,10 @@ async function saveBlockTransactionFromTo(from, to, order) {
     for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done => {
             try {
-                let blockData = await getRpc.getTransactionsFromBTC(i);
+                let blockData = await getRpc.getTransactionsFromBCH(i);
                 if (blockData) {
                     await Promise.all(blockData.map(async (element) => {
-                        await dbBTCtransactionsLib.saveBTCTransactionsToMongoDb(element)
+                        await dbBCHtransactionsLib.saveBCHTransactionsToMongoDb(element)
                     }));
                 }
                 console.log(`BlockNum: ${i}`);

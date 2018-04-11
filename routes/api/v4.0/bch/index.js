@@ -1,11 +1,11 @@
 const express = require('express');
 const app = module.exports = express();
-const btcController = require(`${appRoot}/controllers/btcController`);
+const bchController = require(`${appRoot}/controllers/bchController`);
 
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{
     const raw = req.params.raw;
-    btcController.sendRawTransaction(raw)
+    bchController.sendRawTransaction(raw)
         .then(response => {
             res.send(response);
         })
@@ -16,10 +16,10 @@ app.get('/sendRawTransaction/:raw', (req, res, next) =>{
 // get balance by address
 app.get('/getBalance/:address', (req, res, next) => {
     const address = req.params.address;
-    btcController.getBalance(address)
+    bchController.getBalance(address)
         .then(balance => {
             res.send(balance);
-            
+
         })
         .catch(error => {
             next(error)
@@ -28,7 +28,7 @@ app.get('/getBalance/:address', (req, res, next) => {
 // get listUTXOs by address
 app.get('/getUTXOs/:address', (req, res, next) => {
     const address = req.params.address;
-    btcController.getUTXOs(address)
+    bchController.getUTXOs(address)
         .then(response => {
             res.send(response);
         })
@@ -39,7 +39,7 @@ app.get('/getUTXOs/:address', (req, res, next) => {
 //get txs list by address
 app.get('/getTxList/:address', (req,res, next) => {
     const address = req.params.address;
-    btcController.getTxList(address)
+    bchController.getTxList(address)
         .then(txs => {
             res.send(txs);
 

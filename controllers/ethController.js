@@ -17,6 +17,7 @@ async function getTransactionList(address) {
         return { 'in': TraisactionIn, 'out': TransactionOut };    
     } catch (error) {
         EthError.error(`${new Date()} Error: getTransactionList: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getGasPrice() {
@@ -25,6 +26,7 @@ async function getGasPrice() {
         return { 'gasPrice': utils.convertHexToInt(gasPrice), 'gasPriceHex': gasPrice }
     } catch(error){
         EthError.error(`${new Date()} Error: getGasPrice: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getGasLimit(){
@@ -33,6 +35,7 @@ async function getGasLimit(){
         return {'gasLimit':utils.convertHexToInt(block.gasLimit),'gasLimitHex':block.gasLimit}
     } catch(error){
         EthError.error(`${new Date()} Error: getGasLimit: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getPriceLimit(){
@@ -42,6 +45,7 @@ async function getPriceLimit(){
         return {'gasLimit':gasLimit.gasLimit,'gasLimitHex':gasLimit.gasLimitHex, 'gasPrice':gasPrice.gasPrice, 'gasPriceHex':gasPrice.gasPriceHex};
     } catch(error){
         EthError.error(`${new Date()} Error: getPriceLimit: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getBalance(address){
@@ -52,6 +56,7 @@ async function getBalance(address){
         return {'balance':utils.convertHexToInt(balance)}
     } catch (error) {
         EthError.error(`${new Date()} Error: getBalance: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getTransactionCount(address){
@@ -62,6 +67,7 @@ async function getTransactionCount(address){
         return {'TransactionCount':utils.convertHexToInt(transactionCount)}    
     } catch (error) {
         EthError.error(`${new Date()} Error: getTransactionCount: ${error}`);
+        throw new Error('Service error');
     }    
 }
 async function sendRawTransaction(rawTransaction){
@@ -70,6 +76,7 @@ async function sendRawTransaction(rawTransaction){
         return {transactionHash}
     } catch (error){
         EthError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getTransactionFromHash(txHash){
@@ -84,6 +91,7 @@ async function getTransactionFromHash(txHash){
         return txData
     } catch (error) {
         EthError.error(`${new Date()} Error: getTransactionFromHash: ${error}`);
+        throw new Error('Service error');
     }
 }
 module.exports = {
@@ -95,4 +103,4 @@ module.exports = {
     getTransactionCount:    getTransactionCount,
     sendRawTransaction:     sendRawTransaction,
     getTransactionFromHash: getTransactionFromHash
-}
+};

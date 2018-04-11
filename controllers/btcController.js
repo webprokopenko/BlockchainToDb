@@ -14,6 +14,7 @@ async function getBalance(address){
             return {balance: await gethBTClocal.getBalance(address)};
     } catch (error) {
         BtcError.error(`${new Date()} Error: getBalance: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function sendRawTransaction(raw){
@@ -21,6 +22,7 @@ async function sendRawTransaction(raw){
         return {txid: await gethBTClocal.sendRawTransaction(raw)};
     } catch (error) {
         BtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
+        throw new Error(error);
     }
 }
 async function getUTXOs(address){
@@ -30,6 +32,7 @@ async function getUTXOs(address){
         return {utxos: await gethBTClocal.getUTXOs(address)};
     }catch (error){
         BtcError.error(`${new Date()} Error: getUTXOs: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getTxList(address){
@@ -39,6 +42,7 @@ async function getTxList(address){
         return {txs: await gethBTClocal.getTxsByAddress(address)};
     }catch (error){
         BtcError.error(`${new Date()} Error: getTxList: ${error}`);
+        throw new Error('Service error');
     }
 }
 module.exports = {

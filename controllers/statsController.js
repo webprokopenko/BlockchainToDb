@@ -31,7 +31,8 @@ async function getGdax(pair, countMonths){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getGdax: ${error}`)
+        StatsError.error(`Error: getGdax: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getGdaxDay(pair){
@@ -44,7 +45,8 @@ async function getGdaxDay(pair){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getGdaxDay: ${error}`)
+        StatsError.error(`Error: getGdaxDay: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getGdaxWeek(pair){
@@ -57,7 +59,8 @@ async function getGdaxWeek(pair){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getGdaxWeek: ${error}`)
+        StatsError.error(`Error: getGdaxWeek: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getGdaxAll(pair){
@@ -67,7 +70,8 @@ async function getGdaxAll(pair){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getGdaxAll: ${error}`)
+        StatsError.error(`Error: getGdaxAll: ${error}`);
+        throw new Error('Service error');
     }
 }
 /**
@@ -88,7 +92,8 @@ async function getBitfinex(pair, countMonths){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinex: ${error}`)
+        StatsError.error(`Error: getBitfinex: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getBitfinexDay(pair){
@@ -101,7 +106,8 @@ async function getBitfinexDay(pair){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinexDay: ${error}`)
+        StatsError.error(`Error: getBitfinexDay: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getBitfinexWeek(pair){
@@ -114,17 +120,19 @@ async function getBitfinexWeek(pair){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinexWeek: ${error}`)
+        StatsError.error(`Error: getBitfinexWeek: ${error}`);
+        throw new Error('Service error');
     }
 }
 async function getBitfinexAll(pair){
     try{
-        let from = Math.floor(new Date() / 1000)
+        let from = Math.floor(new Date() / 1000);
         let to = Math.floor(new Date('01-01-2004') / 1000);
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinexAll: ${error}`)
+        StatsError.error(`Error: getBitfinexAll: ${error}`);
+        throw new Error('Service error');
     }
 }
 module.exports = {
@@ -137,4 +145,4 @@ module.exports = {
     getBitfinexDay:     getBitfinexDay,
     getBitfinexWeek:    getBitfinexWeek,
     getBitfinexAll:     getBitfinexAll
-}
+};
