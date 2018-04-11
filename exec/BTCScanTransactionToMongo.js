@@ -3,19 +3,17 @@ const Quequ = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 //Intel logger setup
 const intel = require('intel');
+const LoggerTransactionToDbScanBlock = intel.getLogger('transactionsToDbScan');
 const LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
 const LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
+LoggerTransactionToDbScanBlock.setLevel(LoggerTransactionToDbScanBlock.INFO).addHandler(new intel.handlers.File('./logs/transactionsToDb/scanblock.log'));
 LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('./logs/transactionsToDb/badblock.log'));
-LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('./logs/transactionsToDb/eror.log'));
+LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('./logs/transactionsToDb/error.log'));
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
-//dbEthertransactionsLib
 const dbBTCtransactionsLib = require('../lib/mongodb/btctransactions');
 
-
-//Arguments listener
-//const argv = require('minimist')(process.argv.slice(2));
 async function saveBlockTransactionFromTo(from, to, order) {
     const taskQue = new Quequ(order);
     for (let i = from; i <= to; i++) {
@@ -39,10 +37,17 @@ async function saveBlockTransactionFromTo(from, to, order) {
         })
     }
 }
-//saveBlockTransactionFromTo(1291441, 1292104, 10);
-async function saveTxsToMongo() {
+async function scanTxsToMongo() {
     const lastBlockN = await dbBTCtransactionsLib.getLastBlock();
     const highestBlockN = await getRpc.getBlockCount();
     if(highestBlockN > lastBlockN)
-        saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10);
+        saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10)
+            .then(() => {
+                console.log('Scanning complete at ' + Date());
+            })
+            .catch(err => {
+                LoggerTransactionToDbError.error(`Scannning error: ${error}`);
+            });
 }
+
+module.exports = scanTxsToMongo;
