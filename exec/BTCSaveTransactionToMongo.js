@@ -39,10 +39,4 @@ async function saveBlockTransactionFromTo(from, to, order) {
         })
     }
 }
-//saveBlockTransactionFromTo(1291441, 1292104, 10);
-async function saveTxsToMongo() {
-    const lastBlockN = await dbBTCtransactionsLib.getLastBlock();
-    const highestBlockN = await getRpc.getBlockCount();
-    if(highestBlockN > lastBlockN)
-        saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10);
-}
+saveBlockTransactionFromTo(1291441, 1292104, 10);
