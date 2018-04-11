@@ -1,4 +1,4 @@
-const getRpc = require('../lib/litecoin/getLTCbitcoin');
+const getRpc = require('../lib/litecoin/getLTClitecoin');
 const Quequ = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 //Intel logger setup
@@ -19,10 +19,10 @@ async function saveBlockTransactionFromTo(from, to, order) {
     for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done => {
             try {
-                let blockData = await getRpc.getTransactionsFromBTC(i);
+                let blockData = await getRpc.getTransactionsFromLTC(i);
                 if (blockData) {
                     await Promise.all(blockData.map(async (element) => {
-                        await dbBTCtransactionsLib.saveBTCTransactionsToMongoDb(element)
+                        await dbLTCtransactionsLib.saveLTCTransactionsToMongoDb(element)
                     }));
                 }
                 console.log(`BlockNum: ${i}`);
