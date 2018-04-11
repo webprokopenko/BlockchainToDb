@@ -5,7 +5,7 @@ const ltcController = require(`${appRoot}/controllers/ltcController`);
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{
     const raw = req.params.raw;
-    btcController.sendRawTransaction(raw)
+    ltcController.sendRawTransaction(raw)
         .then(response => {
             res.send(response);
         })
@@ -16,7 +16,7 @@ app.get('/sendRawTransaction/:raw', (req, res, next) =>{
 // get balance by address
 app.get('/getBalance/:address', (req, res, next) => {
     const address = req.params.address;
-    btcController.getBalance(address)
+    ltcController.getBalance(address)
         .then(balance => {
             res.send(balance);
 
@@ -28,7 +28,7 @@ app.get('/getBalance/:address', (req, res, next) => {
 // get listUTXOs by address
 app.get('/getUTXOs/:address', (req, res, next) => {
     const address = req.params.address;
-    btcController.getUTXOs(address)
+    ltcController.getUTXOs(address)
         .then(response => {
             res.send(response);
 
@@ -40,7 +40,7 @@ app.get('/getUTXOs/:address', (req, res, next) => {
 //get txs list by address
 app.get('/getTxList/:address', (req,res, next) => {
     const address = req.params.address;
-    btcController.getTxList(address)
+    ltcController.getTxList(address)
         .then(txs => {
             res.send(txs);
 
