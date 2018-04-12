@@ -5,5 +5,5 @@ test
 logs
 models/BitcoinTransactionTestModel.js
 lib/db.js
-exec/BTCSaveTransactionToMongo.js
+exec/SaveBitKindTransactionsToMongo.js
 .idea
