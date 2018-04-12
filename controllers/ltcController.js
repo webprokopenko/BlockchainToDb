@@ -1,5 +1,5 @@
 const   gethLTClocal = require(`${appRoot}/lib/litecoin/getLTClitecoin.js`),
-    Utils = require(`${appRoot}/lib/litecoin/utilsLTC`),
+    Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`),
     ltcConfig = require(`${appRoot}/config/config.json`).LTCRpc;
 
 //Intel logger setup

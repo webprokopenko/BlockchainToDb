@@ -1,5 +1,5 @@
 const   gethBCHlocal = require(`${appRoot}/lib/bitcoin_cash/getBCHbitcoin_cash.js`),
-    Utils = require(`${appRoot}/lib/bitcoin/utilsBCH`),
+    Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`),
     bchConfig = require(`${appRoot}/config/config.json`).BCHRpc;
 
 //Intel logger setup

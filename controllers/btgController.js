@@ -1,5 +1,5 @@
 const   gethBTGlocal = require(`${appRoot}/lib/bitcoin_gold/getBTGbitcoin_gold.js`),
-    Utils = require(`${appRoot}/lib/bitcoin/utilsBTG`),
+    Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`),
     btgConfig = require(`${appRoot}/config/config.json`).BTGRpc;
 
 //Intel logger setup
