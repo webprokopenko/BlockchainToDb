@@ -1,2 +1,7 @@
-const bitSave = require('BitKindTransactionsToMongo');
-bitSave.saveBlockTransactionFromTo(1291441, 1292104, 10, 'BTC');
+const mongoose = require('mongoose');
+global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(require('../config/config.json').mongodbConnectionString));
+const path = require('path');
+global.appRoot = path.resolve(__dirname);
+global.appRoot = global.appRoot.replace('/exec','');
+const bitSave = require('./BitKindTransactionsToMongo');
+bitSave.saveBlockTransactionFromTo(1000000, 1000000, 10, 'BCH');

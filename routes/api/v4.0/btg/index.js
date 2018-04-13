@@ -1,6 +1,6 @@
 const express = require('express');
 const app = module.exports = express();
-const btgController = require(`${appRoot}/controllers/btcController`);
+const btgController = require(`${appRoot}/controllers/btgController`);
 
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{
