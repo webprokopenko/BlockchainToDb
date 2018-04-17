@@ -11,6 +11,11 @@ const mongoose = require('mongoose');
 const crontab = require('./crontab');
 //set global mongoose
 global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(require('./config/config.json').mongodbConnectionString));
+// localhost dev
+if(process.argv.indexOf('-dev')) {
+    const cors = require('cors');
+    app.use(cors());
+}
 // body parser set
 app.use(bodyParser.json({ type: 'text/plain' }));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,7 +30,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err); 
 });
-
 // error handler
 app.use(function(err, req, res, next) {
   //render the error page

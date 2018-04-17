@@ -1,4 +1,4 @@
-const Quequ = require('../lib/TaskQueue');
+const Queue = require('../lib/TaskQueue');
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
 //Intel logger setup
 const intel = require('intel');
@@ -42,7 +42,7 @@ function _init(currency) {
 }
 async function saveBlockTransactionFromTo(from, to, order, currency) {
     if(!getRpc || !dbTransactionLib) _init(currency);
-    const taskQue = new Quequ(order);
+    const taskQue = new Queue(order);
     for (let i = from; i <= to; i++) {
         taskQue.pushTask(async done => {
             try {
