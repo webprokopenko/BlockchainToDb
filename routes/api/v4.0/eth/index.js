@@ -20,8 +20,8 @@ app.get('/getGasPrice', (req, res, next) => {
         .then(gasPrice => {
             res.send(gasPrice);
         })
-        .catch(() => {
-            next(new Error('Internal Server Error'));
+        .catch(error => {
+            next(error);
         })
 });
 //get gasLimit
@@ -30,8 +30,8 @@ app.get('/getGasLimit', (req, res, next) => {
         .then(gasLimit => {
             res.send(gasLimit);
         })
-        .catch(() => {
-            next(new Error('Internal Server Error'));
+        .catch(error => {
+            next(error);
         })
 });
 //get gasPrice and gasLimit
@@ -41,7 +41,7 @@ app.get('/getPriceLimit', (req, res, next) => {
             res.send(gasPriceLimit);
         })
         .catch(() => {
-            next(new Error('Internal Server Error'));
+            next(error);
         })
 });
 //get balance from address
@@ -71,8 +71,8 @@ app.get('/sendRawTransaction/:rawTransaction', (req, res, next) => {
         .then(transactonHash => {
             res.send(transactonHash)
         })
-        .catch(() => {
-            next(new Error('Internal Server Error'));
+        .catch(error => {
+            next(error);
         })
 });
 app.get('/getTransactionByHash/:hashTransaction', (req, res, next) => {
@@ -81,7 +81,7 @@ app.get('/getTransactionByHash/:hashTransaction', (req, res, next) => {
         .then(txData => {
             res.send(txData)
         })
-        .catch(() => {
-            next(new Error('Internal Server Error'));
+        .catch(error => {
+            next(error);
         })
 });
