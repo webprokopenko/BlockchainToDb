@@ -76,7 +76,7 @@ async function sendRawTransaction(rawTransaction){
         return {hash: transactionHash};
     } catch (error){
         EthError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
-        throw new Error('Service error');
+        throw new Error('Service error: ' + error);
     }
 }
 async function getTransactionFromHash(txHash){
@@ -91,7 +91,7 @@ async function getTransactionFromHash(txHash){
         return txData
     } catch (error) {
         EthError.error(`${new Date()} Error: getTransactionFromHash: ${error}`);
-        throw new Error('Service error');
+        throw new Error('Service error: ' + error);
     }
 }
 module.exports = {
