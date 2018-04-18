@@ -73,7 +73,7 @@ async function getTransactionCount(address){
 async function sendRawTransaction(rawTransaction){
     try{
         let transactionHash = await gethETH.sendRawTransaction(rawTransaction);
-        return {transactionHash}
+        return {hash: transactionHash};
     } catch (error){
         EthError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
         throw new Error('Service error');

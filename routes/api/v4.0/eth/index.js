@@ -74,7 +74,7 @@ app.get('/sendRawTransaction/:rawTransaction', (req, res, next) => {
         .catch(() => {
             next(new Error('Internal Server Error'));
         })
-})
+});
 app.get('/getTransactionByHash/:hashTransaction', (req, res, next) => {
     const hashTransaction = req.params.hashTransaction;
     ethController.getTransactionFromHash(hashTransaction)
@@ -84,4 +84,4 @@ app.get('/getTransactionByHash/:hashTransaction', (req, res, next) => {
         .catch(() => {
             next(new Error('Internal Server Error'));
         })
-})
+});
