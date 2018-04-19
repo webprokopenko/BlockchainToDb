@@ -1,21 +1,27 @@
-require('../models/EthereumTransactionModel.js');
-const getETHRpc = require('../lib/ethereum/getETHRpc');
+if(!global.appRoot) {
+    const path = require('path');
+    global.appRoot = path.resolve(__dirname);
+    global.appRoot = global.appRoot.replace('/exec','');
+}
+require(`${appRoot}/models/EthereumTransactionModel.js`);
+const getETHRpc = require(`${appRoot}/lib/ethereum/getETHRpc`);
 
-const Quequ = require('../lib/TaskQueue');
-const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
+const Quequ = require(`${appRoot}/lib/TaskQueue`);
+const mongodbConnectionString = require(`${appRoot}/config/config.json`).mongodbConnectionString;
 
 //Intel logger setup
 const intel = require('intel');
 const LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
 const LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
-LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('../logs/transactionsToDb/badblock.log'));
-LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('../logs/transactionsToDb/error.log'));
+LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO)
+    .addHandler(new intel.handlers.File(`${appRoot}/logs/transactionsToDb/badblock.log`));
+LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR)
+    .addHandler(new intel.handlers.File(`${appRoot}/logs/transactionsToDb/error.log`));
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
 //dbEthertransactionsLib
-const dbEthertransactionsLib = require('../lib/mongodb/ethtransactions.js');
-
+const dbEthertransactionsLib = require(`${appRoot}/lib/mongodb/ethtransactions.js`);
 
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
@@ -51,7 +57,7 @@ async function calculateCountTransactionFromTo(from, to, callback) {
             try {
                 getETHRpc.getTransactionCountETH(i).then(trnCountinBlock => {
                     count = count + trnCountinBlock;
-                    if (i == to) {
+                    if (i === to) {
                         callback(count);
                     }
                     done();
