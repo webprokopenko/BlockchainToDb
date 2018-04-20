@@ -1,13 +1,21 @@
-const Queue = require('../lib/TaskQueue');
-const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
+if(!global.appRoot) {
+    const path = require('path');
+    global.appRoot = path.resolve(__dirname);
+    global.appRoot = global.appRoot.replace('/exec','');
+}
+const Queue = require(`${appRoot}/lib/TaskQueue`);
+const mongodbConnectionString = require(`${appRoot}/config/config.json`).mongodbConnectionString;
 //Intel logger setup
 const intel = require('intel');
 const LoggerTransactionToDbScanBlock = intel.getLogger('transactionsToDbScan');
 const LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
 const LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
-LoggerTransactionToDbScanBlock.setLevel(LoggerTransactionToDbScanBlock.INFO).addHandler(new intel.handlers.File('./logs/transactionsToDb/scanblock.log'));
-LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO).addHandler(new intel.handlers.File('./logs/transactionsToDb/badblock.log'));
-LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR).addHandler(new intel.handlers.File('./logs/transactionsToDb/error.log'));
+LoggerTransactionToDbScanBlock.setLevel(LoggerTransactionToDbScanBlock.INFO)
+    .addHandler(new intel.handlers.File(`${appRoot}/logs/transactionsToDb/scanblock.log`));
+LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO)
+    .addHandler(new intel.handlers.File(`${appRoot}/logs/transactionsToDb/badblock.log`));
+LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR)
+    .addHandler(new intel.handlers.File(`${appRoot}/logs/transactionsToDb/error.log`));
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
@@ -16,25 +24,29 @@ let dbTransactionLib = null;
 function _init(currency) {
     const curr = {
         'BTC': {
-            rpc: '../lib/bitcoin/getBTCbitcoin',
-            dbLib: '../lib/mongodb/btctransactions'
+            rpc: `${appRoot}/lib/bitcoin/getBTCbitcoin`,
+            dbLib: `${appRoot}/lib/mongodb/btctransactions`
         },
         'BCH': {
-            rpc: '../lib/bitcoin_cash/getBCHbitcoin_cash',
-            dbLib: '../lib/mongodb/bchtransactions'
+            rpc: `${appRoot}/lib/bitcoin_cash/getBCHbitcoin_cash`,
+            dbLib: `${appRoot}/lib/mongodb/bchtransactions`
         },
         'BTG': {
-            rpc: '../lib/bitcoin_gold/getBTGbitcoin_gold',
-            dbLib: '../lib/mongodb/btgtransactions'
+            rpc: `${appRoot}/lib/bitcoin_gold/getBTGbitcoin_gold`,
+            dbLib: `${appRoot}/lib/mongodb/btgtransactions`
         },
         'LTC': {
-            rpc: '../lib/litecoin/getLTClitecoin',
-            dbLib: '../lib/mongodb/ltctransactions'
+            rpc: `${appRoot}/lib/litecoin/getLTClitecoin`,
+            dbLib: `${appRoot}/lib/mongodb/ltctransactions`
+        },
+        'ZEC': {
+            rpc: `${appRoot}/lib/zcash/getZECzcash`,
+            dbLib: `${appRoot}/lib/mongodb/zectransactions`
         }
     };
     if(!curr[currency]) {
-        getRpc = require('../lib/bitcoin/getBTCbitcoin');
-        dbTransactionLib = require('../lib/mongodb/btctransactions');
+        getRpc = require(`${appRoot}/lib/bitcoin/getBTCbitcoin`);
+        dbTransactionLib = require(`${appRoot}/lib/mongodb/btctransactions`);
     } else {
         getRpc = require(curr[currency].rpc);
         dbTransactionLib = require(curr[currency].dbLib);
