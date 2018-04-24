@@ -7,6 +7,7 @@ app.use('/LTC', require('./ltc'));
 app.use('/BCH', require('./bch'));
 app.use('/BTG', require('./btg'));
 app.use('/ZEC', require('./zec'));
+app.use('/XMR', require('./xmr'));
 app.use('/stats', require('./stats'));
 app.get('/', (req, res) => {
     res.status(404).send('wrong query, choose v4.0/ETH');
