@@ -4,4 +4,4 @@ const path = require('path');
 global.appRoot = path.resolve(__dirname);
 global.appRoot = global.appRoot.replace('/exec','');
 const bitSave = require('./BitKindTransactionsToMongo');
-bitSave.saveBlockTransactionFromTo(86000, 92211, 10, 'ZEC');
+bitSave.saveBlockTransactionFromTo(311000, 311585, 10, 'ZEC');

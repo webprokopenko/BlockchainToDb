@@ -25,7 +25,8 @@
     "node-json-rpc": "0.0.1",
     "nodemon": "^1.17.2",
     "npm": "^5.8.0",
-    "web3": "^0.20.4"
+    "web3": "^0.20.4",
+    "zcash-bitcore-lib": "^0.13.20-rc3"
   },
   "devDependencies": {
     "should": "^13.1.3",
