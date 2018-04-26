@@ -41,7 +41,6 @@ async function saveHistoricRates(pair, rates) {
             rateData.high = element[2];
             rateData.open = element[3];
             rateData.close = element[4];
-
             dbExchangeLib.saveExchangeToMongoDb(rateData)
                 .then(save => {
                     done();
@@ -52,7 +51,8 @@ async function saveHistoricRates(pair, rates) {
                     done();
                 })
         })
-    }))
+    }));
+    console.log(pair + ' done');
 }
 async function saveHRBtcUsd(from, to) {
     getHRates('BTC-USD', from, to)
