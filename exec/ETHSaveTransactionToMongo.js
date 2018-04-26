@@ -123,7 +123,7 @@ if (argv) {
                 console.log(e);
             })
     }
-    if(argv.scan) {
+    if (argv.scan) {
         console.log('Realtime Ethereum scanning...');
         scan();
     }

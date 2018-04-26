@@ -1,3 +1,8 @@
+if(!global.appRoot) {
+    const path = require('path');
+    global.appRoot = path.resolve(__dirname);
+    global.appRoot = global.appRoot.replace('/exec','');
+}
 //Bitnifex lib
 const Bitfinex = require('../lib/stats/bitfinex.js');
 //Arguments listener

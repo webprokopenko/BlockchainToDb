@@ -1,3 +1,8 @@
+if(!global.appRoot) {
+    const path = require('path');
+    global.appRoot = path.resolve(__dirname);
+    global.appRoot = global.appRoot.replace('/exec','');
+}
 const dbExchangeLib = require('../lib/mongodb/exchange.js');
 //Quequ
 const Quequ = require('../lib/TaskQueue');
