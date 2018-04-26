@@ -69,6 +69,22 @@ async function calculateCountTransactionFromTo(from, to, callback) {
         })
     }
 }
+async function scan () {
+    try {
+        const lastBlockN = await dbEthertransactionsLib.getLastMongoBlock();
+        const highestBlockN = await getETHRpc.getLatestBlock();
+        if(highestBlockN > lastBlockN)
+            saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10, currency)
+                .then(() => {
+                    console.log('Scanning complete at ' + Date());
+                })
+                .catch(err => {
+                    LoggerTransactionToDbError.error(`Scannning error: ${error}`);
+                });
+    } catch (err) {
+        console.log(err);
+    }
+}
 if (argv) {
     if (argv.from && argv.to && argv.order) {
         console.log('Scan and save from to Started ..... ');
@@ -107,6 +123,13 @@ if (argv) {
                 console.log(e);
             })
     }
+    if(argv.scan) {
+        console.log('Realtime Ethereum scanning...');
+        scan();
+    }
 }
+module.exports = {
+   scan: scan
+};
 
 
