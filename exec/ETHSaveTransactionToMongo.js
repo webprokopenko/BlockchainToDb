@@ -72,7 +72,8 @@ async function calculateCountTransactionFromTo(from, to, callback) {
 async function scan () {
     try {
         const lastBlockN = await dbEthertransactionsLib.getLastMongoBlock();
-        const highestBlockN = await getETHRpc.getLatestBlock();
+        const hBlockN = await getETHRpc.getLatestBlock();
+        const highestBlockN = parseInt(hBlockN.number, 16);
         if(highestBlockN > lastBlockN)
             saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10)
                 .then(() => {
