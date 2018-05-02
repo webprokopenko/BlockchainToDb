@@ -4,7 +4,7 @@ const Gdax = require('./exec/ExchangeGdaxToMongo');
 const Eth = require('./exec/ETHSaveTransactionToMongo');
 const BitKindTxsToMongoScan = require('./exec/BitKindTransactionsToMongo');
 function run(){
-    /*setInterval(hotExchange.parseAndSaveETHUSD, 3600000);   //60 minutes
+    setInterval(hotExchange.parseAndSaveETHUSD, 3600000);   //60 minutes
     setInterval(Bitfinex.savebitfinexToday, 3600000);       //60 minutes
     setInterval(Gdax.savegdaxToday, 3600000);               //60 minutes
     Eth.scan();
@@ -14,7 +14,7 @@ function run(){
     BitKindTxsToMongoScan.scanTxsToMongo('BTC');
     setInterval(() => {
         BitKindTxsToMongoScan.scanTxsToMongo('BTC');
-    }, 600000);*/
+    }, 600000);
     /*BitKindTxsToMongoScan.scanTxsToMongo('LTC');
     setInterval(() => {
         BitKindTxsToMongoScan.scanTxsToMongo('LTC');

@@ -74,7 +74,7 @@ async function scan () {
         const lastBlockN = await dbEthertransactionsLib.getLastMongoBlock();
         const highestBlockN = await getETHRpc.getLatestBlock();
         if(highestBlockN > lastBlockN)
-            saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10, currency)
+            saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10)
                 .then(() => {
                     console.log('Scanning complete at ' + Date());
                 })
