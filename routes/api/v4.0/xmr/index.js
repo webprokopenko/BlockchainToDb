@@ -49,3 +49,14 @@ app.get('/getTxList/:address', (req,res, next) => {
             next(error)
         })
 });
+app.get('/getBlock/:height', (req,res, next) => {
+    const height = req.params.height;
+    xmrController.getBlock(height)
+        .then(block => {
+            res.send(block);
+
+        })
+        .catch(error => {
+            next(error)
+        })
+});

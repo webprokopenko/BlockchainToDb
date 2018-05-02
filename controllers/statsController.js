@@ -37,9 +37,8 @@ async function getGdax(pair, countMonths){
 }
 async function getGdaxDay(pair){
     try {
-        let from = new Date();
-        let to = new Date();
-        to = to.setMonth(to.getDay() - 1);
+        let from = (new Date()).getTime();
+        let to = (new Date()).getTime() - 1000;
         from = Math.floor(from/1000);
         to = Math.floor(to/1000);
         let list = await exchange.getExchangeList(1, pair, from, to);
@@ -98,9 +97,8 @@ async function getBitfinex(pair, countMonths){
 }
 async function getBitfinexDay(pair){
     try {
-        let from = new Date();
-        let to = new Date();
-        to = to.setMonth(to.getDay() - 1);
+        let from = (new Date()).getTime();
+        let to = (new Date()).getTime() - 1000;
         from = Math.floor(from/1000);
         to = Math.floor(to/1000);
         let list = await exchange.getExchangeList(2, pair, from, to);
