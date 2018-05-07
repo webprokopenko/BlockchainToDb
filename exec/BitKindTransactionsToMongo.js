@@ -42,6 +42,10 @@ function _init(currency) {
         'ZEC': {
             rpc: `${appRoot}/lib/zcash/getZECzcash`,
             dbLib: `${appRoot}/lib/mongodb/zectransactions`
+        },
+        'XMR': {
+            rpc: `${appRoot}/lib/monero/getXMRmonero`,
+            dbLib: `${appRoot}/lib/mongodb/xmrtransactions`
         }
     };
     if(!curr[currency]) {

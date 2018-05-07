@@ -5,10 +5,6 @@ let MoneroTransaction = new Schema({
         type:           Number,
         index:          { unique: false }
     },
-    blockhash:{
-        type:           String,
-        index:          { unique: false }
-    },
     timestamp:{
         type:           String,
         index:          { unique: false }
