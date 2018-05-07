@@ -14,10 +14,19 @@ async function getBlock(height){
         throw new Error('Service error');
     }
 }
+async function getTxsByHash(hashes){
+    try{
+        return {txs: await gethXMRlocal.getTxsByHash(hashes)};
+    }catch (error){
+        XmrError.error(`${new Date()} Error: getTxsByHash: ${error}`);
+        throw new Error('Service error');
+    }
+}
 module.exports = {
     /*getBalance:             getBalance,
     sendRawTransaction:     sendRawTransaction,
     getUTXOs:               getUTXOs,
     getTxList:              getTxList,*/
-    getBlock:               getBlock
+    getBlock:               getBlock,
+    getTxsByHash:           getTxsByHash
 };

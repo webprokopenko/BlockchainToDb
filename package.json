@@ -19,7 +19,7 @@
     "gdax": "^0.5.1",
     "intel": "^1.2.0",
     "json-rpc2": "^1.0.2",
-    "mathjs": "^3.20.1",
+    "mathjs": "^3.20.2",
     "minimist": "^1.2.0",
     "mongoose": "^5.0.1",
     "node-json-rpc": "0.0.1",

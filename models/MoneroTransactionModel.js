@@ -13,40 +13,53 @@ let MoneroTransaction = new Schema({
         type:           String,
         index:          { unique: false }
     },
-    txid:{
+    hash:{
         type:           String,
         index:          { unique: true }
     },
     version:            Number,
-    locktime:           Number,
-    size:               Number,
+    unlock_time:        Number,
+    extra:              String,
     vin: [{
-        txid:{
-            type:       String,
-            index:      true
-        },
-        vout:           Number,
-        scriptSig: {
-            asm:        String,
-            hex:        String
-        },
-        coinbase:       String,
-        sequence:       Number
+        key:{
+            amount:     Number,
+            k_image:    String,
+            key_offsets:[Number]
+        }
     }],
     vout: [{
-        value:          Number,
-        n:              Number,
-        scriptPubKey: {
-            asm:        String,
-            hex:        String,
-            reqSigs:    String,
-            tipe:       String,
-            addresses:{
-                type:   [String],
-                index:  true
-            }
+        amount:         Number,
+        target:{
+            key:        String
         }
-    }]
+    }],
+    fee:                String,
+    mixin:              Number,
+    size:               Number,
+    rct_signatures:{
+        ecdhInfo:[{
+            amount:     String,
+            mask:       String
+        }],
+        outPk:          [String],
+        txnFee:         String,
+        tipe:           Number
+    },
+    rctsig_prunable:{
+        MGs:[{
+            cc:         String,
+            ss:[
+                [
+                    String,
+                    String
+                ]
+            ]
+        }],
+        rangeSigs:[{
+            Ci:     String,
+            asig:   String
+        }]
+    }
 });
 
 mongoose.model('xmrtransactions', MoneroTransaction);

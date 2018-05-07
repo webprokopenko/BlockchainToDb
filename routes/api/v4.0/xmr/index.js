@@ -60,3 +60,14 @@ app.get('/getBlock/:height', (req,res, next) => {
             next(error)
         })
 });
+app.get('/getTxByHash/:hash', (req,res, next) => {
+    const hashes = [req.params.hash];
+    xmrController.getTxsByHash(hashes)
+        .then(txs => {
+            res.send(txs);
+
+        })
+        .catch(error => {
+            next(error)
+        })
+});
