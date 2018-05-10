@@ -15,7 +15,7 @@ let MoneroTransaction = new Schema({
     },
     version:            Number,
     unlock_time:        Number,
-    extra:              String,
+    extra:              [Number],
     vin: [{
         key:{
             amount:     Number,
