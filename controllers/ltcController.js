@@ -22,7 +22,9 @@ async function sendRawTransaction(raw){
         return {txid: await gethLTClocal.sendRawTransaction(raw)};
     } catch (error) {
         LtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
-        throw new Error(error);
+        if(error.indexOf('Code-114') >= 0) {
+            return({error: error});
+        } else throw new Error(error);
     }
 }
 async function getUTXOs(address){

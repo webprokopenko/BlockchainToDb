@@ -2,7 +2,6 @@ node_modules
 package-lock.json
 config
 logs
-models/BitcoinTransactionTestModel.js
 lib/db.js
 exec/SaveBitKindTransactionsToMongo.js
 .idea

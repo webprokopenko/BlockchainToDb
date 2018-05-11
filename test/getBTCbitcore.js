@@ -1,10 +1,11 @@
 const path = require('path');
 global.appRoot = path.resolve(__dirname);
 global.appRoot = global.appRoot.replace('/test','');
-const bitcoin = require('../lib/bitcoin/getBTCbitcoin');
+//const bitcoin = require('../lib/bitcoin/getBTCbitcoin');
 const insight = require('../lib/bitcoin/getBTCbitcore');
 const db = require('../lib/db');
 //const BTCTxs = require('../models/BitcoinTransactionModel');
+const sendRPC = require('../lib/utils').sendRPC;
 
 describe('Testing BTC',()=> {
     it('BTC::getAddressBalance', (done) => {
@@ -272,29 +273,14 @@ describe('Testing BTC',()=> {
     });
     it('BTC::getBlockCount', (done) => {
         const address = 'ms27DRoYW6nF78rEXvE3MRkZtLwrtz9CGJ';
-        const stateDB = db.connect({
-            db: {
-                "name": "triumf",
-                "user": "",
-                "password": "",
-                "host": "localhost",
-                "port": 27017
-            },
-            log: console.log
-        });
-        if (stateDB) {
-            bitcoin.getBlockCount()
-                .then(txs => {
-                    console.dir(txs);
-                    done();
-                })
-                .catch(err => {
-                    console.dir(err);
-                    done();
-                });
-        } else {
-            console.log('Db connect error.');
-            done();
-        }
+        sendRPC('getblockcount', require('../config/config').BTCRpc)
+            .then(count => {
+                console.dir(count);
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                done();
+            })
     });
 });

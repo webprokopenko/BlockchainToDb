@@ -22,7 +22,9 @@ async function sendRawTransaction(raw){
         return {txid: await gethBTGlocal.sendRawTransaction(raw)};
     } catch (error) {
         BtgError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
-        throw new Error(error);
+        if(error.indexOf('Code-114') >= 0) {
+            return({error: error});
+        } else throw new Error(error);
     }
 }
 async function getUTXOs(address){

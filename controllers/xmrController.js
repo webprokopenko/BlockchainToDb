@@ -1,5 +1,5 @@
-const   gethXMRlocal = require(`${appRoot}/lib/monero/getXMRmonero.js`),
-    xmrConfig = require(`${appRoot}/config/config.json`).XMRRpc;
+const   gethXMRlocal = require(`${appRoot}/lib/monero/getXMRmonero.js`);
+//    xmrConfig = require(`${appRoot}/config/config.json`).XMRRpc;
 
 //Intel logger setup
 const intel = require('intel');

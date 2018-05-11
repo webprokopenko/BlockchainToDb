@@ -80,7 +80,7 @@ async function scan () {
                     console.log('Scanning complete at ' + Date());
                 })
                 .catch(err => {
-                    LoggerTransactionToDbError.error(`Scannning error: ${error}`);
+                    LoggerTransactionToDbError.error(`Scannning error: ${err}`);
                 });
     } catch (err) {
         console.log(err);

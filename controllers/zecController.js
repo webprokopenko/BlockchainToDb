@@ -22,11 +22,13 @@ async function sendRawTransaction(raw){
         return {txid: await gethZEClocal.sendRawTransaction(raw)};
     } catch (error) {
         ZecError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
-        throw new Error(error);
+        if(error.indexOf('Code-114') >= 0) {
+            return({error: error});
+        } else throw new Error(error);
     }
 }
 async function getUTXOs(address){
-    if(!Utils.isZAddress(address, ltcConfig.network))
+    if(!Utils.isZAddress(address, zecConfig.network))
         return {error: 'Incorrect address - ' + address};
     try{
         return {utxos: await gethZEClocal.getUTXOs(address)};
