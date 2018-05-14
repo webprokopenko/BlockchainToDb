@@ -22,6 +22,7 @@
     "mongoose": "^5.0.1",
     "nodemon": "^1.17.2",
     "npm": "^5.8.0",
+    "request": "^2.85.0",
     "xmlhttprequest": "^1.8.0",
     "zcash-bitcore-lib": "^0.13.20-rc3"
   },

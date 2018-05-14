@@ -14,8 +14,14 @@ async function getTransactionList(address) {
     try {
         let TraisactionIn = await ethTransaction.getTransactionlistIn(address);
         let TransactionOut = await ethTransaction.getTransactionlistOut(address);
-        let TransactionPending = await ethTransaction.getPendingTxs(address);
-        return { 'in': TraisactionIn, 'out': TransactionOut, 'pending': TransactionPending };
+        let TransactionPendingIn = await ethTransaction.getPendingInTxs(address);
+        let TransactionPendingOut = await ethTransaction.getPendingOutTxs(address);
+        return {
+            'in': TraisactionIn,
+            'out': TransactionOut,
+            'pending_in': TransactionPendingIn,
+            'pending_out': TransactionPendingOut
+            };
     } catch (error) {
         EthError.error(`${new Date()} Error: getTransactionList: ${error}`);
         throw new Error('Service error');
