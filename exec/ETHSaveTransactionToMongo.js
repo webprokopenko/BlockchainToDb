@@ -4,6 +4,7 @@ if(!global.appRoot) {
     global.appRoot = global.appRoot.replace('/exec','');
 }
 require(`${appRoot}/models/EthereumTransactionModel.js`);
+require(`${appRoot}/models/EthereumTempTxsModel.js`);
 const getETHRpc = require(`${appRoot}/lib/ethereum/getETHRpc`);
 
 const Quequ = require(`${appRoot}/lib/TaskQueue`);
@@ -26,7 +27,7 @@ const dbEthertransactionsLib = require(`${appRoot}/lib/mongodb/ethtransactions.j
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
 
-async function saveBlockTransactionFromTo(from, to, order) {
+async function saveBlockTransactionFromTo(from, to, order, clearTemp = false) {
     const taskQue = new Quequ(order);
     for (let i = from; i <= to; i++) {
             taskQue.pushTask(async done => {
@@ -34,7 +35,9 @@ async function saveBlockTransactionFromTo(from, to, order) {
                 let blockData = await getETHRpc.getTransactionFromETH(i);
                 if (blockData) {
                     await Promise.all(blockData.map(async (element) => {
-                        await dbEthertransactionsLib.saveBlockTransactionToMongoDb(element)
+                        await dbEthertransactionsLib.saveBlockTransactionToMongoDb(element);
+                        if (clearTemp) await dbEthertransactionsLib
+                            .removeTempTansaction(element.hash);
                     }));
                 }
                 console.log(`BlockNum: ${i}`);
@@ -75,7 +78,7 @@ async function scan () {
         const hBlockN = await getETHRpc.getLatestBlock();
         const highestBlockN = parseInt(hBlockN.number, 16);
         if(highestBlockN > lastBlockN)
-            saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10)
+            saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10, true)
                 .then(() => {
                     console.log('Scanning complete at ' + Date());
                 })

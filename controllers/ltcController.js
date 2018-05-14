@@ -22,8 +22,8 @@ async function sendRawTransaction(raw){
         return {txid: await gethLTClocal.sendRawTransaction(raw)};
     } catch (error) {
         LtcError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
-        if(error.indexOf('Code-114') >= 0) {
-            return({error: error});
+        if(error.toString().indexOf('Code-114') >= 0) {
+            return {error: error.toString()};
         } else throw new Error(error);
     }
 }

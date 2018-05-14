@@ -14,7 +14,8 @@ async function getTransactionList(address) {
     try {
         let TraisactionIn = await ethTransaction.getTransactionlistIn(address);
         let TransactionOut = await ethTransaction.getTransactionlistOut(address);
-        return { 'in': TraisactionIn, 'out': TransactionOut };    
+        let TransactionPending = await ethTransaction.getPendingTxs(address);
+        return { 'in': TraisactionIn, 'out': TransactionOut, 'pending': TransactionPending };
     } catch (error) {
         EthError.error(`${new Date()} Error: getTransactionList: ${error}`);
         throw new Error('Service error');
@@ -73,18 +74,22 @@ async function getTransactionCount(address){
 async function sendRawTransaction(rawTransaction){
     try{
         let transactionHash = await gethETH.sendRawTransaction(rawTransaction);
+        await ethTransaction
+            .saveTempTransaction(await getTransactionFromHash(transactionHash));
         return {hash: transactionHash};
     } catch (error){
         EthError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
-        if(error.indexOf('Code-114') >= 0) {
-            return({error: error});
+        if(error.toString().indexOf('Code-114') >= 0) {
+            return {error: error.toString()};
         } else throw new Error('Service error: ' + error);
     }
 }
-async function getTransactionFromHash(txHash){
+async function getTransactionFromHash(txHash)   {
     try {
         let txData = await gethETH.getTransactionFromHash(txHash);    
-        txData.blockNumber = utils.convertHexToInt(txData.blockNumber);
+        txData.blockNumber = txData.blockNumber ?
+            utils.convertHexToInt(txData.blockNumber):
+            0;
         txData.transactionIndex = utils.convertHexToInt(txData.transactionIndex);
         txData.value = utils.convertHexToInt(txData.value);
         txData.gas = utils.convertHexToInt(txData.gas);
@@ -93,8 +98,8 @@ async function getTransactionFromHash(txHash){
         return txData
     } catch (error) {
         EthError.error(`${new Date()} Error: getTransactionFromHash: ${error}`);
-        if(error.indexOf('Code-114') >= 0) {
-            return({error: error});
+        if(error.toString().indexOf('Code-114') >= 0) {
+            return {error: error.toString()};
         } else throw new Error('Service error: ' + error);
     }
 }
