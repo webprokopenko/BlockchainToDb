@@ -41,3 +41,5 @@ server.listen(process.env.PORT || 2345, function() {
   console.log('Сервер запущен на порте: ' + server.address().port);
   crontab.run();
 });
+
+module.exports = app;
