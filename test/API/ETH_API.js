@@ -6,12 +6,7 @@ const chaiHttp = require('chai-http');
 const server = require('../../app.js');
 const should = chai.should();
 
-const ETH_WALLET = {
-  addres: 'efb8ab883ef70148bbb66ae7f3fce7039244f6e8',
-  balance: 1.108410154065632,
-  transactionCount: 8,
-  TxHash: '0x186b9b57a415cceed9502248ff99fa6abc729da5baf7d238359aa31daaee212'
-}
+const TEST_DATA = require('../test-data.json');
 
 chai.use(chaiHttp);
 describe('Ethereum', () => {
@@ -54,11 +49,11 @@ describe('Ethereum', () => {
   describe('/GET ETH Transaction Count', () => {
     it('it should GET Ethereum Transaction Count', (done) => {
       chai.request(server)
-        .get(`/api/v4.0/ETH/getTransactionCount/${ETH_WALLET.addres}`)
+        .get(`/api/v4.0/ETH/getTransactionCount/${TEST_DATA.wallet.addres}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('TransactionCount', ETH_WALLET.transactionCount);
+          res.body.should.have.property('TransactionCount', TEST_DATA.wallet.transactionCount);
           done();
         });
     });
@@ -66,11 +61,11 @@ describe('Ethereum', () => {
   describe('/GET ETH Balance', () => {
     it('it should GET Ethereum Balance', (done) => {
       chai.request(server)
-        .get(`/api/v4.0/ETH/getBalance/${ETH_WALLET.addres}`)
+        .get(`/api/v4.0/ETH/getBalance/${TEST_DATA.wallet.addres}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('balance', ETH_WALLET.balance);
+          res.body.should.have.property('balance', TEST_DATA.wallet.balance);
           done();
         });
     });
@@ -78,7 +73,7 @@ describe('Ethereum', () => {
   describe('/GET ETH Transaction List', () => {
     it('it should GET Ethereum Transaction List by address', (done) => {
       chai.request(server)
-        .get(`/api/v4.0/ETH/getTransactionsList/${ETH_WALLET.addres}`)
+        .get(`/api/v4.0/ETH/getTransactionsList/${TEST_DATA.wallet.addres}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -90,11 +85,11 @@ describe('Ethereum', () => {
   describe('/GET ETH Transaction from Hash', () => {
     it('it should GET Ethereum Transaction from Hash', (done) => {
       chai.request(server)
-        .get(`/api/v4.0/ETH/getTransactionByHash/${ETH_WALLET.TxHash}`)
+        .get(`/api/v4.0/ETH/getTransactionByHash/${TEST_DATA.wallet.TxHash}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.all.keys('hash', 'timestamp', 'from', 'to', 'value','fee', 'blockNum');
+          res.body.should.have.all.keys('blockHash','blockNumber','from','gas','gasPrice','hash','input','nonce','to','transactionIndex','value','v','r','s');
           done();
         });
     });

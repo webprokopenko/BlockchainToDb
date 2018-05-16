@@ -5,11 +5,11 @@ const expect = chai.expect; // we are using the "expect" style of Chai
 const ETHRpc = require('../../lib/ethereum/getETHRpc');
 const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
 
-const ETH_WALLET = require('../wallet.json');
+const TEST_DATA = require('../test-data.json');
 
 describe('ETHRpc',  async ()=> {
   it('getBlockData() should return data in block',  async ()=> {
-    let BlockData =  await ETHRpc.getBlockData(1244073);
+    let BlockData =  await ETHRpc.getBlockData(TEST_DATA.block.num);
     expect(BlockData).to.include.all.keys('difficulty','extraData','gasLimit','gasUsed','hash','logsBloom',
         'miner','mixHash','nonce','number','parentHash','receiptsRoot','sha3Uncles','size','stateRoot','timestamp',
         'totalDifficulty','transactions','transactionsRoot','uncles');
@@ -26,8 +26,20 @@ describe('ETHRpc',  async ()=> {
         'totalDifficulty','transactions','transactionsRoot','uncles');
   });
   it('getBalance() should return balance of account',  async ()=> {
-    let balance =  await ETHRpc.getBalance(ETH_WALLET.addres);
-    expect(utils.convertHexToInt(balance)).to.be.equal(ETH_WALLET.balance);
+    let balance =  await ETHRpc.getBalance(TEST_DATA.wallet.addres);
+    expect(utils.convertHexToInt(balance)).to.be.equal(TEST_DATA.wallet.balance);
+  });
+  it('getTransactionCount() should return count transaction of account',  async ()=> {
+    let count =  await ETHRpc.getTransactionCount(TEST_DATA.wallet.addres);
+    expect(utils.convertHexToInt(count)).to.be.equal(TEST_DATA.wallet.transactionCount);
+  });
+  it('getTransactionFromHash() should return transaction from Hash',  async ()=> {
+    let count =  await ETHRpc.getTransactionFromHash(TEST_DATA.wallet.TxHash);
+    expect(count).include.keys('blockHash','blockNumber','from','gas','gasPrice','hash','input','nonce','to','transactionIndex','value','v','r','s');
+  });
+  it('getTransactionCountETH() should return count of transaction in block',  async ()=> {
+    let count =  await ETHRpc.getTransactionCountETH(1244073);
+    expect(count).equal(5);
   });
   
 });

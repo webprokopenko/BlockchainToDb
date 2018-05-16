@@ -1,0 +1,12 @@
+{   
+    "wallet":{
+        "addres": "0xeFb8Ab883EF70148BBB66AE7F3fCE7039244F6e8",
+        "balance": 1.108410154065632,
+        "transactionCount": 8,
+        "TxHash": "0xcac27b9928d735272ac3f1b30d7e4e4a0dd782b92fe9d5b37be494e7671c46a8"
+    },
+    "block": {
+        "num": 1244073,
+        "countTransaction":5
+    } 
+}
