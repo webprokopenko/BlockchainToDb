@@ -6,7 +6,9 @@ if(!global.appRoot) {
 require(`${appRoot}/models/EthereumTransactionModel.js`);
 require(`${appRoot}/models/EthereumTempTxsModel.js`);
 const getETHRpc = require(`${appRoot}/lib/ethereum/getETHRpc`);
-
+const Units = require('ethereumjs-units');
+const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
+const math = require('mathjs');
 const Quequ = require(`${appRoot}/lib/TaskQueue`);
 const mongodbConnectionString = require(`${appRoot}/config/config.json`).mongodbConnectionString;
 
@@ -26,13 +28,34 @@ const dbEthertransactionsLib = require(`${appRoot}/lib/mongodb/ethtransactions.j
 
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
+async function getTransactionFromETH(numBlock) {
+    const blockData = await getETHRpc.getBlockData(numBlock);
+    let blockTransaction = [];
+    await Promise.all(blockData.transactions.map(async (element) => {
+        let transaction = {};
+        transaction.from = element.from;
+        transaction.to = element.to;
+        element.gas = math.bignumber(utils.convertHexToInt(element.gas)).toFixed();
+        element.gasPrice = math.bignumber(utils.convertHexToInt(element.gasPrice)).toFixed();
+        transaction.value = Units.convert(math.bignumber(utils.convertHexToInt(element.value)).toFixed(), 'wei', 'eth'); //unexpect 0x26748d96b29f5076000 value not support
+        transaction.fee = Units.convert(element.gas * element.gasPrice, 'wei', 'eth');
+        transaction.hash = element.hash;
+        let gasUse = math.bignumber(await getETHRpc.getGasFromTransactionHash(element.hash));
+        let gasPrice = math.bignumber(Units.convert(element.gasPrice, 'wei', 'eth'));
+        transaction.fee = math.multiply(gasPrice, gasUse).toFixed();
+        transaction.timestamp = utils.convertHexToInt(blockData.timestamp);
+        transaction.blockNum = utils.convertHexToInt(element.blockNumber);
+        blockTransaction.push(transaction);
+    }));
+    return blockTransaction.length > 0 ? blockTransaction : null;
+}
 
 async function saveBlockTransactionFromTo(from, to, order, clearTemp = false) {
     const taskQue = new Quequ(order);
     for (let i = from; i <= to; i++) {
             taskQue.pushTask(async done => {
             try {
-                let blockData = await getETHRpc.getTransactionFromETH(i);
+                let blockData = await getTransactionFromETH(i);
                 if (blockData) {
                     await Promise.all(blockData.map(async (element) => {
                         await dbEthertransactionsLib.saveBlockTransactionToMongoDb(element);

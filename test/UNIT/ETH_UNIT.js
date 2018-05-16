@@ -8,12 +8,6 @@ const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
 const TEST_DATA = require('../test-data.json');
 
 describe('ETHRpc', async () => {
-
-    it('getGasFromTransactionHash() should return gas from Transaction Hash', async () => {
-        let gas = await ETHRpc.getGasFromTransactionHash(TEST_DATA.wallet.TxHash);
-        expect(gas).to.be.equal(TEST_DATA.wallet.TxHashGas);
-    });
-
     it('getBlockData() should return data in block', async () => {
         let BlockData = await ETHRpc.getBlockData(TEST_DATA.block.num);
         expect(BlockData).to.include.all.keys('difficulty', 'extraData', 'gasLimit', 'gasUsed', 'hash', 'logsBloom',
