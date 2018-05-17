@@ -41,11 +41,4 @@ describe('ETHRpc', async () => {
         let count = await ETHRpc.getTransactionCountETH(TEST_DATA.block.num);
         expect(count).equal(5);
     });
-    it('getTransactionFromETH() should return transactions in block', async () => {
-        let transactions = await ETHRpc.getTransactionFromETH(TEST_DATA.block.num);
-        let EmptyTransactions = await ETHRpc.getTransactionFromETH(TEST_DATA.block.emptyTransaction);
-        expect(transactions).include.keys('0', '1', '2', '3', '4');
-        expect(EmptyTransactions).to.be.equal(null);
-    });
-
 });
