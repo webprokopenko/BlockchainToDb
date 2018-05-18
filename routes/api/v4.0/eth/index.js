@@ -85,9 +85,14 @@ app.get('/getTransactionByHash/:hashTransaction', (req, res, next) => {
             next(error);
         })
 });
-
-const params = {
-    from: '',
-    to: '',
-    data: '0x70a08231678792c0af6aef01843d614f8a089dd6a33c4ceb'
-};
+app.get('/getTokenBalance/:contractAddress/:address', (req, res, next) => {
+    const contractAddress = req.params.contractAddress;
+    const address = req.params.address;
+    ethController.getTokenBalance(contractAddress, address)
+        .then(tokens => {
+            res.send(tokens)
+        })
+        .catch(error => {
+            next(error);
+        })
+});

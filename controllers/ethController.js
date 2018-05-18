@@ -90,8 +90,9 @@ async function sendRawTransaction(rawTransaction){
         } else throw new Error('Service error: ' + error);
     }
 }
-async function getTransactionFromHash(txHash)   {
+async function getTransactionFromHash(txHash) {
     try {
+        if(!utils.isHash(txHash)) return {error: 'Wrong hash.'};
         let txData = await gethETH.getTransactionFromHash(txHash);    
         txData.blockNumber = txData.blockNumber ?
             utils.convertHexToInt(txData.blockNumber):
@@ -109,6 +110,20 @@ async function getTransactionFromHash(txHash)   {
         } else throw new Error('Service error: ' + error);
     }
 }
+async function getTokenBalance(contractAddress, address) {
+    try{
+        if(!utils.isAddress(contractAddress)) return {error: 'Wrong contract address.'};
+        if(!utils.isAddress(contractAddress)) return {error: 'Wrong address.'};
+        return {
+            'tokens': await gethETH.getTokenBalance(contractAddress, address)
+        };
+    } catch(error){
+        EthError.error(`${new Date()} Error: getTokenBalance: ${error}`);
+        if(error.toString().indexOf('Code-114') >= 0) {
+            return {error: error.toString()};
+        } else throw new Error('Service error: ' + error);
+    }
+}
 module.exports = {
     getTransactionlist:     getTransactionList,
     getGasPrice:            getGasPrice,
@@ -117,5 +132,6 @@ module.exports = {
     getBalance:             getBalance,
     getTransactionCount:    getTransactionCount,
     sendRawTransaction:     sendRawTransaction,
-    getTransactionFromHash: getTransactionFromHash
+    getTransactionFromHash: getTransactionFromHash,
+    getTokenBalance:        getTokenBalance
 };
