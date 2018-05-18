@@ -1,6 +1,7 @@
 const ethTransaction = require(`${appRoot}/lib/mongodb/ethtransactions`);
 const gethETH = require(`${appRoot}/lib/ethereum/getETHRpc`);
 const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
+const hanlerErr = require('../errors/HandlerErrors');
 
 //Intel logger setup
 const intel = require('intel');
@@ -26,6 +27,14 @@ async function getTransactionList(address) {
         EthError.error(`${new Date()} Error: getTransactionList: ${error}`);
         throw new Error('Service error');
     }
+}
+async function testGetBlock(numBlock){
+    try{
+        return await gethETH.getBlockData(numBlock);
+    } catch(error){
+        new hanlerErr(error);
+    }
+     
 }
 async function getGasPrice() {
     try{
@@ -117,5 +126,6 @@ module.exports = {
     getBalance:             getBalance,
     getTransactionCount:    getTransactionCount,
     sendRawTransaction:     sendRawTransaction,
-    getTransactionFromHash: getTransactionFromHash
+    getTransactionFromHash: getTransactionFromHash,
+    testGetBlock:           testGetBlock
 };

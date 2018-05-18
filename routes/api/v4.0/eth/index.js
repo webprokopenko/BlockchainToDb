@@ -2,7 +2,6 @@ const express = require('express');
 const app = module.exports = express();
 const ethController = require(`${appRoot}/controllers/ethController`);
 
-// get list transaction by address
 app.get('/getTransactionsList/:address', (req, res, next) => {
     const address = req.params.address;
 
@@ -14,7 +13,6 @@ app.get('/getTransactionsList/:address', (req, res, next) => {
             next(error)
         })
 });
-// get gasPrice
 app.get('/getGasPrice', (req, res, next) => {
     ethController.getGasPrice()
         .then(gasPrice => {
@@ -24,7 +22,6 @@ app.get('/getGasPrice', (req, res, next) => {
             next(error);
         })
 });
-//get gasLimit
 app.get('/getGasLimit', (req, res, next) => {
     ethController.getGasLimit()
         .then(gasLimit => {
@@ -34,7 +31,6 @@ app.get('/getGasLimit', (req, res, next) => {
             next(error);
         })
 });
-//get gasPrice and gasLimit
 app.get('/getPriceLimit', (req, res, next) => {
     ethController.getPriceLimit()
         .then(gasPriceLimit => {
@@ -44,7 +40,6 @@ app.get('/getPriceLimit', (req, res, next) => {
             next(error);
         })
 });
-//get balance from address
 app.get('/getBalance/:address', (req, res, next) => {
     const address = req.params.address;
     ethController.getBalance(address)

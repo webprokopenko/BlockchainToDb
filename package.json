@@ -21,7 +21,7 @@
     "mathjs": "^3.20.2",
     "minimist": "^1.2.0",
     "mongoose": "^5.0.1",
-    "nodemon": "^1.17.2",
+    "nodemon": "^1.17.4",
     "npm": "^5.10.0",
     "request": "^2.85.0",
     "xmlhttprequest": "^1.8.0",
