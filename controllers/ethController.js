@@ -7,7 +7,6 @@ const intel = require('intel');
 const EthError = intel.getLogger('EthError');
 EthError.setLevel(EthError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/eth/error.log`));
 
-
 async function getTransactionList(address) {
     if(!utils.isAddress(address))
         throw new Error('Address not valid in Ethereum');
@@ -113,7 +112,7 @@ async function getTransactionFromHash(txHash) {
 async function getTokenBalance(contractAddress, address) {
     try{
         if(!utils.isAddress(contractAddress)) return {error: 'Wrong contract address.'};
-        if(!utils.isAddress(contractAddress)) return {error: 'Wrong address.'};
+        if(!utils.isAddress(address)) return {error: 'Wrong address.'};
         return {
             'tokens': await gethETH.getTokenBalance(contractAddress, address)
         };
