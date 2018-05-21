@@ -102,9 +102,9 @@ async function getTokenBalance(contractAddress, address) {
     try{
         if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract address.');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
-        return {
-            'tokens': await gethETH.getTokenBalance(contractAddress, address)
-        };
+        const decimals = await gethETH.getContractDecimals(contractAddress);
+        const tokens = await gethETH.getTokens(contractAddress, address);
+        return {'tokens': tokens.dividedBy(10 ** decimals.toNumber())};
     } catch(error){
         new hanlerErr(error);
     }

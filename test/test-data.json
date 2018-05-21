@@ -10,5 +10,12 @@
         "num": 1244073,
         "countTransaction":5,
         "emptyTransaction": 3
-    } 
+    },
+    "contract": {
+        "validContract": "0x9cb09ca8efccb10ca9625072d5ef845209406eec",
+        "validAddress": "0x714ed41b0e8308be7590b9ce53d37fd963469d9a",
+        "balance": 0,
+        "decimals": 6
+
+    }
 }

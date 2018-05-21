@@ -41,8 +41,12 @@ describe('ETHRpc', async () => {
         let count = await ETHRpc.getTransactionCountETH(TEST_DATA.block.num);
         expect(count).equal(5);
     });
-    it('getTokenBalance() should return balance of account in smart-contract ERC20', async () => {
-        let balance = await ETHRpc.getTokenBalance(TEST_DATA.contract.validContract, TEST_DATA.contract.validAdress);
+    it('getTokens() should return balance of account in smart-contract ERC20', async () => {
+        let balance = await ETHRpc.getTokens(TEST_DATA.contract.validContract, TEST_DATA.contract.validAddress);
         expect(utils.convertHexToInt(balance)).to.be.equal(TEST_DATA.contract.balance);
+    });
+    it('getContractDecimals() should return decimals of smart-contract ERC20', async () => {
+        let decimals = await ETHRpc.getContractDecimals(TEST_DATA.contract.validContract);
+        expect(utils.convertHexToInt(decimals)).to.be.equal(TEST_DATA.contract.decimals);
     });
 });

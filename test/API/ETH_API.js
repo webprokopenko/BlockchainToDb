@@ -94,4 +94,16 @@ describe('Ethereum', () => {
         });
     });
   });
+  describe('/GET ETH Token Balance', () => {
+        it('it should GET Ethereum address contract balance', (done) => {
+            chai.request(server)
+                .get(`/api/v4.0/ETH/getTokenBalance/${TEST_DATA.contract.validContract}/${TEST_DATA.contract.validAddress}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.all.keys('tokens');
+                    done();
+                });
+        });
+    });
 });
