@@ -80,3 +80,14 @@ app.get('/getTransactionByHash/:hashTransaction', (req, res, next) => {
             next(error);
         })
 });
+app.get('/getTokenBalance/:contractAddress/:address', (req, res, next) => {
+    const contractAddress = req.params.contractAddress;
+    const address = req.params.address;
+    ethController.getTokenBalance(contractAddress, address)
+        .then(tokens => {
+            res.send(tokens)
+        })
+        .catch(error => {
+            next(error);
+        })
+});

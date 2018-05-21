@@ -8,7 +8,6 @@ const intel = require('intel');
 const EthError = intel.getLogger('EthError');
 EthError.setLevel(EthError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/eth/error.log`));
 
-
 async function getTransactionList(address) {
     if(!utils.isAddress(address))
         throw new Error('Address not valid in Ethereum');
@@ -24,25 +23,15 @@ async function getTransactionList(address) {
             'pending_out': TransactionPendingOut
             };
     } catch (error) {
-        EthError.error(`${new Date()} Error: getTransactionList: ${error}`);
-        throw new Error('Service error');
-    }
-}
-async function testGetBlock(numBlock){
-    try{
-        return await gethETH.getBlockData(numBlock);
-    } catch(error){
         new hanlerErr(error);
     }
-     
 }
 async function getGasPrice() {
     try{
         let gasPrice = await gethETH.getGasPrice();
         return { 'gasPrice': utils.convertHexToInt(gasPrice), 'gasPriceHex': gasPrice }
     } catch(error){
-        EthError.error(`${new Date()} Error: getGasPrice: ${error}`);
-        throw new Error('Service error');
+        new hanlerErr(error);
     }
 }
 async function getGasLimit(){
@@ -50,8 +39,7 @@ async function getGasLimit(){
         let block = await gethETH.getLatestBlock();
         return {'gasLimit':utils.convertHexToInt(block.gasLimit),'gasLimitHex':block.gasLimit}
     } catch(error){
-        EthError.error(`${new Date()} Error: getGasLimit: ${error}`);
-        throw new Error('Service error');
+        new hanlerErr(error);
     }
 }
 async function getPriceLimit(){
@@ -60,8 +48,7 @@ async function getPriceLimit(){
         let gasPrice = await this.getGasPrice();
         return {'gasLimit':gasLimit.gasLimit,'gasLimitHex':gasLimit.gasLimitHex, 'gasPrice':gasPrice.gasPrice, 'gasPriceHex':gasPrice.gasPriceHex};
     } catch(error){
-        EthError.error(`${new Date()} Error: getPriceLimit: ${error}`);
-        throw new Error('Service error');
+        new hanlerErr(error);
     }
 }
 async function getBalance(address){
@@ -71,8 +58,7 @@ async function getBalance(address){
         let balance = await gethETH.getBalance(address);
         return {'balance':utils.convertHexToInt(balance)}
     } catch (error) {
-        EthError.error(`${new Date()} Error: getBalance: ${error}`);
-        throw new Error('Service error');
+        new hanlerErr(error);
     }
 }
 async function getTransactionCount(address){
@@ -82,8 +68,7 @@ async function getTransactionCount(address){
         let transactionCount = await gethETH.getTransactionCount(address);
         return {'TransactionCount':utils.convertHexToInt(transactionCount)}    
     } catch (error) {
-        EthError.error(`${new Date()} Error: getTransactionCount: ${error}`);
-        throw new Error('Service error');
+        new hanlerErr(error);
     }    
 }
 async function sendRawTransaction(rawTransaction){
@@ -93,14 +78,12 @@ async function sendRawTransaction(rawTransaction){
             .saveTempTransaction(await getTransactionFromHash(transactionHash));
         return {hash: transactionHash};
     } catch (error){
-        EthError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
-        if(error.toString().indexOf('Code-114') >= 0) {
-            return {error: error.toString()};
-        } else throw new Error('Service error: ' + error);
+        new hanlerErr(error);
     }
 }
-async function getTransactionFromHash(txHash)   {
+async function getTransactionFromHash(txHash) {
     try {
+        if(!utils.isHash(txHash)) return {error: 'Wrong hash.'};
         let txData = await gethETH.getTransactionFromHash(txHash);    
         txData.blockNumber = txData.blockNumber ?
             utils.convertHexToInt(txData.blockNumber):
@@ -112,10 +95,18 @@ async function getTransactionFromHash(txHash)   {
 
         return txData
     } catch (error) {
-        EthError.error(`${new Date()} Error: getTransactionFromHash: ${error}`);
-        if(error.toString().indexOf('Code-114') >= 0) {
-            return {error: error.toString()};
-        } else throw new Error('Service error: ' + error);
+        new hanlerErr(error);
+    }
+}
+async function getTokenBalance(contractAddress, address) {
+    try{
+        if(!utils.isAddress(contractAddress)) return {error: 'Wrong contract address.'};
+        if(!utils.isAddress(address)) return {error: 'Wrong address.'};
+        return {
+            'tokens': await gethETH.getTokenBalance(contractAddress, address)
+        };
+    } catch(error){
+        new hanlerErr(error);
     }
 }
 module.exports = {
@@ -127,5 +118,5 @@ module.exports = {
     getTransactionCount:    getTransactionCount,
     sendRawTransaction:     sendRawTransaction,
     getTransactionFromHash: getTransactionFromHash,
-    testGetBlock:           testGetBlock
+    getTokenBalance:        getTokenBalance
 };
