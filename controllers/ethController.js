@@ -100,8 +100,8 @@ async function getTransactionFromHash(txHash) {
 }
 async function getTokenBalance(contractAddress, address) {
     try{
-        if(!utils.isAddress(contractAddress)) return {error: 'Wrong contract address.'};
-        if(!utils.isAddress(address)) return {error: 'Wrong address.'};
+        if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract address.');
+        if(!utils.isAddress(address)) throw new Error('Wrong address.');
         return {
             'tokens': await gethETH.getTokenBalance(contractAddress, address)
         };
