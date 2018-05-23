@@ -32,10 +32,11 @@ describe('Bitcoin Cash', () => {
         it('it should GET Bitcoin Cash address balance', done => {
             chai.request(server)
                 .get('/api/v4.0/BCH/getBalance/' + bchData.legacy)
-                .end((err, res) => {console.dir(res.body);
+                .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('balance');
+                    res.body.balance.should.be.a('number');
                     done();
                 });
         })
@@ -44,10 +45,12 @@ describe('Bitcoin Cash', () => {
         it('it should GET Bitcoin Cash address unspent transactions array', done => {
             chai.request(server)
                 .get('/api/v4.0/BCH/getUTXOs/' + bchData.legacy)
-                .end((err, res) => {console.dir(res.body);
+                .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('utxos');
+                    res.body.utxos[0].should.be.a('object');
+                    res.body.utxos[0].should.have.all.keys(bchData.utoxsKeys);
                     done();
                 });
         })
@@ -56,10 +59,12 @@ describe('Bitcoin Cash', () => {
         it('it should GET Bitcoin Cash address transactions array', done => {
             chai.request(server)
                 .get('/api/v4.0/BCH/getTxList/' + bchData.legacy)
-                .end((err, res) => {console.dir(res.body);
+                .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('txs');
+                    res.body.txs[0].should.be.a('object');
+                    res.body.txs[0].should.have.all.keys(bchData.transactionKeys);
                     done();
                 });
         })
