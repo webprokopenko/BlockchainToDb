@@ -12,6 +12,7 @@
   "dependencies": {
     "base-64": "^0.1.0",
     "bignumber": "^1.1.0",
+    "bignumber.js": "^7.2.0",
     "bitcoincashjs": "^0.1.10",
     "bitcoinjs-lib": "^3.3.2",
     "body-parser": "^1.18.2",

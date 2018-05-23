@@ -1,7 +1,7 @@
 const ethTransaction = require(`${appRoot}/lib/mongodb/ethtransactions`);
 const gethETH = require(`${appRoot}/lib/ethereum/getETHRpc`);
 const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
-const hanlerErr = require('../errors/HandlerErrors');
+const handlerErr = require('../errors/HandlerErrors');
 
 async function getTransactionList(address) {
     if(!utils.isAddress(address))
@@ -23,12 +23,23 @@ async function getTransactionList(address) {
         new hanlerErr(error);
     }
 }
-async function getAllTransactionList(address){
+async function getAllTransactionList(address, page=0){
     try {
         if(!utils.isAddress(address))
-        throw new Error('Address not valid in Ethereum');
+            throw new Error('Address not valid in Ethereum');
+        if(page<0)
+            throw new Error('Page invalid');
+        
+            
+        const countTransaction = await ethTransaction.getCountTransaction(address);
+        const pages = Math.floor(countTransaction/50);
 
-        return await ethTransaction.getAllTransactionList(address);   
+        const transactionList = await ethTransaction.getAllTransactionList(address, 50, page*50);
+        
+        return    {
+            "pages": pages,
+            "transactions": transactionList
+        }
     } catch (error) {
         new handlerErr(error);
     }
@@ -38,7 +49,7 @@ async function getGasPrice() {
         let gasPrice = await gethETH.getGasPrice();
         return { 'gasPrice': utils.convertHexToInt(gasPrice), 'gasPriceHex': gasPrice }
     } catch(error){
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getGasLimit(){
@@ -46,7 +57,7 @@ async function getGasLimit(){
         let block = await gethETH.getLatestBlock();
         return {'gasLimit':utils.convertHexToInt(block.gasLimit),'gasLimitHex':block.gasLimit}
     } catch(error){
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getPriceLimit(){
@@ -55,7 +66,7 @@ async function getPriceLimit(){
         let gasPrice = await this.getGasPrice();
         return {'gasLimit':gasLimit.gasLimit,'gasLimitHex':gasLimit.gasLimitHex, 'gasPrice':gasPrice.gasPrice, 'gasPriceHex':gasPrice.gasPriceHex};
     } catch(error){
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getBalance(address){
@@ -65,7 +76,7 @@ async function getBalance(address){
         let balance = await gethETH.getBalance(address);
         return {'balance':utils.convertHexToInt(balance)}
     } catch (error) {
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getTransactionCount(address){
@@ -75,7 +86,7 @@ async function getTransactionCount(address){
         let transactionCount = await gethETH.getTransactionCount(address);
         return {'TransactionCount':utils.convertHexToInt(transactionCount)}    
     } catch (error) {
-        new hanlerErr(error);
+        new handlerErr(error);
     }    
 }
 async function sendRawTransaction(rawTransaction){
@@ -85,7 +96,7 @@ async function sendRawTransaction(rawTransaction){
             .saveTempTransaction(await getTransactionFromHash(transactionHash));
         return {hash: transactionHash};
     } catch (error){
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getTransactionFromHash(txHash) {
@@ -102,7 +113,7 @@ async function getTransactionFromHash(txHash) {
 
         return txData
     } catch (error) {
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getTokenBalance(contractAddress, address) {
@@ -113,7 +124,7 @@ async function getTokenBalance(contractAddress, address) {
         const tokens = await gethETH.getTokens(contractAddress, address);
         return {'tokens': tokens.dividedBy(10 ** decimals.toNumber())};
     } catch(error){
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 module.exports = {

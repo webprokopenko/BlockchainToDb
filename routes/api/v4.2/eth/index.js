@@ -6,7 +6,20 @@ app.get('/getTransactionsList/:address', (req, res, next) => {
     const address = req.params.address;
     ethController.getAllTransactionList(address)
         .then(transactions => {
-            res.send(transactions);
+            res.setHeader('TrPages', transactions.pages);
+            res.send(transactions.transactions);
+        })
+        .catch(error => {
+            next(error)
+        })
+});
+app.get('/getTransactionsList/:address/:page', (req, res, next) => {
+    const page = parseInt(req.params.page);
+    const address = req.params.address;
+    ethController.getAllTransactionList(address, page)
+        .then(transactions => {
+            res.setHeader('TrPages', transactions.pages);
+            res.send(transactions.transactions);
         })
         .catch(error => {
             next(error)
