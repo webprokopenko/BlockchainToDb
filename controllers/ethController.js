@@ -3,11 +3,6 @@ const gethETH = require(`${appRoot}/lib/ethereum/getETHRpc`);
 const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
 const hanlerErr = require('../errors/HandlerErrors');
 
-//Intel logger setup
-const intel = require('intel');
-const EthError = intel.getLogger('EthError');
-EthError.setLevel(EthError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/eth/error.log`));
-
 async function getTransactionList(address) {
     if(!utils.isAddress(address))
         throw new Error('Address not valid in Ethereum');

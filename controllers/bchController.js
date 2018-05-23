@@ -1,50 +1,46 @@
-const   gethBCHlocal = require(`${appRoot}/lib/bitcoin_cash/getBCHbitcoin_cash.js`),
-    Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`),
-    bchConfig = require(`${appRoot}/config/config.json`).BCHRpc;
-
-//Intel logger setup
-const intel = require('intel');
-const BchError = intel.getLogger('BchError');
-BchError.setLevel(BchError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/bch/error.log`));
+const gethBCHlocal = require(`${appRoot}/lib/bitcoin_cash/getBCHbitcoin_cash.js`);
+const Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`);
+const bchConfig = require(`${appRoot}/config/config.json`).BCHRpc;
+const hanlerErr = require('../errors/HandlerErrors');
 
 async function getBalance(address){
-    if(!Utils.isAddress(address, bchConfig.network))
-        return {error: 'Incorrect address - ' + address};
+    const addr = Utils.isLegacyBCHAddress(address, bchConfig.network)
+        || Utils.isBitpayBCHAddress(address, bchConfig.network)
+        || Utils.isBCHAddress(address, bchConfig.network);
+    if(!addr) throw new Error('address not valid in BCH');
     try {
-        return {balance: await gethBCHlocal.getBalance(address)};
+        return {balance: await gethBCHlocal.getBalance(addr)};
     } catch (error) {
-        BchError.error(`${new Date()} Error: getBalance: ${error}`);
-        throw new Error('Service error');
+        new hanlerErr(error);
     }
 }
 async function sendRawTransaction(raw){
     try {
         return {txid: await gethBCHlocal.sendRawTransaction(raw)};
     } catch (error) {
-        BchError.error(`${new Date()} Error: sendRawTransaction: ${error}`);
-        if(error.toString().indexOf('Code-114') >= 0) {
-            return {error: error.toString()};
-        } else throw new Error(error);
+        new hanlerErr(error);
     }
 }
 async function getUTXOs(address){
-    if(!Utils.isAddress(address, bchConfig.network))
-        return {error: 'Incorrect address - ' + address};
+    const addr = Utils.isLegacyBCHAddress(address, bchConfig.network)
+        || Utils.isBitpayBCHAddress(address, bchConfig.network)
+        || Utils.isBCHAddress(address, bchConfig.network);
+    if(!addr) throw new Error('address not valid in BCH');
     try{
-        return {utxos: await gethBCHlocal.getUTXOs(address)};
+        return {utxos: await gethBCHlocal.getUTXOs(addr)};
     }catch (error){
-        BchError.error(`${new Date()} Error: getUTXOs: ${error}`);
-        throw new Error('Service error');
+        new hanlerErr(error);
     }
 }
 async function getTxList(address){
-    if(!Utils.isAddress(address, bchConfig.network))
-        return {error: 'Incorrect address - ' + address};
+    const addr = Utils.isLegacyBCHAddress(address, bchConfig.network)
+        || Utils.isBitpayBCHAddress(address, bchConfig.network)
+        || Utils.isBCHAddress(address, bchConfig.network);
+    if(!addr) throw new Error('address not valid in BCH');
     try{
-        return {txs: await gethBCHlocal.getTxsByAddress(address)};
+        return {txs: await gethBCHlocal.getTxsByAddress(addr)};
     }catch (error){
-        BchError.error(`${new Date()} Error: getTxList: ${error}`);
-        throw new Error('Service error');
+        new hanlerErr(error);
     }
 }
 module.exports = {
