@@ -16,6 +16,8 @@ async function getTransactionList(address) {
         let TransactionOut = await ethTransaction.getTransactionlistOut(address);
         let TransactionPendingIn = await ethTransaction.getPendingInTxs(address);
         let TransactionPendingOut = await ethTransaction.getPendingOutTxs(address);
+        let TransactionOutCount = await ethTransaction.getCountTransactionOut(address);
+        let TransactionInCount = await ethTransaction.getCountTransactionIn(address);
         return {
             'in': TraisactionIn,
             'out': TransactionOut,
@@ -24,6 +26,16 @@ async function getTransactionList(address) {
             };
     } catch (error) {
         new hanlerErr(error);
+    }
+}
+async function getAllTransactionList(address){
+    try {
+        if(!utils.isAddress(address))
+        throw new Error('Address not valid in Ethereum');
+
+        return await ethTransaction.getAllTransactionList(address);   
+    } catch (error) {
+        new handlerErr(error);
     }
 }
 async function getGasPrice() {
@@ -118,5 +130,6 @@ module.exports = {
     getTransactionCount:    getTransactionCount,
     sendRawTransaction:     sendRawTransaction,
     getTransactionFromHash: getTransactionFromHash,
-    getTokenBalance:        getTokenBalance
+    getTokenBalance:        getTokenBalance,
+    getAllTransactionList:  getAllTransactionList
 };
