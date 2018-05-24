@@ -6,9 +6,11 @@ global.appRoot = path.resolve(__dirname + '/../');
 const intel = require('intel');
 const ErrorLoger = {
     'eth': intel.getLogger('GethError'),
+    'btc': intel.getLogger('BTCError'),
     'bch': intel.getLogger('BCHError')
 };
 ErrorLoger.eth.setLevel(ErrorLoger.eth.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/geth/error.log`));
+ErrorLoger.btc.setLevel(ErrorLoger.btc.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/btc/error.log`));
 ErrorLoger.bch.setLevel(ErrorLoger.bch.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/bch/error.log`));
 
 module.exports = class HandlerErrors {
