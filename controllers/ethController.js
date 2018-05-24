@@ -11,8 +11,6 @@ async function getTransactionList(address) {
         let TransactionOut = await ethTransaction.getTransactionlistOut(address);
         let TransactionPendingIn = await ethTransaction.getPendingInTxs(address);
         let TransactionPendingOut = await ethTransaction.getPendingOutTxs(address);
-        let TransactionOutCount = await ethTransaction.getCountTransactionOut(address);
-        let TransactionInCount = await ethTransaction.getCountTransactionIn(address);
         return {
             'in': TraisactionIn,
             'out': TransactionOut,
