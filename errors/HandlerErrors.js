@@ -4,8 +4,12 @@ const path = require('path');
 global.appRoot = path.resolve(__dirname + '/../');
 //Intel logger setup
 const intel = require('intel');
-const GethError = intel.getLogger('GethError');
-GethError.setLevel(GethError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/geth/error.log`));
+const ErrorLoger = {
+    'eth': intel.getLogger('GethError'),
+    'bch': intel.getLogger('BCHError')
+};
+ErrorLoger.eth.setLevel(ErrorLoger.eth.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/geth/error.log`));
+ErrorLoger.bch.setLevel(ErrorLoger.bch.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/bch/error.log`));
 
 module.exports = class HandlerErrors {
     constructor(ErrorObj) {
@@ -13,7 +17,8 @@ module.exports = class HandlerErrors {
         if (ErrorObj instanceof RpcError) {
             switch (ErrorObj.codeErr) {
                 default:
-                    GethError.error(`${this.listClient.get(ErrorObj.client)} ${new Date()}: ${ErrorObj} code: ${ErrorObj.codeErr}`);
+                    ErrorLoger[ErrorObj.client]
+                        .error(`${this.listClient.get(ErrorObj.client)} ${new Date()}: ${ErrorObj} code: ${ErrorObj.codeErr}`);
                     throw new RpcError(`Service error`, ErrorObj.codeErr, ErrorObj.status)
             }
         } else if (ErrorObj instanceof AppError) {
@@ -26,6 +31,7 @@ module.exports = class HandlerErrors {
         this.listClient = new Map();
         this.listClient.set('eth', 'Ethereum');
         this.listClient.set('btc', 'Bitcoin');
+        this.listClient.set('bch', 'BitcoinCash');
     }
 }
 
