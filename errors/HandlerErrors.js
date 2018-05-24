@@ -26,6 +26,7 @@ module.exports = class HandlerErrors {
         this.listClient = new Map();
         this.listClient.set('eth', 'Ethereum');
         this.listClient.set('btc', 'Bitcoin');
+        this.listClient.set('bch', 'BitcoinCash');
     }
 }
 

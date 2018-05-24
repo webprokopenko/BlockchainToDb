@@ -106,4 +106,15 @@ describe('Ethereum', () => {
                 });
         });
     });
+    describe('/GET All Transaction List', () => {
+      it('it should GET all transaction List ', (done) => {
+          chai.request(server)
+              .get(`/api/v4.2/ETH/getTransactionsList/${TEST_DATA.contract.validAddress}`)
+              .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.should.be.a('array');
+                  done();
+              });
+      });
+  });
 });
