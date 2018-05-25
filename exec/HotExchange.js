@@ -26,14 +26,8 @@ function parseAndSaveETHUSD() {
             if (!body[0].price_usd) {
                 return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
             }
-            dbHotExchangeLib.removeAllHotExchange()
-                .then(() => {
-                    dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'ETH-USD', 'value': body[0].price_usd })
+            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'ETH-USD', 'value': body[0].price_usd })
                     .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
-                })
-                .catch(error => {
-                    StatsError.error(`removeAllHotExchange Error: ${error}`)
-                });
         }
     );
 }
