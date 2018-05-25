@@ -9,7 +9,7 @@ module.exports = {
         } else {
             const str = ['latest', 'earliest', 'pending'];
             if(str.indexOf(params[1]) >= 0) {
-                return {balance: testData.balance};
+                return testData.balance;
             } else throw Error('Invalid argument 1');
         }
     },
@@ -39,5 +39,17 @@ module.exports = {
         {
             throw Error('Wrong input params');
         } else return testData.transaction;
+    },
+    eth_call: (params) => {
+        if(!utils.isArray(params) || !params[0])
+        {
+            throw Error('Wrong input params');
+        } else {
+            if(!utils.isAddress(params[0].to)) {
+                throw Error('Wrong input params');
+            } else {
+                return testData.tokens;
+            }
+        }
     }
 };

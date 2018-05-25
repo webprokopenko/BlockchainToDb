@@ -7,8 +7,9 @@ const bodyParser = function(req, res, next) {
         if(!req.body.id
             || !req.body.method
             || !req.body.params
-            || !methods[req.body.method]) throw Error();
-        else next();
+            || !methods[req.body.method]) {
+            throw Error();
+        } else next();
     } catch (error) {
         response.error = 'Wrong request body';
         res.status(500).send(response);

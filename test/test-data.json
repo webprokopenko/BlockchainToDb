@@ -1,8 +1,8 @@
 {   
     "wallet":{
         "addres": "0xeFb8Ab883EF70148BBB66AE7F3fCE7039244F6e8",
-        "balance": 1.108410154065632,
-        "transactionCount": 8,
+        "balance": "1108410154065632000",
+        "transactionCount": "3",
         "TxHash": "0xcac27b9928d735272ac3f1b30d7e4e4a0dd782b92fe9d5b37be494e7671c46a8",
         "TxHashGas": "21000"
     },
@@ -14,7 +14,7 @@
     "contract": {
         "validContract": "0x9cb09ca8efccb10ca9625072d5ef845209406eec",
         "validAddress": "0x714ed41b0e8308be7590b9ce53d37fd963469d9a",
-        "balance": 0,
+        "balance": 1486153833,
         "decimals": 6
 
     }
