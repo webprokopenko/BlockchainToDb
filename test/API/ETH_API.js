@@ -1,5 +1,4 @@
 process.env.NODE_ENV = 'test';
-const mongoose = require("mongoose");
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -106,7 +105,7 @@ describe('Ethereum', () => {
                 });
         });
     });
-    describe('/GET All Transaction List', () => {
+  describe('/GET All Transaction List', () => {
       it('it should GET all transaction List ', (done) => {
           chai.request(server)
               .get(`/api/v4.2/ETH/getTransactionsList/${TEST_DATA.contract.validAddress}`)
