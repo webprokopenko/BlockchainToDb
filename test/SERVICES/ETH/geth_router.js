@@ -15,7 +15,7 @@ const bodyParser = function(req, res, next) {
         res.status(500).send(response);
     }
 };
-const methods = require(appRoot + '/test/SERVICES/geth_methods');
+const methods = require(appRoot + '/test/SERVICES/ETH/geth_methods');
 module.exports = (app) => {
     app.get('/', (req, res) => {
         res.status(404).send('TEST GETH RPC SERVICE')

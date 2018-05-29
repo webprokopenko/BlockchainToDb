@@ -15,6 +15,7 @@ global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection
 if(process.argv.indexOf('-dev') > 0) {
     const cors = require('cors');
     app.use(cors());
+    require('./test/SERVICES/run.js');
 }
 // body parser set
 app.use(bodyParser.json({ type: 'text/plain' }));
@@ -37,8 +38,8 @@ app.use(function(err, req, res, next) {
   res.send({error: err.message, code: err.codeErr});
 });
 
-server.listen(process.env.PORT || 2345, function() {
-  console.log('Сервер запущен на порте: ' + server.address().port);
+server.listen(process.env.PORT || 2315, function() {
+  console.log('App start on port: ' + server.address().port);
   crontab.run();
 });
 

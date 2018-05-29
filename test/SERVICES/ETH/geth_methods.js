@@ -1,4 +1,4 @@
-const testData = require(appRoot + '/test/SERVICES/geth_config.json');
+const testData = require(appRoot + '/test/SERVICES/ETH/geth_config.json');
 const utils = require(appRoot + '/lib/ethereum/utilsETH');
 
 module.exports = {
