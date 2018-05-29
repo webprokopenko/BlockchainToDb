@@ -11,7 +11,13 @@ let BlockTransaction = new Schema({
     to:         String,
     value:      String,
     fee:        String,
-    blockNum:   Number
+    blockNum:   Number,
+    input: {
+        to:     String,
+        value:  String,
+        from:   String
+    },
+    status:     Boolean
 });
 
 module.export = mongoose.model('ethtransactions', BlockTransaction);

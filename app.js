@@ -12,7 +12,7 @@ const crontab = require('./crontab');
 //set global mongoose
 global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(require('./config/config.json').mongodbConnectionString));
 // localhost dev
-if(process.argv.indexOf('-dev')) {
+if(process.argv.indexOf('-dev') > 0) {
     const cors = require('cors');
     app.use(cors());
 }

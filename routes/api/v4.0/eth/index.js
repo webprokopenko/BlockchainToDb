@@ -91,3 +91,14 @@ app.get('/getTokenBalance/:contractAddress/:address', (req, res, next) => {
             next(error);
         })
 });
+app.get('/getContractTransfers/:contractAddress/:address', (req, res, next) => {
+    const contractAddress = req.params.contractAddress;
+    const address = req.params.address;
+    ethController.getContractTransfers(contractAddress, address)
+        .then(transfers => {
+            res.send(transfers)
+        })
+        .catch(error => {
+            next(error);
+        })
+});

@@ -40,11 +40,19 @@ async function getTransactionFromETH(numBlock) {
         transaction.value = Units.convert(math.bignumber(utils.convertHexToInt(element.value)).toFixed(), 'wei', 'eth'); //unexpect 0x26748d96b29f5076000 value not support
         transaction.fee = Units.convert(element.gas * element.gasPrice, 'wei', 'eth');
         transaction.hash = element.hash;
-        let gasUse = math.bignumber(await getETHRpc.getGasFromTransactionHash(element.hash));
+        const gas = await getETHRpc.getGasFromTransactionHash(element.hash);
+        let gasUse = math.bignumber(gas.gasUsed);
+        transaction.status = gas.status;
         let gasPrice = math.bignumber(Units.convert(element.gasPrice, 'wei', 'eth'));
         transaction.fee = math.multiply(gasPrice, gasUse).toFixed();
         transaction.timestamp = utils.convertHexToInt(blockData.timestamp);
         transaction.blockNum = utils.convertHexToInt(element.blockNumber);
+        transaction.input = element.input;
+        transaction.input.to = transaction.input.to || '0x0';
+        transaction.input.value = transaction.input.value
+            ? utils.toBigNumber(transaction.input.value).toString()
+            : '0';
+        transaction.input.from = transaction.input.from || '0x0';
         blockTransaction.push(transaction);
     }));
     return blockTransaction.length > 0 ? blockTransaction : null;
