@@ -1,9 +1,12 @@
 const path = require('path');
 global.appRoot = path.resolve(__dirname + '/../../');
+global.mongoose = require('mongoose');
+global.mongoose.connect(require(appRoot + '/config/config.json').mongodbConnectionString);
 const chai = require('chai');
 const expect = chai.expect; // we are using the "expect" style of Chai
 const ETHRpc = require('../../lib/ethereum/getETHRpc');
 const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
+const ETHtransactions = require(`${appRoot}/lib/mongodb/ethtransactions`);
 
 const TEST_DATA = require('../test-data.json');
 
@@ -48,5 +51,11 @@ describe('ETHRpc', async () => {
     it('getContractDecimals() should return decimals of smart-contract ERC20', async () => {
         let decimals = await ETHRpc.getContractDecimals(TEST_DATA.contract.validContract);
         expect(parseInt(decimals.toString())).to.be.a('number');
+    });
+    it('getContractTransfers() should return all smart-contract ERC20 transfers by given ETH address', async () => {
+        let transfers = await ETHtransactions
+            .getContractTransfers(TEST_DATA.contract.validContract,
+                TEST_DATA.contract.validAddress);
+        expect(transfers).to.be.a('array');
     });
 });

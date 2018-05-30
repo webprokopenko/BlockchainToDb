@@ -105,13 +105,19 @@ describe('Ethereum', () => {
                 });
         });
     });
-  describe('/GET All Transaction List', () => {
-      it('it should GET all transaction List ', (done) => {
-          chai.request(server)
-              .get(`/api/v4.2/ETH/getTransactionsList/${TEST_DATA.contract.validAddress}`)
+  describe('/GET ERC20 Contract Transfers', () => {
+      it('it should GET all ERC20 Contract Transfers', (done) => {
+           chai.request(server)
+              .get(`/api/v4.0/ETH/getContractTransfers/${TEST_DATA
+                  .contract.validContract}/${TEST_DATA.contract.validAddress}`)
               .end((err, res) => {
                   res.should.have.status(200);
-                  res.body.should.be.a('array');
+                  res.body.should.be.a('object');
+                  res.body.should.have.all.keys('transfers');
+                  res.body.transfers.should.be.a('array');
+                  if(res.body.transfers.lenght) {
+                      res.body.transfers[0].should.have.all.keys('fee', 'from', 'hash', 'input', 'status', 'timestamp', 'to', 'value');
+                  }
                   done();
               });
       });
