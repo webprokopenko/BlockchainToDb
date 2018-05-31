@@ -16,5 +16,9 @@
 ###### lib -            Manual library
 ###### logs -           Logs project
 ###### models -         MongoDB models 
+###### test -           Tests 
+####### test\API -      Tests API
+####### test\UNIT -     Tests Unit
+####### test\SERVICES - Tests Environment(Virtual RPC Client)
 ###### app.js -         Start project app
 ###### crontab.js -     Crontab task 
