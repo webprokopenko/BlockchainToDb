@@ -3,7 +3,7 @@ global.appRoot = path.resolve(__dirname + '/../../');
 global.mongoose = require('mongoose');
 global.mongoose.connect(require(appRoot + '/config/config.json').mongodbConnectionString);
 const chai = require('chai');
-const expect = chai.expect; // we are using the "expect" style of Chai
+const expect = chai.expect; 
 const ETHRpc = require('../../lib/ethereum/getETHRpc');
 const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
 const ETHtransactions = require(`${appRoot}/lib/mongodb/ethtransactions`);
