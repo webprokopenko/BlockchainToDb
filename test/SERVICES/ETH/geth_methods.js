@@ -31,8 +31,11 @@ module.exports = {
     eth_getTransactionCount: () => {
         return testData.transactionCount;
     },
-    eth_sendRawTransaction: () => {
-        return testData.hash;
+    eth_sendRawTransaction: (params) => {
+        if(!utils.isArray(params) || !utils.isString(params[0]))
+        {
+            throw Error('Wrong input params');
+        } else return testData.hash;
     },
     eth_getTransactionByHash: (params) => {
         if(!utils.isArray(params) || !params[0])
