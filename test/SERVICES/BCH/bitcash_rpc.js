@@ -27,8 +27,14 @@ app.use(function(err, req, res, next) {
     res.send({error: err.message, code: err.codeErr});
 });
 
-server.listen(rpcConfig.port, function() {
-    console.log('BitcoinCash test RPC service start on: ' + server.address().port);
+server.listen(rpcConfig.port);
+server.on('error', error => {
+    console.log('ERROR BitcoinCash test RPC service: ' + error)
+});
+server.on('listening', () => {
+    console.log('BitcoinCash test RPC service start on: ' + (server.address() === 'string'
+    ? 'pipe ' + server.address()
+    : 'port ' + server.address().port))
 });
 
 module.exports = app;
