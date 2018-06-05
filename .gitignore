@@ -6,3 +6,4 @@ lib/db.js
 exec/SaveBitKindTransactionsToMongo.js
 .idea
 test/db_test/diagnostic.data/
+crontab.js
