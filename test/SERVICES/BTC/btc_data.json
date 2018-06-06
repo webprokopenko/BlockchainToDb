@@ -1,0 +1,45 @@
+{
+  "block": {
+    "hash": "00000000de1250dc2df5cf4d877e055f338d6ed1ab504d5b71c097cdccd00e13",
+    "confirmations": 269239,
+    "strippedsize": 216,
+    "size": 216,
+    "weight": 864,
+    "height": 30000,
+    "version": 1,
+    "versionHex": "00000001",
+    "merkleroot": "37be054a52112c5f8d2c06d965813a63cc8bd1598133836aec883914c5cf14a7",
+    "tx": [
+      { "txid": "37be054a52112c5f8d2c06d965813a63cc8bd1598133836aec883914c5cf14a7",
+        "hash": "37be054a52112c5f8d2c06d965813a63cc8bd1598133836aec883914c5cf14a7",
+        "version": 1,
+        "size": 135,
+        "vsize": 135,
+        "locktime": 0,
+        "vin": [ { "coinbase": "04ffff001d02d304", "sequence": 4294967295 } ],
+        "vout": [ 
+          { "value": 50,
+            "n": 0,
+            "scriptPubKey":
+              { 
+                "asm": "04197ce6604dd1cf5a36fc817dfda6b0eec419875c5b8df508823254fb32ff8a064799e600966d7d5083b435f864f3c555c4d41d1e74113b76d912ea6bb63d0b39 OP_CHECKSIG",
+                "hex": "4104197ce6604dd1cf5a36fc817dfda6b0eec419875c5b8df508823254fb32ff8a064799e600966d7d5083b435f864f3c555c4d41d1e74113b76d912ea6bb63d0b39ac",
+                "reqSigs": 1,
+                "type": "pubkey",
+                "addresses": [ "1FuXfSvK4UHFvjoTJjUxgnj9x2T3DujzjM" ] } 
+          } 
+        ],
+      "hex": "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0804ffff001d02d304ffffffff0100f2052a01000000434104197ce6604dd1cf5a36fc817dfda6b0eec419875c5b8df508823254fb32ff8a064799e600966d7d5083b435f864f3c555c4d41d1e74113b76d912ea6bb63d0b39ac00000000" 
+      } 
+    ],
+    "time": 1261007544,
+    "mediantime": 1261004323,
+    "nonce": 2747428616,
+    "bits": "1d00ffff",
+    "difficulty": 1,
+    "chainwork": "0000000000000000000000000000000000000000000000000000753175317531",
+    "previousblockhash": "00000000b3cc5384f93014f783d86d6e209ad5ca7dc5a613c4f994fa984168c6",
+    "nextblockhash": "0000000050a8248e6eda4db7b5919491746c06e2ca458b22c35d8d72b3f3e5b6"
+   },
+   "blockCount": 302441
+  }

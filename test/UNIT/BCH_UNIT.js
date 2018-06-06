@@ -1,7 +1,7 @@
 const path = require('path');
 global.appRoot = path.resolve(__dirname + '/../../');
 const chai = require('chai');
-const expect = chai.expect; // we are using the "expect" style of Chai
+const expect = chai.expect; 
 global.mongoose = require('mongoose');
 const mongodbConnectionString = require(appRoot + '/config/config.json').mongodbConnectionString;
 mongoose.connect(mongodbConnectionString);

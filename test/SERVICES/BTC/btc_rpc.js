@@ -7,17 +7,18 @@ const server = http.createServer(app);
 
 global.appRoot = path.resolve(__dirname + '/../../../');
 
-const rpcConfig = require(appRoot + '/config/config.json').ETHRpc;
+global.rpcConfig = require(appRoot + '/config/config.json').BTCRpc;
 
 app.use(bodyParser.json({}));
 
-require(appRoot + '/test/SERVICES/ETH/geth_router')(app);
+require(appRoot + '/test/SERVICES/BTC/btc_router')(app);
 
 app.use(function(req, res, next) {
     const err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
+
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.send({error: err.message, code: err.codeErr});
@@ -25,12 +26,13 @@ app.use(function(err, req, res, next) {
 
 server.listen(rpcConfig.port);
 server.on('error', error => {
-    console.log('ERROR Ethereum test RPC service: ' + error)
+    console.log('ERROR Bitcoin test RPC service: ' + error)
 });
 server.on('listening', () => {
-    console.log('Ethereum test RPC service start on: ' + (server.address() === 'string'
-        ? 'pipe ' + server.address()
-        : 'port ' + server.address().port))
+    console.log('Bitcoin test RPC service start on: ' + (server.address() === 'string'
+    ? 'pipe ' + server.address()
+    : 'port ' + server.address().port))
 });
+
 
 module.exports = app;
