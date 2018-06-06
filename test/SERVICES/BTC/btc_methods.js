@@ -15,7 +15,9 @@ module.exports = {
         if(!utils.isArray(params) || !utils.isString(params[0]) ||  !utils.isBoolean(params[1]))
         {
             throw Error('Wrong input params');
-        } else return testData.block;
+        } else {
+            return testData.block;
+        }
     },
     getblockhash: (params) => {
         if(!utils.isArray(params) || !Number.isInteger(params[0]))
