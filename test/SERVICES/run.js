@@ -1,2 +1,3 @@
-require('./ETH/geth_rpc');
-require('./ETH/bitcash_rpc');
+//require('./ETH/geth_rpc');
+require('./BTC/btc_rpc');
+//require('./BCH/bitcash_rpc'); 

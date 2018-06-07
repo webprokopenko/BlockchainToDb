@@ -4,7 +4,7 @@
   "description": "Wallet for crypto coins",
   "main": "app.js",
   "scripts": {
-    "start": "SET NODE_ENV=dev && node app.js",
+    "start": "SET NODE_ENV=dev node app.js",
     "test": "mocha --timeout 50000 node test/SERVICES/run"
   },
   "author": "Prokopenko Ivan",

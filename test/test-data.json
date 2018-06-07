@@ -17,5 +17,8 @@
         "balance": 1486153833,
         "decimals": 6
 
+    },
+    "BTC":{
+        "blockCount": 302175
     }
 }

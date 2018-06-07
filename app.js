@@ -6,7 +6,6 @@ const http = require('http');
 const server = http.createServer(app);
 //set global AppDirectory
 global.appRoot = path.resolve(__dirname);
-
 const mongoose = require('mongoose');
 const crontab = require('./crontab');
 //set global mongoose
