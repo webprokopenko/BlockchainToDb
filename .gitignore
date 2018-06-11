@@ -7,3 +7,6 @@ exec/SaveBitKindTransactionsToMongo.js
 .idea
 test/db_test/diagnostic.data/
 crontab.js
+data
+dockerfiles
+themes

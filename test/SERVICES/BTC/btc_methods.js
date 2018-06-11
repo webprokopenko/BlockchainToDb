@@ -12,7 +12,7 @@ module.exports = {
         return testData.blockCount;
     },
     getblock: (params) => {
-        if(!utils.isArray(params) || !utils.isString(params[0]) ||  !utils.isBoolean(params[1]))
+        if(!utils.isArray(params) || !utils.isString(params[0]))
         {
             throw Error('Wrong input params');
         } else {
@@ -23,7 +23,7 @@ module.exports = {
         if(!utils.isArray(params) || !Number.isInteger(params[0]))
         {
             throw Error('Wrong input params');
-        } else return testData.blockHash;
+        } else return testData.block.hash;
     },
     getrawtransaction: (params) => {
         if(!utils.isArray(params) || !utils.isString(params[0]) ||  !utils.isBoolean(params[1]))

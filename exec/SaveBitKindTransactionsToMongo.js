@@ -31,3 +31,10 @@ if(argv.gettransaction && argv.gettransaction>0){
         console.log(data);
     })
 }
+if(argv.getbalance){
+    getRpc.getBalance('1FuXfSvK4UHFvjoTJjUxgnj9x2T3DujzjM')
+    .then(data=>{
+        console.log('Result from getBalance: ');
+        console.log(data);
+    })
+}

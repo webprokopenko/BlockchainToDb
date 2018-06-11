@@ -29,16 +29,14 @@ const btcData = {
     ]
 };
 
-describe('BCH RPC lib', async () => {
+describe('BTC RPC lib', async () => {
     it('sendRawTransaction', async () => {});
     it('getBlockCount', async () => {
         const blockCount = await BTCRpc.getBlockCount();
         expect(blockCount).to.be.an('number');
     });
     it('getBlockData', async () => {
-        console.log('get!!!!Block!!!Data!!!');
-        const data = await BTCRpc.getBlockData('00000000de1250dc2df5cf4d877e055f338d6ed1ab504d5b71c097cdccd00e13');
-        console.log(data);
+        const data = await BTCRpc.getBlockData(btcData.blockHash);
         expect(data).to.be.an('object')
             .that.have.all.keys(btcData.blockKeys);
     });
@@ -53,17 +51,18 @@ describe('BCH RPC lib', async () => {
             .that.have.all.keys(btcData.transactionKeys);
     });
     it('getBalance', async () => {
-        const balance = await BTCRpc.getBalance(btcData.cashSplit1);
+        const balance = await BTCRpc.getBalance('1FuXfSvK4UHFvjoTJjUxgnj9x2T3DujzjM');
+        console.log('Balance :' + balance);
         expect(balance).to.be.an('number');
     });
     it('getUTXOs', async () => {
-        const utxos = await BTCRpc.getUTXOs(btcData.cashSplit1);
+        const utxos = await BTCRpc.getUTXOs('1FuXfSvK4UHFvjoTJjUxgnj9x2T3DujzjM');
         expect(utxos).to.be.an('array');
         expect(utxos[0]).to.be.an('object')
             .that.have.all.keys(btcData.utoxsKeys);
     });
     it('getTxsByAddress', async () => {
-        const txs = await BTCRpc.getTxsByAddress(btcData.cashSplit1);
+        const txs = await BTCRpc.getTxsByAddress('1FuXfSvK4UHFvjoTJjUxgnj9x2T3DujzjM');
         expect(txs).to.be.an('array');
         expect(txs[0]).to.be.an('object')
             .that.have.all.keys(btcData.transactionKeys);
