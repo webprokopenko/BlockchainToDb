@@ -18,7 +18,7 @@ async function getTransactionList(address) {
             'pending_out': TransactionPendingOut
             };
     } catch (error) {
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getAllTransactionList(address, page=0){
@@ -35,8 +35,8 @@ async function getAllTransactionList(address, page=0){
         const transactionList = await ethTransaction.getAllTransactionList(address, 50, page*50);
         
         return    {
-            "pages": pages,
-            "transactions": transactionList
+            'pages': pages,
+            'transactions': transactionList
         }
     } catch (error) {
         new handlerErr(error);
