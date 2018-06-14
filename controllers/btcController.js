@@ -9,14 +9,14 @@ async function getBalance(address){
     try {
         return {balance: await gethBTClocal.getBalance(address)};
     } catch (error) {
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function sendRawTransaction(raw){
     try {
         return {txid: await gethBTClocal.sendRawTransaction(raw)};
     } catch (error) {
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getUTXOs(address){
@@ -26,7 +26,7 @@ async function getUTXOs(address){
 
         return {utxos: await gethBTClocal.getUTXOs(address)};
     }catch (error){
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 async function getTxList(address){
@@ -35,7 +35,7 @@ async function getTxList(address){
             throw new Error('Address not valid in Bitcoin');
         return {txs: await gethBTClocal.getTxsByAddress(address)};
     }catch (error){
-        new hanlerErr(error);
+        new handlerErr(error);
     }
 }
 module.exports = {
