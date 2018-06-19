@@ -30,6 +30,21 @@ async function getUTXOs(address){
         new handlerErr(error);
     }
 }
+async function getUTXOsP(address, page = 0) {
+    try{
+        if(!Utils.isAddress(address, btcConfig.network))
+            throw new Error('Address not valid in Bitcoin');
+        if(page<0)
+            throw new Error('Page invalid');
+        const result = await gethBTClocal.getUTXOsP(address, page, 50);
+        return {
+            pages: result[0],
+            utxos: result[1]
+        };
+    }catch (error){
+        new handlerErr(error);
+    }
+}
 async function getTxList(address){
     try{
         if(!Utils.isAddress(address, btcConfig.network))
@@ -39,7 +54,7 @@ async function getTxList(address){
         new handlerErr(error);
     }
 }
-async function getAllTxList(address, page=0){
+async function getAllTxList(address, page = 0){
     try {
         if(!Utils.isAddress(address, btcConfig.network))
             throw new Error('Address not valid in Ethereum');
@@ -62,6 +77,7 @@ module.exports = {
     getBalance:             getBalance,
     sendRawTransaction:     sendRawTransaction,
     getUTXOs:               getUTXOs,
+    getUTXOsP:              getUTXOsP,
     getTxList:              getTxList,
     getAllTxList:           getAllTxList
 };

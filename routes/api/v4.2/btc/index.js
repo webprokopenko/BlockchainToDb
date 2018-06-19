@@ -36,6 +36,18 @@ app.get('/getUTXOs/:address', (req, res, next) => {
             next(error)
         })
 });
+// get listUTXOs by address & pages
+app.get('/getUTXOs/:address/:page', (req, res, next) => {
+    const page = parseInt(req.params.page);
+    const address = req.params.address;
+    btcController.getUTXOsP(address, page)
+        .then(response => {
+            res.send(response);
+        })
+        .catch(error => {
+            next(error)
+        })
+});
 //get txs list by address
 app.get('/getTxList/:address', (req,res, next) => {
     const address = req.params.address;
