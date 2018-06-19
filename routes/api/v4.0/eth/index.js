@@ -36,7 +36,7 @@ app.get('/getPriceLimit', (req, res, next) => {
         .then(gasPriceLimit => {
             res.send(gasPriceLimit);
         })
-        .catch(() => {
+        .catch((error) => {
             next(error);
         })
 });
