@@ -10,10 +10,11 @@ const mongoose = require('mongoose');
 const crontab = require('./crontab');
 //set global mongoose
 global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(require('./config/config.json').mongodbConnectionString));
+// CORS enable
+const cors = require('cors');
+app.use(cors());
 // localhost dev
 if(process.argv.indexOf('-dev') > 0) {
-    const cors = require('cors');
-    app.use(cors());
     require('./test/SERVICES/run.js');
 }
 // body parser set

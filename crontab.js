@@ -10,11 +10,11 @@ function run(){
     Eth.scan();
     setInterval(() => {
         Eth.scan();
-    }, 200000);/*
+    }, 200000);
     BitKindTxsToMongoScan.scanTxsToMongo('BTC');
     setInterval(() => {
         BitKindTxsToMongoScan.scanTxsToMongo('BTC');
-    }, 600000);*/
+    }, 600000);
     /*BitKindTxsToMongoScan.scanTxsToMongo('LTC');
     setInterval(() => {
         BitKindTxsToMongoScan.scanTxsToMongo('LTC');
