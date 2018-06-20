@@ -28,8 +28,9 @@ app.get('/getBalance/:address', (req, res, next) => {
 // get listUTXOs by address
 app.get('/getUTXOs/:address', (req, res, next) => {
     const address = req.params.address;
-    btcController.getUTXOs(address)
+    btcController.getUTXOsP(address, 0)
         .then(response => {
+            res.setHeader('UtxoPages', response.pages);
             res.send(response);
         })
         .catch(error => {
@@ -42,6 +43,7 @@ app.get('/getUTXOs/:address/:page', (req, res, next) => {
     const address = req.params.address;
     btcController.getUTXOsP(address, page)
         .then(response => {
+            res.setHeader('UtxoPages', response.pages);
             res.send(response);
         })
         .catch(error => {
@@ -51,10 +53,10 @@ app.get('/getUTXOs/:address/:page', (req, res, next) => {
 //get txs list by address
 app.get('/getTxList/:address', (req,res, next) => {
     const address = req.params.address;
-    btcController.getTxList(address)
-        .then(txs => {
-            res.send(txs);
-
+    btcController.getAllTxList(address, 0)
+        .then(transactions => {
+            res.setHeader('TrPages', transactions.pages);
+            res.send(transactions.transactions);
         })
         .catch(error => {
             next(error)
