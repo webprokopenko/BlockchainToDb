@@ -15,7 +15,19 @@ async function getBalance(address){
 }
 async function sendRawTransaction(raw){
     try {
-        return {txid: await gethBTClocal.sendRawTransaction(raw)};
+        const txid = await gethBTClocal.sendRawTransaction(raw);
+        await btcTransaction
+            .saveTempTransaction(await getRawTransaction(txid));
+        return {txid: txid};
+    } catch (error) {
+        new handlerErr(error);
+    }
+}
+async function getRawTransaction(txid){
+    if(!Utils.isString(txid))
+        throw new Error('Transaction Id not valid');
+    try {
+        return await gethBTClocal.getRawTransaction(txid);
     } catch (error) {
         new handlerErr(error);
     }
@@ -62,11 +74,12 @@ async function getAllTxList(address, page = 0){
             throw new Error('Page invalid');
         const countTransaction = await btcTransaction.getCountTransaction(address);
         const pages = Math.floor(countTransaction/50);
-
+        const pending = await btcTransaction.getPendingTransactions(address);
         const transactionList = await btcTransaction.getAllTransactionList(address, 50, page*50);
 
         return    {
             'pages': pages,
+            'pending': pending,
             'transactions': transactionList
         }
     } catch (error) {
@@ -76,6 +89,7 @@ async function getAllTxList(address, page = 0){
 module.exports = {
     getBalance:             getBalance,
     sendRawTransaction:     sendRawTransaction,
+    getTransactionById:     getRawTransaction,
     getUTXOs:               getUTXOs,
     getUTXOsP:              getUTXOsP,
     getTxList:              getTxList,

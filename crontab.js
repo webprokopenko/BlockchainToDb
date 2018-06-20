@@ -14,7 +14,7 @@ function run(){
     BitKindTxsToMongoScan.scanTxsToMongo('BTC');
     setInterval(() => {
         BitKindTxsToMongoScan.scanTxsToMongo('BTC');
-    }, 600000);
+    }, 3 * 60 * 1000);
     /*BitKindTxsToMongoScan.scanTxsToMongo('LTC');
     setInterval(() => {
         BitKindTxsToMongoScan.scanTxsToMongo('LTC');

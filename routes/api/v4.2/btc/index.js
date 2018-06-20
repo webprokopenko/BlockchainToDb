@@ -75,3 +75,14 @@ app.get('/getTxList/:address/:page', (req,res, next) => {
             next(error)
         })
 });
+// get raw transaction by id
+app.get('/getTransactionById/:txid', (req, res, next) => {
+    const txid = req.params.txid;
+    btcController.getTransactionById(txid)
+        .then(tx => {
+            res.send(tx);
+        })
+        .catch(error => {
+            next(error)
+        })
+});

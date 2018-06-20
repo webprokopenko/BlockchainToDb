@@ -140,16 +140,40 @@ async function getContractTransfers(contractAddress, address) {
         new handlerErr(error);
     }
 }
+async function getContractTransfersPage(contractAddress, address, page = 0) {
+    try{
+        if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract address.');
+        if(!utils.isAddress(address)) throw new Error('Wrong address.');
+        if(page<0) throw new Error('Page invalid');
+
+        const countTransaction = await ethTransaction.getCountTransaction(address);
+        const pages = Math.floor(countTransaction/50);
+        const decimals = await gethETH.getContractDecimals(contractAddress);
+        const transfers = await ethTransaction.getContractTransfers(contractAddress, address, 50, page * 50);
+        transfers.forEach(tr => {
+            tr.input.value = utils.toBigNumber(tr.input.value)
+                .dividedBy(10 ** decimals.toNumber()).toString();
+        });
+        return {
+            pages: pages,
+            transfers: transfers
+        };
+    } catch(error){
+        new handlerErr(error);
+    }
+}
+
 module.exports = {
-    getTransactionlist:     getTransactionList,
-    getGasPrice:            getGasPrice,
-    getGasLimit:            getGasLimit,
-    getPriceLimit:          getPriceLimit,
-    getBalance:             getBalance,
-    getTransactionCount:    getTransactionCount,
-    sendRawTransaction:     sendRawTransaction,
-    getTransactionFromHash: getTransactionFromHash,
-    getTokenBalance:        getTokenBalance,
-    getAllTransactionList:  getAllTransactionList,
-    getContractTransfers:   getContractTransfers
+    getTransactionlist:         getTransactionList,
+    getGasPrice:                getGasPrice,
+    getGasLimit:                getGasLimit,
+    getPriceLimit:              getPriceLimit,
+    getBalance:                 getBalance,
+    getTransactionCount:        getTransactionCount,
+    sendRawTransaction:         sendRawTransaction,
+    getTransactionFromHash:     getTransactionFromHash,
+    getTokenBalance:            getTokenBalance,
+    getAllTransactionList:      getAllTransactionList,
+    getContractTransfers:       getContractTransfers,
+    getContractTransfersPage:   getContractTransfersPage
 };
