@@ -17,7 +17,7 @@ async function sendRawTransaction(raw){
     try {
         const txid = await gethBTClocal.sendRawTransaction(raw);
         await btcTransaction
-            .saveTempTransaction(await getRawTransaction(txid));
+            .saveTempTransactionToMongoDb(await getRawTransaction(txid));
         return {txid: txid};
     } catch (error) {
         new handlerErr(error);

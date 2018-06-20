@@ -56,7 +56,7 @@ function _init(currency) {
         dbTransactionLib = require(curr[currency].dbLib);
     }
 }
-async function saveBlockTransactionFromTo(from, to, order, currency) {
+async function saveBlockTransactionFromTo(from, to, order, currency, clearTemp = false) {
     if(!getRpc || !dbTransactionLib) _init(currency);
     const taskQue = new Queue(order);
     for (let i = from; i <= to; i++) {
@@ -65,7 +65,9 @@ async function saveBlockTransactionFromTo(from, to, order, currency) {
                 let blockData = await getRpc.getTransactionsFromBlock(i);
                 if (blockData) {
                     await Promise.all(blockData.map(async (element) => {
-                        await dbTransactionLib.saveTransactionToMongoDb(element)
+                        await dbTransactionLib.saveTransactionToMongoDb(element);
+                        if (clearTemp) await dbTransactionLib
+                            .removeTempTansaction(element.hash);
                     }));
                 }
                 console.log(`BlockNum: ${i} ${currency}`);
@@ -86,7 +88,7 @@ async function scanTxsToMongo(currency) {
         const lastBlockN = await dbTransactionLib.getLastBlock();
         const highestBlockN = await getRpc.getBlockCount();
         if(highestBlockN > lastBlockN)
-            saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10, currency)
+            saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10, currency, true)
                 .then(() => {
                     console.log('Scanning complete at ' + Date());
                 })

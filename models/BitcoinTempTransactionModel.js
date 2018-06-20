@@ -1,18 +1,6 @@
 let Schema = mongoose.Schema;
 
 let BitcoinTransaction = new Schema({
-    blockheight:{
-        type:           Number,
-        index:          { unique: false }
-    },
-    blockhash:{
-        type:           String,
-        index:          { unique: false }
-    },
-    timestamp:{
-        type:           String,
-        index:          { unique: false }
-    },
     txid:{
         type:           String,
         index:          { unique: true }
@@ -22,8 +10,7 @@ let BitcoinTransaction = new Schema({
     size:               Number,
     vin: [{
         txid:{
-            type:       String,
-            index:      true
+            type:       String
         },
         vout:           Number,
         scriptSig: {
