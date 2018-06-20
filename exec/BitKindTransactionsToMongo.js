@@ -67,7 +67,7 @@ async function saveBlockTransactionFromTo(from, to, order, currency, clearTemp =
                     await Promise.all(blockData.map(async (element) => {
                         await dbTransactionLib.saveTransactionToMongoDb(element);
                         if (clearTemp) await dbTransactionLib
-                            .removeTempTansaction(element.hash);
+                            .removeTempTansaction(element.txid);
                     }));
                 }
                 console.log(`BlockNum: ${i} ${currency}`);

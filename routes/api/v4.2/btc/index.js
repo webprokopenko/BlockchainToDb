@@ -56,7 +56,7 @@ app.get('/getTxList/:address', (req,res, next) => {
     btcController.getAllTxList(address, 0)
         .then(transactions => {
             res.setHeader('TrPages', transactions.pages);
-            res.send(transactions.transactions);
+            res.send(transactions);
         })
         .catch(error => {
             next(error)
@@ -69,7 +69,7 @@ app.get('/getTxList/:address/:page', (req,res, next) => {
     btcController.getAllTxList(address, page)
         .then(transactions => {
             res.setHeader('TrPages', transactions.pages);
-            res.send(transactions.transactions);
+            res.send(transactions);
         })
         .catch(error => {
             next(error)
