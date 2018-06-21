@@ -7,16 +7,15 @@ async function getTransactionList(address) {
     if(!utils.isAddress(address))
         throw new Error('Address not valid in Ethereum');
     try {
-        let TraisactionIn = await ethTransaction.getTransactionlistIn(address);
-        let TransactionOut = await ethTransaction.getTransactionlistOut(address);
-        let TransactionPendingIn = await ethTransaction.getPendingInTxs(address);
-        let TransactionPendingOut = await ethTransaction.getPendingOutTxs(address);
+        let TransactionPending = await ethTransaction.getPendingTxs(address);
+        let Transactions = await ethTransaction.getAllTransactionList(address, 50, 0);
+        const countTransaction = await ethTransaction.getCountTransaction(address);
+        const pages = Math.floor(countTransaction/50);
         return {
-            'in': TraisactionIn,
-            'out': TransactionOut,
-            'pending_in': TransactionPendingIn,
-            'pending_out': TransactionPendingOut
-            };
+            'pages': pages,
+            'pending': TransactionPending,
+            'transactions': Transactions
+        };
     } catch (error) {
         new handlerErr(error);
     }
