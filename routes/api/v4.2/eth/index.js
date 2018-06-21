@@ -4,7 +4,7 @@ const ethController = require(`${appRoot}/controllers/ethController`);
 
 app.get('/getTransactionsList/:address', (req, res, next) => {
     const address = req.params.address;
-    ethController.getTransactionsList(address)
+    ethController.getTransactionListPending(address)
         .then(transactions => {
             res.setHeader('TrPages', transactions.pages);
             res.send(transactions);
