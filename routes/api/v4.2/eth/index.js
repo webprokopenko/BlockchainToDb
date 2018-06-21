@@ -4,10 +4,10 @@ const ethController = require(`${appRoot}/controllers/ethController`);
 
 app.get('/getTransactionsList/:address', (req, res, next) => {
     const address = req.params.address;
-    ethController.getAllTransactionList(address)
+    ethController.getTransactionList(address)
         .then(transactions => {
             res.setHeader('TrPages', transactions.pages);
-            res.send(transactions.transactions);
+            res.send(transactions);
         })
         .catch(error => {
             next(error)
