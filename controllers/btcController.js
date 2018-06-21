@@ -73,7 +73,7 @@ async function getAllTxList(address, page = 0){
         if(page<0)
             throw new Error('Page invalid');
         const countTransaction = await btcTransaction.getCountTransaction(address);
-        const pages = Math.floor(countTransaction/50);
+        const pages = Math.ceil(countTransaction/50);
         const pending = await btcTransaction.getPendingTransactions(address);
         const transactionList = await btcTransaction.getAllTransactionList(address, 50, page*50);
 

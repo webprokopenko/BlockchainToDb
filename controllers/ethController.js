@@ -10,7 +10,7 @@ async function getTransactionList(address) {
         let TransactionPending = await ethTransaction.getPendingTxs(address);
         let Transactions = await ethTransaction.getAllTransactionList(address, 50, 0);
         const countTransaction = await ethTransaction.getCountTransaction(address);
-        const pages = Math.floor(countTransaction/50);
+        const pages = Math.ceil(countTransaction/50);
         return {
             'pages': pages,
             'pending': TransactionPending,
@@ -29,7 +29,7 @@ async function getAllTransactionList(address, page=0){
         
             
         const countTransaction = await ethTransaction.getCountTransaction(address);
-        const pages = Math.floor(countTransaction/50);
+        const pages = Math.ceil(countTransaction/50);
 
         const transactionList = await ethTransaction.getAllTransactionList(address, 50, page*50);
         
