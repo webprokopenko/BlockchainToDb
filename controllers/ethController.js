@@ -145,7 +145,7 @@ async function getTokenBalance(contractAddress, address) {
 }
 async function getContractTransfers(contractAddress, address) {
     try{
-        if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract');
+        if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract address.');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
         const decimals = await gethETH.getContractDecimals(contractAddress);
         const transfers = await ethTransaction.getContractTransfers(contractAddress, address);

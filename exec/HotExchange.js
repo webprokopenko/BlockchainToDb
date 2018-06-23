@@ -31,6 +31,27 @@ function parseAndSaveETHUSD() {
         }
     );
 }
+function parseAndSaveUSDT() {
+    request.get(url.replace('/v1', '/v2') + '825/?convert=USD',
+        async (error, response, body) => {
+            if (!body) {
+                return StatsError.error(`parseAndSaveUSDT Error: Body empty : ${body}`)
+            }
+            if (error) {
+                return StatsError.error(`parseAndSaveUSDT Error: ${error}`)
+            }
+            body = JSON.parse(body) || {};
+
+            if (!body.data || !body.data.quotes
+                || !body.data.quotes.USD || !body.data.quotes.USD.price) {
+                return StatsError.error(`parseAndSaveUSDT Error: price empty`)
+            }
+            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'USDT-USD', 'value': body[0].price_usd })
+                .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
+        }
+    );
+}
 module.exports = {
-    parseAndSaveETHUSD: parseAndSaveETHUSD
+    parseAndSaveETHUSD: parseAndSaveETHUSD,
+    parseAndSaveUSDT:   parseAndSaveUSDT
 };

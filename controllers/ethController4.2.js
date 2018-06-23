@@ -163,7 +163,7 @@ async function getContractTransfers(contractAddr, address) {
 async function getContractTransfersPage(contractAddr, address, page = 0) {
     try{
         const contractAddress = contracts.get(contractAddr);
-        if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract address.');
+        if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract.');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
         if(page<0) throw new Error('Page invalid');
 
