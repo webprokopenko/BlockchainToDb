@@ -69,4 +69,18 @@ describe('Bitcoin Cash', () => {
                 });
         })
     });
+    describe('/GET BCH getUTXOs apiv4.2', () => {
+        it('it should GET Bitcoin Cash address unspent transactions array', done => {
+            chai.request(server)
+                .get('/api/v4.2/BCH/getUTXOs/' + bchData.legacy)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.all.keys(['pages', 'utxos']);
+                    res.body.pages.should.be.a('number');
+                    res.body.utxos.should.be.a('array');
+                    done();
+                });
+        })
+    });
 });

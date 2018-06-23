@@ -7,11 +7,12 @@ const bitSave = require('./BitKindTransactionsToMongo');
 const getRpc = require(`${appRoot}/lib/bitcoin/getBTCbitcoin`);
 
 const argv = require('minimist')(process.argv.slice(2));
-if (argv.from && argv.to && argv.order) {
-    console.log('Scan and save from to Started ..... ');
-    bitSave.saveBlockTransactionFromTo(argv.from, argv.to, argv.order, 'BTC');
+if (argv.from && argv.to && argv.order && argv.code) {
+    console
+        .log(`Scan and save ${argv.code} from:${argv.from} to:${argv.to} Start... `);
+    bitSave.saveBlockTransactionFromTo(argv.from, argv.to, argv.order, argv.code);
 }
-if (argv.getblock && argv.getblock > 0) {
+if (argv.getblock && argv.getblock > 0) { // argv.getblock = block number
     getRpc.getBlockHash(argv.getblock)
     .then(hash => {
         getRpc.getBlockData(hash)
@@ -24,15 +25,15 @@ if (argv.getblock && argv.getblock > 0) {
         })
     })
 }
-if(argv.gettransaction && argv.gettransaction>0){
+if(argv.gettransaction && argv.gettransaction>0){ // argv.gettransaction = block number
     getRpc.getTransactionsFromBlock(argv.gettransaction)
     .then(data=>{
         console.log('Result from getTransactionsFromBlock: ');
         console.log(data);
     })
 }
-if(argv.getbalance){
-    getRpc.getBalance('1FuXfSvK4UHFvjoTJjUxgnj9x2T3DujzjM')
+if(argv.getbalance){ // argv.getbalance = account address
+    getRpc.getBalance(argv.getbalance)
     .then(data=>{
         console.log('Result from getBalance: ');
         console.log(data);

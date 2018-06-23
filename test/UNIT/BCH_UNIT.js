@@ -32,6 +32,7 @@ const bchData = {
         'txid', 'vout', 'address', 'scriptPubKey', 'amount'
     ]
 };
+const rawTx = require('../../test/SERVICES/BCH/bitcash_config').rawTransaction;
 
 describe('BCH utils', () => {
     it('isLegacyBCHAddress', done => {
@@ -56,6 +57,13 @@ describe('BCH mongodb lib', async () => {
         expect(txsList).to.be.an('array');
         expect(txsList[0]._doc).to.be.an('object')
             .that.have.all.keys(bchData.transactionKeys.concat(['__v', '_id']));
+    });
+    it('save/remove Pending Transaction To MongoDb', async () => {
+        const tx = await BCHRpc.getRawTransaction(rawTx.txid);console.dir(tx);
+        const pendingTx = await mongodbLib.saveTempTransactionToMongoDb(tx);
+        expect(pendingTx).to.equal(true);
+        const remv = await mongodbLib.removeTempTransaction(tx.txid);
+        expect(remv).to.equal(true);
     });
     it('saveTransactionToMongoDb', async () => {});
     it('getLastBlock', async () => {

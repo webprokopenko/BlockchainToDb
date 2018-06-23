@@ -86,6 +86,7 @@ async function getAllTxList(address, page = 0){
         new handlerErr(error);
     }
 }
+
 module.exports = {
     getBalance:             getBalance,
     sendRawTransaction:     sendRawTransaction,

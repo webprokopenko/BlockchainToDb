@@ -17,7 +17,10 @@ async function getBalance(address){
 }
 async function sendRawTransaction(raw){
     try {
-        return {txid: await gethBCHlocal.sendRawTransaction(raw)};
+        const txid = await gethBCHlocal.sendRawTransaction(raw);
+        await bchTransaction
+            .saveTempTransactionToMongoDb(await getRawTransaction(txid));
+        return {txid: txid};
     } catch (error) {
         new handlerErr(error);
     }
@@ -51,7 +54,7 @@ async function getUTXOsP(address, page = 0) {
             throw new Error('Address not valid in Bitcoin');
         if(page<0)
             throw new Error('Page invalid');
-        const result = await gethBCHlocal.getUTXOsP(address, page, 50);
+        const result = await gethBCHlocal.getUTXOsP(addr, page, 50);
         return {
             pages: result[0],
             utxos: result[1]
@@ -77,13 +80,13 @@ async function getAllTxList(address, page = 0){
             || Utils.isBitpayBCHAddress(address, bchConfig.network)
             || Utils.isBCHAddress(address, bchConfig.network);
         if(!addr)
-            throw new Error('Address not valid in Ethereum');
+            throw new Error('Address not valid in BCH');
         if(page<0)
             throw new Error('Page invalid');
-        const countTransaction = await bchTransaction.getCountTransaction(address);
+        const countTransaction = await bchTransaction.getCountTransaction(addr);
         const pages = Math.ceil(countTransaction/50);
-        const pending = await bchTransaction.getPendingTransactions(address);
-        const transactionList = await bchTransaction.getAllTransactionList(address, 50, page*50);
+        const pending = await bchTransaction.getPendingTransactions(addr);
+        const transactionList = await bchTransaction.getAllTransactionList(addr, 50, page*50);
 
         return    {
             'pages': pages,

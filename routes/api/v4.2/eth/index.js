@@ -1,6 +1,6 @@
 const express = require('express');
 const app = module.exports = express();
-const ethController = require(`${appRoot}/controllers/ethController`);
+const ethController = require(`${appRoot}/controllers/ethController4.2`);
 
 app.get('/getTransactionsList/:address', (req, res, next) => {
     const address = req.params.address;
@@ -48,7 +48,7 @@ app.get('/getPriceLimit', (req, res, next) => {
         .then(gasPriceLimit => {
             res.send(gasPriceLimit);
         })
-        .catch(() => {
+        .catch(error => {
             next(error);
         })
 });
@@ -98,6 +98,29 @@ app.get('/getTokenBalance/:contractAddress/:address', (req, res, next) => {
     ethController.getTokenBalance(contractAddress, address)
         .then(tokens => {
             res.send(tokens)
+        })
+        .catch(error => {
+            next(error);
+        })
+});
+app.get('/getContractTransfers/:contractAddress/:address', (req, res, next) => {
+    const contractAddress = req.params.contractAddress;
+    const address = req.params.address;
+    ethController.getContractTransfersPage(contractAddress, address, 0)
+        .then(transfers => {
+            res.send(transfers)
+        })
+        .catch(error => {
+            next(error);
+        })
+});
+app.get('/getContractTransfers/:contractAddress/:address/:page', (req, res, next) => {
+    const contractAddress = req.params.contractAddress;
+    const address = req.params.address;
+    const page = parseInt(req.params.page);
+    ethController.getContractTransfersPage(contractAddress, address, page)
+        .then(transfers => {
+            res.send(transfers)
         })
         .catch(error => {
             next(error);

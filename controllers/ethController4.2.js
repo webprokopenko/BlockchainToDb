@@ -45,13 +45,13 @@ async function getAllTransactionList(address, page=0){
             throw new Error('Address not valid in Ethereum');
         if(page<0)
             throw new Error('Page invalid');
-        
-            
+
+
         const countTransaction = await ethTransaction.getCountTransaction(address);
         const pages = Math.ceil(countTransaction/50);
 
         const transactionList = await ethTransaction.getAllTransactionList(address, 50, page*50);
-        
+
         return    {
             'pages': pages,
             'transactions': transactionList
@@ -100,10 +100,10 @@ async function getTransactionCount(address){
         throw new Error('address not valid in ETH');
     try {
         let transactionCount = await gethETH.getTransactionCount(address);
-        return {'TransactionCount':utils.convertHexToInt(transactionCount)}    
+        return {'TransactionCount':utils.convertHexToInt(transactionCount)}
     } catch (error) {
         new handlerErr(error);
-    }    
+    }
 }
 async function sendRawTransaction(rawTransaction){
     try{
@@ -118,7 +118,7 @@ async function sendRawTransaction(rawTransaction){
 async function getTransactionFromHash(txHash) {
     try {
         if(!utils.isHash(txHash)) return {error: 'Wrong hash.'};
-        let txData = await gethETH.getTransactionFromHash(txHash);    
+        let txData = await gethETH.getTransactionFromHash(txHash);
         txData.blockNumber = txData.blockNumber ?
             utils.convertHexToInt(txData.blockNumber):
             0;
@@ -132,8 +132,9 @@ async function getTransactionFromHash(txHash) {
         new handlerErr(error);
     }
 }
-async function getTokenBalance(contractAddress, address) {
+async function getTokenBalance(contractAddr, address) {
     try{
+        const contractAddress = contracts.get(contractAddr);
         if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract.');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
         const decimals = await gethETH.getContractDecimals(contractAddress);
@@ -143,8 +144,9 @@ async function getTokenBalance(contractAddress, address) {
         new handlerErr(error);
     }
 }
-async function getContractTransfers(contractAddress, address) {
+async function getContractTransfers(contractAddr, address) {
     try{
+        const contractAddress = contracts.get(contractAddr);
         if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
         const decimals = await gethETH.getContractDecimals(contractAddress);
@@ -158,8 +160,9 @@ async function getContractTransfers(contractAddress, address) {
         new handlerErr(error);
     }
 }
-async function getContractTransfersPage(contractAddress, address, page = 0) {
+async function getContractTransfersPage(contractAddr, address, page = 0) {
     try{
+        const contractAddress = contracts.get(contractAddr);
         if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract address.');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
         if(page<0) throw new Error('Page invalid');

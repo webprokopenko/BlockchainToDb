@@ -3,8 +3,8 @@ const app = module.exports = express();
 
 app.use('/ETH', require('./eth'));
 app.use('/BTC', require('./btc'));/*
-app.use('/LTC', require('./ltc'));
-app.use('/BCH', require('./bch'));
+app.use('/LTC', require('./ltc'));*/
+app.use('/BCH', require('./bch'));/*
 app.use('/BTG', require('./btg'));
 app.use('/ZEC', require('./zec'));
 app.use('/XMR', require('./xmr'));
