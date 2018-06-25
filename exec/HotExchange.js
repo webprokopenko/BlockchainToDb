@@ -46,7 +46,7 @@ function parseAndSaveUSDT() {
                 || !body.data.quotes.USD || !body.data.quotes.USD.price) {
                 return StatsError.error(`parseAndSaveUSDT Error: price empty`)
             }
-            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'USDT-USD', 'value': body[0].price_usd })
+            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'USDT-USD', 'value': body.data.quotes.USD.price })
                 .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
         }
     );

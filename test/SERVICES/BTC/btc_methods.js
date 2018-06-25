@@ -26,7 +26,7 @@ module.exports = {
         } else return testData.block.hash;
     },
     getrawtransaction: (params) => {
-        if(!utils.isArray(params) || !utils.isString(params[0]) ||  !utils.isBoolean(params[1]))
+        if(!utils.isArray(params) || !utils.isString(params[0]))
         {
             throw Error('Wrong input params');
         } else return testData.rawTransaction;

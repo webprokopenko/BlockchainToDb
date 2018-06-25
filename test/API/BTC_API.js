@@ -5,11 +5,10 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../app.js');
 const should = chai.should();
-const bchData = {
-    legacy: '16G3nBgH8cEWkcTiDuzjzMunhNwaSRwrQH',
-    bitpay: 'CMiwME2M1fD3ekN8ufKfZsXpKW9zM4wwXy',
-    cash: 'bitcoincash:qqumzvpteg66fskct2wwnph7gcrvaf0u6vjum6mwe3',
-    transactionHash: '87329fae502377053b4d1f24daad70a94cf21cc4aa2f084ea584fe51104a4060',
+const testData = require(appRoot + '/test/SERVICES/BTC/btc_data.json');
+const btcData = {
+    address: 'ms4pEdg3zu4cdy9yjye1BUta9mwNGMTKgD', // testnet BTC
+    transactionHash: '0x87329fae502377053b4d1f24daad70a94cf21cc4aa2f084ea584fe51104a4060',
     transactionKeys: [
         'timestamp' ,'blockhash' ,'blockheight', 'txid', 'version', 'locktime', 'size',
         'vin', 'vout'
@@ -25,11 +24,11 @@ const bchData = {
 
 chai.use(chaiHttp);
 
-describe('Bitcoin Cash apiv4.0', () => {
-    describe('/GET BCH getBalance', () => {
-        it('it should GET Bitcoin Cash address balance', done => {
+describe('Bitcoin apiv4.0', () => {
+    describe('/GET BTC getBalance', () => {
+        it('it should GET Bitcoin address balance', done => {
             chai.request(server)
-                .get('/api/v4.0/BCH/getBalance/' + bchData.legacy)
+                .get('/api/v4.0/BTC/getBalance/' + btcData.address)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -39,10 +38,10 @@ describe('Bitcoin Cash apiv4.0', () => {
                 });
         })
     });
-    describe('/GET BCH getUTXOs', () => {
-        it('it should GET Bitcoin Cash address unspent transactions array', done => {
+    describe('/GET BTC getUTXOs', () => {
+        it('it should GET Bitcoin address unspent transactions array', done => {
             chai.request(server)
-                .get('/api/v4.0/BCH/getUTXOs/' + bchData.legacy)
+                .get('/api/v4.0/BTC/getUTXOs/' + btcData.address)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -50,34 +49,34 @@ describe('Bitcoin Cash apiv4.0', () => {
                     res.body.utxos.should.be.a('array');
                     if(res.body.utxos.length > 0) {
                         res.body.utxos[0].should.be.a('object');
-                        res.body.utxos[0].should.have.all.keys(bchData.utoxsKeys);
+                        res.body.utxos[0].should.have.all.keys(btcData.utoxsKeys);
                     }
                     done();
                 });
         })
     });
-    describe('/GET BCH getTxList', () => {
-        it('it should GET Bitcoin Cash address transactions array', done => {
+    describe('/GET BTC getTxList', () =>    {
+        it('it should GET Bitcoin address transactions array', done => {
             chai.request(server)
-                .get('/api/v4.0/BCH/getTxList/' + bchData.legacy)
+                .get('/api/v4.0/BTC/getTxList/' + btcData.address)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('txs');
                     if(res.body.txs.length > 0) {
                         res.body.txs[0].should.be.a('object');
-                        res.body.txs[0].should.have.all.keys(bchData.transactionKeys);
+                        res.body.txs[0].should.have.all.keys(btcData.transactionKeys);
                     }
                     done();
                 });
         })
     });
 });
-describe('Bitcoin Cash apiv4.2', () => {
-    describe('/GET BCH getBalance', () => {
-        it('it should GET Bitcoin Cash address balance', done => {
+describe('Bitcoin apiv4.2', () => {
+    describe('/GET BTC getBalance', () => {
+        it('it should GET Bitcoin address balance', done => {
             chai.request(server)
-                .get('/api/v4.2/BCH/getBalance/' + bchData.legacy)
+                .get('/api/v4.2/BCH/getBalance/' + btcData.address)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -87,10 +86,10 @@ describe('Bitcoin Cash apiv4.2', () => {
                 });
         })
     });
-    describe('/GET BCH getTxList', () => {
-        it('it should GET Bitcoin Cash address transactions array', done => {
+    describe('/GET BTC getTxList', () => {
+        it('it should GET Bitcoin address transactions array', done => {
             chai.request(server)
-                .get('/api/v4.2/BCH/getTxList/' + bchData.legacy)
+                .get('/api/v4.2/BTC/getTxList/' + btcData.address)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -100,16 +99,16 @@ describe('Bitcoin Cash apiv4.2', () => {
                     res.body.transactions.should.be.a('array');
                     if (res.body.transactions.length > 0) {
                         res.body.transactions[0].should.be.a('object');
-                        res.body.transactions[0].should.have.all.keys(bchData.transactionKeys);
+                        res.body.transactions[0].should.have.all.keys(btcData.transactionKeys);
                     }
                     done();
                 });
         })
     });
-    describe('/GET BCH getUTXOs', () => {
-        it('it should GET Bitcoin Cash address unspent transactions array', done => {
+    describe('/GET BTC getUTXOs', () => {
+        it('it should GET Bitcoin address unspent transactions array', done => {
             chai.request(server)
-                .get('/api/v4.2/BCH/getUTXOs/' + bchData.legacy)
+                .get('/api/v4.2/BTC/getUTXOs/' + btcData.address)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -118,20 +117,20 @@ describe('Bitcoin Cash apiv4.2', () => {
                     res.body.utxos.should.be.a('array');
                     if(res.body.utxos.length > 0) {
                         res.body.utxos[0].should.be.a('object');
-                        res.body.utxos[0].should.have.all.keys(bchData.utoxsKeys);
+                        res.body.utxos[0].should.have.all.keys(btcData.utoxsKeys);
                     }
                     done();
                 });
         })
     });
-    describe('/GET BCH getTransactionById', () => {
-        it('it should GET Bitcoin Cash raw transaction', done => {
+    describe('/GET BTC getTransactionById', () => {
+        it('it should GET Bitcoin raw transaction', done => {
             chai.request(server)
-                .get('/api/v4.2/BCH/getTransactionById/' + bchData.transactionHash)
+                .get('/api/v4.2/BTC/getTransactionById/' + btcData.transactionHash)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.all.keys(bchData.rawTransactionKeys);
+                    res.body.should.have.all.keys(Object.keys(testData.rawTransaction));
                     done();
                 });
         })

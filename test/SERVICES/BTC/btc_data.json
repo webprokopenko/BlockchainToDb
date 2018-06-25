@@ -89,5 +89,56 @@
       }
     ],
     "vsize": 226
+  },
+  "rawTransaction": {
+    "hex": "01000000019022e78642556532aab2050dc02a35be578edc7e7ec4f9192078220dbe4fbdb0000000006b483045022100917f5d0811e889fb99c9bd419256372ba871bb50ef3dceccc2016f7be92def50022033e8af654ebb60fe4d5ff1e967c879e1bf3a01a74545b63c562dd914d39cdd94412103e2edec7fba04d8d364c9dc82aa157093bb725c1d730f965b87a067259b84bbffffffffff02f0c70600000000001976a91469cd4bad52a9fa315e911d1ef1c7ddd26bd06b1b88ac4ad80000000000001976a91433db1e9ad789c63001e45026b2e51ad121ad597988ac00000000",
+    "txid": "be172342528e4f0a6b71870143a24708dc4c4e4c8063a5a707b75640420cfa74",
+    "hash": "be172342528e4f0a6b71870143a24708dc4c4e4c8063a5a707b75640420cfa74",
+    "size": 226,
+    "version": 1,
+    "locktime": 0,
+    "vin": [
+      {
+        "txid": "b0bd4fbe0d22782019f9c47e7edc8e57be352ac00d05b2aa3265554286e72290",
+        "vout": 0,
+        "scriptSig": {
+          "asm": "3045022100917f5d0811e889fb99c9bd419256372ba871bb50ef3dceccc2016f7be92def50022033e8af654ebb60fe4d5ff1e967c879e1bf3a01a74545b63c562dd914d39cdd94[ALL|FORKID] 03e2edec7fba04d8d364c9dc82aa157093bb725c1d730f965b87a067259b84bbff",
+          "hex": "483045022100917f5d0811e889fb99c9bd419256372ba871bb50ef3dceccc2016f7be92def50022033e8af654ebb60fe4d5ff1e967c879e1bf3a01a74545b63c562dd914d39cdd94412103e2edec7fba04d8d364c9dc82aa157093bb725c1d730f965b87a067259b84bbff"
+        },
+        "sequence": 4294967295
+      }
+    ],
+    "vout": [
+      {
+        "value": 0.004444,
+        "n": 0,
+        "scriptPubKey": {
+          "asm": "OP_DUP OP_HASH160 69cd4bad52a9fa315e911d1ef1c7ddd26bd06b1b OP_EQUALVERIFY OP_CHECKSIG",
+          "hex": "76a91469cd4bad52a9fa315e911d1ef1c7ddd26bd06b1b88ac",
+          "reqSigs": 1,
+          "type": "pubkeyhash",
+          "addresses": [
+            "bitcoincash:qp5u6jad225l5v27jyw3auw8mhfxh5rtrvvtavzakw"
+          ]
+        }
+      },
+      {
+        "value": 0.0005537,
+        "n": 1,
+        "scriptPubKey": {
+          "asm": "OP_DUP OP_HASH160 33db1e9ad789c63001e45026b2e51ad121ad5979 OP_EQUALVERIFY OP_CHECKSIG",
+          "hex": "76a91433db1e9ad789c63001e45026b2e51ad121ad597988ac",
+          "reqSigs": 1,
+          "type": "pubkeyhash",
+          "addresses": [
+            "bitcoincash:qqeak85667yuvvqpu3gzdvh9rtgjrt2e0ysrnmcd7j"
+          ]
+        }
+      }
+    ],
+    "blockhash": "0000000000000000006bb1da1dddb20ebc0d0f2186c04aea5e2572895949390a",
+    "confirmations": 857,
+    "time": 1527241465,
+    "blocktime": 1527241465
   }
 }

@@ -55,24 +55,24 @@ describe('BCH mongodb lib', async () => {
     it('getTransactionslist', async () => {
         const txsList = await mongodbLib.getTransactionslist(bchData.cashSplit1);
         expect(txsList).to.be.an('array');
-        expect(txsList[0]._doc).to.be.an('object')
-            .that.have.all.keys(bchData.transactionKeys.concat(['__v', '_id']));
+        if(txsList.length > 0) {
+            expect(txsList[0]._doc).to.be.an('object')
+                .that.have.all.keys(bchData.transactionKeys.concat(['__v', '_id']));
+        }
     });
     it('save/remove Pending Transaction To MongoDb', async () => {
-        const tx = await BCHRpc.getRawTransaction(rawTx.txid);console.dir(tx);
+        const tx = await BCHRpc.getRawTransaction(rawTx.txid);
         const pendingTx = await mongodbLib.saveTempTransactionToMongoDb(tx);
         expect(pendingTx).to.equal(true);
         const remv = await mongodbLib.removeTempTransaction(tx.txid);
         expect(remv).to.equal(true);
     });
-    it('saveTransactionToMongoDb', async () => {});
     it('getLastBlock', async () => {
         const last = await mongodbLib.getLastBlock();
         expect(last).to.be.an('number');
     });
 });
 describe('BCH RPC lib', async () => {
-    it('sendRawTransaction', async () => {});
     it('getBlockCount', async () => {
         const blockCount = await BCHRpc.getBlockCount();
         expect(blockCount).to.be.an('number');
@@ -99,13 +99,22 @@ describe('BCH RPC lib', async () => {
     it('getUTXOs', async () => {
         const utxos = await BCHRpc.getUTXOs(bchData.cashSplit1);
         expect(utxos).to.be.an('array');
-        expect(utxos[0]).to.be.an('object')
-            .that.have.all.keys(bchData.utoxsKeys);
+        if(utxos.length > 0) {
+            expect(utxos[0]).to.be.an('object')
+                .that.have.all.keys(bchData.utoxsKeys);
+        }
     });
     it('getTxsByAddress', async () => {
         const txs = await BCHRpc.getTxsByAddress(bchData.cashSplit1);
         expect(txs).to.be.an('array');
-        expect(txs[0]).to.be.an('object')
-            .that.have.all.keys(bchData.transactionKeys);
+        if(txs.length > 0) {
+            expect(txs[0]).to.be.an('object')
+                .that.have.all.keys(bchData.transactionKeys);
+        }
+    });
+    it('getRawTransaction', async () => {
+        const tx = await BCHRpc.getRawTransaction(bchData.transactionHash);
+        expect(tx).to.be.an('object');
+        // .that.have.all.keys(Object.keys(rawTx));
     });
 });
