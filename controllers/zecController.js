@@ -2,11 +2,6 @@ const   gethZEClocal = require(`${appRoot}/lib/zcash/getZECzcash.js`),
     Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`),
     zecConfig = require(`${appRoot}/config/config.json`).ZECRpc;
 
-//Intel logger setup
-const intel = require('intel');
-const ZecError = intel.getLogger('ZecError');
-ZecError.setLevel(ZecError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/zec/error.log`));
-
 async function getBalance(address){
     if(!Utils.isZAddress(address, zecConfig.network))
         return {error: 'Incorrect address - ' + address};
