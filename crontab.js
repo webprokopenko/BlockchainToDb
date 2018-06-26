@@ -20,10 +20,10 @@ function run(){
     // setInterval(() => {
     //     BitKindTxsToMongoScan.scanTxsToMongo('BCH');
     // }, 3 * 60 * 1000);
-    // BitKindTxsToMongoScan.scanTxsToMongo('LTC');
-    // setInterval(() => {
-    //     BitKindTxsToMongoScan.scanTxsToMongo('LTC');
-    // }, 30 * 1000);
+    BitKindTxsToMongoScan.scanTxsToMongo('LTC');
+    setInterval(() => {
+        BitKindTxsToMongoScan.scanTxsToMongo('LTC');
+    }, 30 * 1000);
     /*BitKindTxsToMongoScan.scanTxsToMongo('BTG');
     setInterval(() => {
         BitKindTxsToMongoScan.scanTxsToMongo('BTG');

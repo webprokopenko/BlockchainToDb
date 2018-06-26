@@ -17,7 +17,7 @@ const ltcData = {
         'tx', 'time', 'mediantime', 'nonce', 'bits', 'difficulty', 'chainwork',
         'previousblockhash', 'nextblockhash'
     ],
-    transactionHash: '066b3c59e6b50b50c3295b7a5f633ee3e956b0fc7459401a98cae2db00301731',
+    transactionId: '6c0ce887a27f70084c4018752b30b0b96ba8cb9968d6d748ead61064defcc549',
     transactionKeys: [
         'timestamp' ,'blockhash' ,'blockheight', 'txid', 'version', 'locktime', 'size',
         'vin', 'vout'
@@ -66,11 +66,11 @@ describe('LTC RPC lib', async () => {
         expect(txs).to.be.an('array');
         if (txs.length > 0) {
             expect(txs[0]).to.be.an('object')
-                .that.have.all.keys(btcData.transactionKeys);
+                .that.have.all.keys(ltcData.transactionKeys);
         }
     });
     it('getRawTransaction', async () => {
-        const tx = await LTCRpc.getRawTransaction(ltcData.transactionHash);
+        const tx = await LTCRpc.getRawTransaction(ltcData.transactionId);
         expect(tx).to.be.an('object')
             .that.have.all.keys(Object.keys(testData.rawTransaction));
     });

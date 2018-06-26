@@ -8,7 +8,7 @@ const should = chai.should();
 const testData = require(appRoot + '/test/SERVICES/LTC/ltc_data.json');
 const ltcData = {
     address: 'ms4pEdg3zu4cdy9yjye1BUta9mwNGMTKgD', // testnet LTC
-    transactionHash: '0x87329fae502377053b4d1f24daad70a94cf21cc4aa2f084ea584fe51104a4060',
+    transactionId: '6c0ce887a27f70084c4018752b30b0b96ba8cb9968d6d748ead61064defcc549',
     transactionKeys: [
         'timestamp' ,'blockhash' ,'blockheight', 'txid', 'version', 'locktime', 'size',
         'vin', 'vout'
@@ -126,7 +126,7 @@ describe('Litecoin apiv4.2', () => {
     describe('/GET LTC getTransactionById', () => {
         it('it should GET Litecoin raw transaction', done => {
             chai.request(server)
-                .get('/api/v4.2/LTC/getTransactionById/' + ltcData.transactionHash)
+                .get('/api/v4.2/LTC/getTransactionById/' + ltcData.transactionId)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
