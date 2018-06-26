@@ -2,11 +2,6 @@ const   gethBTGlocal = require(`${appRoot}/lib/bitcoin_gold/getBTGbitcoin_gold.j
     Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`),
     btgConfig = require(`${appRoot}/config/config.json`).BTGRpc;
 
-//Intel logger setup
-const intel = require('intel');
-const BtgError = intel.getLogger('BtgError');
-BtgError.setLevel(BtgError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/btg/error.log`));
-
 async function getBalance(address){
     if(!Utils.isAddress(address, btgConfig.network))
         return {error: 'Incorrect address - ' + address};
