@@ -59,7 +59,8 @@ if (argv.getblock && argv.getblock > 0) { // argv.getblock = block number
         getRpc.getBlockData(hash)
         .then(res=>{
             console.log('Result from getBlockData: ');
-            console.dir(res.tx[0].vout[0].scriptPubKey.addresses);
+            //console.dir(res.tx[0].vout[0].scriptPubKey.addresses);
+            console.dir(JSON.stringify(res));
         })
         .catch(e=>{
             console.log('error');
