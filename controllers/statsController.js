@@ -1,16 +1,13 @@
 const exchange = require(`${appRoot}/lib/mongodb/exchange`);
 const dbHotExchangeLib = require(`${appRoot}/lib/mongodb/hot_exchange.js`);
-//Intel logger setup
-const intel = require('intel');
-const StatsError = intel.getLogger('StatsError');
-StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/stats/error.log`));
+const handlerErr = require(`${appRoot}/errors/HandlerErrors`);
 
 async function getHotExchange(pair){
     try{
         return await dbHotExchangeLib.getHotExchange(pair);
     }
     catch(error){
-        throw new Error(`Error: getHotExchange: ${error}`);
+        new handlerErr(error);
     }
 }
 /**
@@ -31,8 +28,7 @@ async function getGdax(pair, countMonths){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getGdax: ${error}`);
-        throw new Error('Service error');
+        new handlerErr(error);
     }
 }
 async function getGdaxDay(pair){
@@ -45,8 +41,7 @@ async function getGdaxDay(pair){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getGdaxDay: ${error}`);
-        throw new Error('Service error');
+        new handlerErr(error);
     }
 }
 async function getGdaxWeek(pair){
@@ -58,8 +53,7 @@ async function getGdaxWeek(pair){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getGdaxWeek: ${error}`);
-        throw new Error('Service error');
+        new handlerErr(error);
     }
 }
 async function getGdaxAll(pair){
@@ -69,8 +63,7 @@ async function getGdaxAll(pair){
         let list = await exchange.getExchangeList(1, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getGdaxAll: ${error}`);
-        throw new Error('Service error');
+        new handlerErr(error);
     }
 }
 /**
@@ -91,8 +84,7 @@ async function getBitfinex(pair, countMonths){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinex: ${error}`);
-        throw new Error('Service error');
+        new handlerErr(error);
     }
 }
 async function getBitfinexDay(pair){
@@ -105,8 +97,7 @@ async function getBitfinexDay(pair){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinexDay: ${error}`);
-        throw new Error('Service error');
+        new handlerErr(error);
     }
 }
 async function getBitfinexWeek(pair){
@@ -118,8 +109,7 @@ async function getBitfinexWeek(pair){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinexWeek: ${error}`);
-        throw new Error('Service error');
+        new handlerErr(error);
     }
 }
 async function getBitfinexAll(pair){
@@ -129,8 +119,7 @@ async function getBitfinexAll(pair){
         let list = await exchange.getExchangeList(2, pair, from, to);
         return list;
     } catch (error) {
-        StatsError.error(`Error: getBitfinexAll: ${error}`);
-        throw new Error('Service error');
+        new handlerErr(error);
     }
 }
 module.exports = {

@@ -34,6 +34,9 @@ module.exports = class HandlerErrors {
         this.listClient.set('eth', 'Ethereum');
         this.listClient.set('btc', 'Bitcoin');
         this.listClient.set('bch', 'BitcoinCash');
+        this.listClient.set('btg', 'BitcoinGold');
+        this.listClient.set('ltc', 'Litecoin');
+        this.listClient.set('sts', 'Stats');
     }
 }
 
