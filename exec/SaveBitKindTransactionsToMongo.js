@@ -4,9 +4,50 @@ const path = require('path');
 global.appRoot = path.resolve(__dirname);
 global.appRoot = global.appRoot.replace('/exec','');
 const bitSave = require('./BitKindTransactionsToMongo');
-const getRpc = require(`${appRoot}/lib/bitcoin/getBTCbitcoin`);
+
+let getRpc = null;
+let dbTransactionLib = null;
+
+function _init(currency) {
+    const curr = {
+        'BTC': {
+            rpc: `${appRoot}/lib/bitcoin/getBTCbitcoin`,
+            dbLib: `${appRoot}/lib/mongodb/btctransactions`
+        },
+        'BCH': {
+            rpc: `${appRoot}/lib/bitcoin_cash/getBCHbitcoin_cash`,
+            dbLib: `${appRoot}/lib/mongodb/bchtransactions`
+        },
+        'BTG': {
+            rpc: `${appRoot}/lib/bitcoin_gold/getBTGbitcoin_gold`,
+            dbLib: `${appRoot}/lib/mongodb/btgtransactions`
+        },
+        'LTC': {
+            rpc: `${appRoot}/lib/litecoin/getLTClitecoin`,
+            dbLib: `${appRoot}/lib/mongodb/ltctransactions`
+        },
+        'ZEC': {
+            rpc: `${appRoot}/lib/zcash/getZECzcash`,
+            dbLib: `${appRoot}/lib/mongodb/zectransactions`
+        },
+        'XMR': {
+            rpc: `${appRoot}/lib/monero/getXMRmonero`,
+            dbLib: `${appRoot}/lib/mongodb/xmrtransactions`
+        }
+    };
+    if(!curr[currency]) {
+        getRpc = require(`${appRoot}/lib/bitcoin/getBTCbitcoin`);
+        dbTransactionLib = require(`${appRoot}/lib/mongodb/btctransactions`);
+    } else {
+        getRpc = require(curr[currency].rpc);
+        dbTransactionLib = require(curr[currency].dbLib);
+    }
+}
 
 const argv = require('minimist')(process.argv.slice(2));
+
+if (argv.code) _init(argv.code);
+
 if (argv.from && argv.to && argv.order && argv.code) {
     console
         .log(`Scan and save ${argv.code} from:${argv.from} to:${argv.to} Start... `);

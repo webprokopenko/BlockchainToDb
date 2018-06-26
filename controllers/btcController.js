@@ -69,7 +69,7 @@ async function getTxList(address){
 async function getAllTxList(address, page = 0){
     try {
         if(!Utils.isAddress(address, btcConfig.network))
-            throw new Error('Address not valid in Ethereum');
+            throw new Error('Address not valid in Bitcoin');
         if(page<0)
             throw new Error('Page invalid');
         const countTransaction = await btcTransaction.getCountTransaction(address);
