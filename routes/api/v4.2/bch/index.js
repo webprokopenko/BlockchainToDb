@@ -43,7 +43,9 @@ app.get('/getUTXOs/:address/:page', (req, res, next) => {
     const address = req.params.address;
     bchController.getUTXOsP(address, page)
         .then(response => {
-            res.send(response);
+            res.send({
+                utxos: response.utxos
+            });
         })
         .catch(error => {
             next(error)
