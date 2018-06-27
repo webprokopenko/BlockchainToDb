@@ -18,7 +18,6 @@ app.get('/getTransactionsList/:address/:page', (req, res, next) => {
     const address = req.params.address;
     ethController.getAllTransactionList(address, page)
         .then(transactions => {
-            res.setHeader('TrPages', transactions.pages);
             res.send(transactions.transactions);
         })
         .catch(error => {

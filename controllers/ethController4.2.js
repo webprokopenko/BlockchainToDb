@@ -53,7 +53,6 @@ async function getAllTransactionList(address, page=0){
         const transactionList = await ethTransaction.getAllTransactionList(address, 50, page*50);
 
         return    {
-            'pages': pages,
             'transactions': transactionList
         }
     } catch (error) {
