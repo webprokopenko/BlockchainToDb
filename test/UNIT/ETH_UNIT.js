@@ -10,6 +10,11 @@ const ETHtransactions = require(`${appRoot}/lib/mongodb/ethtransactions`);
 
 const TEST_DATA = require('../test-data.json');
 
+describe('ETH utils', () => {
+    it('is ETH Address', () => {
+        expect(utils.isAddress(TEST_DATA.contract.validAddress)).to.equal(true);
+    })
+});
 describe('ETHRpc', async () => {
     it('getBlockData() should return data in block', async () => {
         let BlockData = await ETHRpc.getBlockData(TEST_DATA.block.num);
