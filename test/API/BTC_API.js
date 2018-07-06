@@ -8,13 +8,14 @@ const should = chai.should();
 const testData = require(appRoot + '/test/SERVICES/BTC/btc_data.json');
 const btcData = {
     address: 'ms4pEdg3zu4cdy9yjye1BUta9mwNGMTKgD', // testnet BTC
-    transactionHash: '0x87329fae502377053b4d1f24daad70a94cf21cc4aa2f084ea584fe51104a4060',
+    transactionHash: '843480dc620615b94da12a037076a4bff85592d1d10952c158b5060d78ef6adc',
     transactionKeys: [
         'timestamp' ,'blockhash' ,'blockheight', 'txid', 'version', 'locktime', 'size',
         'vin', 'vout'
     ],
     rawTransactionKeys: [
-        'txid', 'version', 'locktime', 'size', 'vin', 'vout'
+        'time' ,'blockhash' ,'blocktime', 'txid', 'version', 'locktime', 'size',
+        'vin', 'vout', 'vsize','confirmations', 'hex', 'hash'
     ],
     balance: 0.000011,
     utoxsKeys: [
@@ -89,7 +90,7 @@ describe('Bitcoin apiv4.2', () => {
     describe('/GET BTC getTxList', () => {
         it('it should GET Bitcoin address transactions array', done => {
             chai.request(server)
-                .get('/api/v4.2/BTC/getTxList/' + btcData.address)
+                .get('/api/v4.2/BTC/getTransactionsList/' + btcData.address)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -130,7 +131,7 @@ describe('Bitcoin apiv4.2', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.all.keys(Object.keys(testData.rawTransaction));
+                    res.body.should.have.all.keys(btcData.rawTransactionKeys);
                     done();
                 });
         })

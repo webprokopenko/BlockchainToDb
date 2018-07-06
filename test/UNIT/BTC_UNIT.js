@@ -10,17 +10,28 @@ const mongodbLib = require(`${appRoot}/lib/mongodb/btctransactions`);
 const testData = require(appRoot + '/test/SERVICES/BTC/btc_data.json');
 
 const btcData = {
-    blockNum: 30000,
-    blockHash: '00000000de1250dc2df5cf4d877e055f338d6ed1ab504d5b71c097cdccd00e13',
+    blockNum: 1350026,
+    blockHash: '000000000000006a55547f3371c0dfacfb923dc65e1e2f7e8794334f1aeba783',
     blockKeys: [
         'hash', 'confirmations','strippedsize', 'size', 'height', 'weight' ,'version', 'versionHex', 'merkleroot',
         'tx', 'time', 'mediantime', 'nonce', 'bits', 'difficulty', 'chainwork',
         'previousblockhash', 'nextblockhash'
     ],
-    transactionHash: '87329fae502377053b4d1f24daad70a94cf21cc4aa2f084ea584fe51104a4060',
-    transactionKeys: [
-        'timestamp' ,'blockhash' ,'blockheight', 'txid', 'version', 'locktime', 'size',
-        'vin', 'vout'
+    transactionHash: '843480dc620615b94da12a037076a4bff85592d1d10952c158b5060d78ef6adc',
+    blockTransactionsKeys: [
+        'blockhash',
+        'blockheight',
+        'locktime',
+        'size',
+        'timestamp',
+        'txid',
+        'version',
+        'vin',
+        'vout'
+    ],
+    rawTransactionKeys: [
+        'time' ,'blockhash' ,'blocktime', 'txid', 'version', 'locktime', 'size',
+        'vin', 'vout', 'vsize','confirmations', 'hex', 'hash'
     ],
     balance: 0.000011,
     utoxsKeys: [
@@ -47,7 +58,7 @@ describe('BTC RPC lib', async () => {
         const txs = await BTCRpc.getTransactionsFromBlock(btcData.blockNum);
         expect(txs).to.be.an('array');
         expect(txs[0]).to.be.an('object')
-            .that.have.all.keys(btcData.transactionKeys);
+            .that.have.all.keys(btcData.blockTransactionsKeys);
     });
     it('getBalance', async () => {
         const balance = await BTCRpc.getBalance(btcData.address);
@@ -72,7 +83,7 @@ describe('BTC RPC lib', async () => {
     it('getRawTransaction', async () => {
         const tx = await BTCRpc.getRawTransaction(btcData.transactionHash);
         expect(tx).to.be.an('object')
-         .that.have.all.keys(Object.keys(testData.rawTransaction));
+         .that.have.all.keys(btcData.rawTransactionKeys);
     });
 });
 describe('BTC MongoDB lib', async () => {
@@ -82,4 +93,8 @@ describe('BTC MongoDB lib', async () => {
         const remvTx = await mongodbLib.removeTempTransaction(testData.PendingTransaction.txid);
         expect(remvTx).to.equal(true);
     });
+    it('Get Transactions List', async () => {
+        const txs = await mongodbLib.getAllTransactionList_('2NFMcjyW8XaeB4ruAzYcdyCNsSjhBVrUoDG', 1, 0);
+        console.log(txs);
+    })
 })

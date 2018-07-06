@@ -25,8 +25,8 @@ let BitcoinTransaction = new Schema({
             type:       String,
             index:      true
         },
-        value:          Number,
         addresses:      [String],
+        value:          Number,
         vout:           Number,
         scriptSig: {
             asm:        String,
