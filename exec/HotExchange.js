@@ -31,6 +31,82 @@ function parseAndSaveETHUSD() {
         }
     );
 }
+function parseAndSaveBTCUSD(){
+    request.get(url + 'bitcoin/?convert=USD',
+        async (error, response, body) => {
+            if (!body || body.length < 2) {
+                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
+            }
+            if (error) {
+                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
+            }
+            body = JSON.parse(body) || {};
+
+            if (!body[0].price_usd) {
+                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
+            }
+            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'BTC-USD', 'value': body[0].price_usd })
+                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
+        }
+    );
+}
+function parseAndSaveLTCUSD(){
+    request.get(url + 'litecoin/?convert=USD',
+        async (error, response, body) => {
+            if (!body || body.length < 2) {
+                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
+            }
+            if (error) {
+                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
+            }
+            body = JSON.parse(body) || {};
+
+            if (!body[0].price_usd) {
+                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
+            }
+            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'LTC-USD', 'value': body[0].price_usd })
+                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
+        }
+    );
+}
+function parseAndSaveBTGUSD(){
+    request.get(url + 'bitcoin-gold/?convert=USD',
+        async (error, response, body) => {
+            if (!body || body.length < 2) {
+                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
+            }
+            if (error) {
+                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
+            }
+            body = JSON.parse(body) || {};
+
+            if (!body[0].price_usd) {
+                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
+            }
+            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'BTG-USD', 'value': body[0].price_usd })
+                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
+        }
+    );
+}
+function parseAndSaveBCHUSD(){
+    request.get(url + 'bitcoin-cash/?convert=USD',
+        async (error, response, body) => {
+            if (!body || body.length < 2) {
+                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
+            }
+            if (error) {
+                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
+            }
+            body = JSON.parse(body) || {};
+
+            if (!body[0].price_usd) {
+                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
+            }
+            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'BCH-USD', 'value': body[0].price_usd })
+                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
+        }
+    );
+}
 function parseAndSaveUSDT() {
     request.get(url.replace('/v1', '/v2') + '825/?convert=USD',
         async (error, response, body) => {
@@ -53,5 +129,9 @@ function parseAndSaveUSDT() {
 }
 module.exports = {
     parseAndSaveETHUSD: parseAndSaveETHUSD,
-    parseAndSaveUSDT:   parseAndSaveUSDT
+    parseAndSaveUSDT:   parseAndSaveUSDT,
+    parseAndSaveBCHUSD: parseAndSaveBCHUSD,
+    parseAndSaveBTCUSD: parseAndSaveBTCUSD,
+    parseAndSaveLTCUSD: parseAndSaveLTCUSD,
+    parseAndSaveBTGUSD: parseAndSaveBTGUSD
 };
