@@ -1,10 +1,14 @@
 const config = require('../config/config');
+const handlerErrors = require('../errors/HandlerErrors');
 const ControllerFactory = require('../lib/ControllerFactory');
-const controllerFactory = new ControllerFactory(config.currencies, appRoot);
+const controllerFactory = new ControllerFactory(config.currencies, appRoot, handlerErrors);
 const controllers = [];
 config.routes.api.forEach(api => {
     config.currencies.forEach(curr => {
-        controllers.push(controllerFactory.getController(curr.code, api))
+        const controller = controllerFactory.getController(curr, api);
+        if (!controller) {
+            console.log('Controller Code: ' + curr.code + ' API: ' + api + ' start error');
+        } else controllers.push(controller);
     });
 });
 function originalUriParser(uri) {
