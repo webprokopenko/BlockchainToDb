@@ -22,6 +22,7 @@ app.use(bodyParser.json({ type: 'text/plain' }));
 app.use(bodyParser.urlencoded({extended: false}));
 //static file
 app.use(express.static(path.join(__dirname, 'public')));
+
 // add routes
 require('./routes')(app);
 
