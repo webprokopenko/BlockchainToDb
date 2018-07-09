@@ -87,7 +87,9 @@ async function getAllTxList(address, page = 0){
         const pages = Math.ceil(countTransaction/50);
         const pending = await bchTransaction.getPendingTransactions(addr);
         const transactionList = await bchTransaction.getAllTransactionList(addr, 50, page*50);
-
+        transactionList.map(tx => {
+            return bchTransaction.calculateTransactionFee(tx._doc);
+        });
         return    {
             'pages': pages,
             'pending': pending,
@@ -101,9 +103,9 @@ async function getAllTxList(address, page = 0){
 module.exports = {
     getBalance:             getBalance,
     sendRawTransaction:     sendRawTransaction,
+    getTransactionById:     getRawTransaction,
     getUTXOs:               getUTXOs,
     getUTXOsP:              getUTXOsP,
     getTxList:              getTxList,
-    getRawTransaction:      getRawTransaction,
     getAllTxList:           getAllTxList
 };

@@ -1,18 +1,6 @@
 let Schema = mongoose.Schema;
 
-let BitcoinGoldTransaction = new Schema({
-    blockheight:{
-        type:           Number,
-        index:          { unique: false }
-    },
-    blockhash:{
-        type:           String,
-        index:          { unique: false }
-    },
-    timestamp:{
-        type:           String,
-        index:          { unique: false }
-    },
+let BitcoinTransaction = new Schema({
     txid:{
         type:           String,
         index:          { unique: true }
@@ -22,12 +10,11 @@ let BitcoinGoldTransaction = new Schema({
     size:               Number,
     vin: [{
         txid:{
-            type:       String,
-            index:      true
+            type:       String
         },
+        vout:           Number,
         addresses:      [String],
         value:          Number,
-        vout:           Number,
         scriptSig: {
             asm:        String,
             hex:        String
@@ -51,4 +38,4 @@ let BitcoinGoldTransaction = new Schema({
     }]
 });
 
-mongoose.model('btgtransactions', BitcoinGoldTransaction);
+mongoose.model('btgtmptxs', BitcoinTransaction);

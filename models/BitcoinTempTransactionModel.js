@@ -1,6 +1,6 @@
 let Schema = mongoose.Schema;
 
-let BitcoinTransaction = new Schema({
+let BitcoinGoldTransaction = new Schema({
     txid:{
         type:           String,
         index:          { unique: true }
@@ -38,4 +38,4 @@ let BitcoinTransaction = new Schema({
     }]
 });
 
-mongoose.model('btctmptxs', BitcoinTransaction);
+mongoose.model('btctmptxs', BitcoinGoldTransaction);

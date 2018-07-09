@@ -25,6 +25,8 @@ let LitecoinTransaction = new Schema({
             type:       String,
             index:      true
         },
+        addresses:      [String],
+        value:          Number,
         vout:           Number,
         scriptSig: {
             asm:        String,

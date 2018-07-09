@@ -76,7 +76,9 @@ async function getAllTxList(address, page = 0){
         const pages = Math.ceil(countTransaction/50);
         const pending = await btcTransaction.getPendingTransactions(address);
         const transactionList = await btcTransaction.getAllTransactionList(address, 50, page*50);
-
+        transactionList.map(tx => {
+            return btcTransaction.calculateTransactionFee(tx._doc);
+        });
         return    {
             'pages': pages,
             'pending': pending,

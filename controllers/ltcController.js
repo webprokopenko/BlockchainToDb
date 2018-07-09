@@ -76,7 +76,9 @@ async function getAllTxList(address, page = 0){
         const pages = Math.ceil(countTransaction/50);
         const pending = await ltcTransaction.getPendingTransactions(address);
         const transactionList = await ltcTransaction.getAllTransactionList(address, 50, page*50);
-
+        transactionList.map(tx => {
+            return ltcTransaction.calculateTransactionFee(tx._doc);
+        });
         return    {
             'pages': pages,
             'pending': pending,
