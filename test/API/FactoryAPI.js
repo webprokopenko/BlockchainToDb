@@ -22,8 +22,29 @@ const btcData = {
         'txid', 'vout', 'address', 'scriptPubKey', 'amount'
     ]
 };
+const ethData = {
+    testnet: {
+        address: '0xb4016d8ca33ab5970b1acdc3fb9a63a123a30638'
+    }
+};
 
 chai.use(chaiHttp);
+
+describe('Ethereum factory', () => {
+    describe('/GET ETH utxos', () => {
+        it('it should GET Ethereum address balance', done => {
+            chai.request(server)
+                .get('/api/v4.2/ETH/getBalance/' + ethData.testnet.address)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.all.keys(['balance']);console.dir(res.body);
+                    done();
+                });
+        })
+    });
+});
+
 describe('Bitcoin factory', () => {
     describe('/GET BTC utxos', () => {
         it('it should GET Bitcoin address utxos', done => {

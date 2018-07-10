@@ -1,13 +1,13 @@
 const config = require('../config/config');
 const handlerErrors = require('../errors/HandlerErrors');
 const ControllerFactory = require('../lib/ControllerFactory');
-const controllerFactory = new ControllerFactory(config.currencies, appRoot, handlerErrors);
+const controllerFactory = new ControllerFactory(config, appRoot, handlerErrors);
 const controllers = [];
 config.routes.api.forEach(api => {
     config.currencies.forEach(curr => {
         const controller = controllerFactory.getController(curr, api);
         if (controller.error) {
-            console.log('Controller Code: ' + curr.code + ' API: ' + api + ' start error ' +
+            console.log('Controller Code:' + curr.code + ' API:' + api + ' start error ' +
             controller.error.message);
         } else controllers.push(controller);
     });
@@ -29,13 +29,13 @@ function routeRun(req, res, next) {
         res.status(404).send('Wrong request route');
     } else {
         const controller = controllers.filter(controller => (
-            controller.code === route[3] && controller.api === route[4]
+            controller.code === route[3] && controller.apiVersion === route[2]
         ))[0];
-        if (!controller) {
+        if (!controller || !controller[route[4]]) {
             res.status(404).send('Wrong request api');
         } else {
             req.params = route.slice(5);
-            controller(req)
+            controller[route[4]](req)
                 .then(result => {
                     res.send(result);
                 })
@@ -46,6 +46,6 @@ function routeRun(req, res, next) {
         }
 }
 module.exports = (app) => {
-  app.get('/', routeRun);
+  app.use(routeRun);
   // app.post('/', selectRoute);
 };
