@@ -16,7 +16,7 @@ app.get('/sendRawTransaction/:raw', (req, res, next) =>{
 // get balance by address
 app.get('/getBalance/:address', (req, res, next) => {
     const address = req.params.address;
-    btcController.getBalance(address)
+    btcController.getBalanceNew(address)
         .then(balance => {
             res.send(balance);
 
@@ -25,10 +25,10 @@ app.get('/getBalance/:address', (req, res, next) => {
             next(error)
         })
 });
-// get balanceNew by address
-app.get('/getBalanceNew/:address', (req, res, next) => {
+// get balanceOld by address
+app.get('/getBalanceOld/:address', (req, res, next) => {
     const address = req.params.address;
-    btcController.getBalanceNew(address)
+    btcController.getBalance(address)
         .then(balance => {
             res.send(balance);
 
