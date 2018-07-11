@@ -34,8 +34,8 @@ function routeRun(req, res, next) {
         if (!controller || !controller[route[4]]) {
             res.status(404).send('Wrong request api');
         } else {
-            req.params = route.slice(5);
-            controller[route[4]](req)
+            const params = route.slice(5);
+            controller[route[4]](params)
                 .then(result => {
                     res.send(result);
                 })

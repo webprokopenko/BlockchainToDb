@@ -31,7 +31,7 @@ const ethData = {
 chai.use(chaiHttp);
 
 describe('Ethereum factory', () => {
-    describe('/GET ETH utxos', () => {
+    describe('/GET ETH address balance', () => {
         it('it should GET Ethereum address balance', done => {
             chai.request(server)
                 .get('/api/v4.2/ETH/getBalance/' + ethData.testnet.address)
@@ -46,22 +46,48 @@ describe('Ethereum factory', () => {
 });
 
 describe('Bitcoin factory', () => {
-    describe('/GET BTC utxos', () => {
-        it('it should GET Bitcoin address utxos', done => {
+    describe('/GET BTC address balance', () => {
+        it('it should GET Bitcoin address balance', done => {
             chai.request(server)
-                .get('/api/v4.2/BTC/getUTXOs/' + btcData.address + '/')
+                .get('/api/v4.2/BTC/getBalance/' + btcData.address)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.all.keys(['pages', 'utxos']);
-                    res.body.pages.should.be.a('number');
-                    res.body.utxos.should.be.a('array');
-                    if(res.body.utxos.length > 0) {
-                        res.body.utxos[0].should.be.a('object');
-                        res.body.utxos[0].should.have.all.keys(btcData.utoxsKeys);
-                    }
+                    res.body.should.have.all.keys(['balance']);console.dir(res.body);
                     done();
                 });
         })
     });
+    describe('/GET BTC address transactions', () => {
+        it('it should GET Bitcoin address transactions', done => {
+            chai.request(server)
+                .get('/api/v4.2/BTC/getTransactionsList/' + btcData.address)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.all.keys(['transactions', 'pages', 'pending']);
+                    done();
+                });
+        })
+    });
+    it('BTC Txs', async () => {
+        const DbBTC = require('../../lib/dbBTC');
+        const dbBTC = new DbBTC({
+            code: 'BTC',
+            name: 'Bitcoin',
+            network: 'testnet',
+            appRoot: '..',
+            apiVersion: 'v4.2',
+            handlerErrors: Error,
+            rpc: {host: '193.200.173.204',
+                port: 18331,
+                user: 'u',
+                pass: 'p',
+                timeout: 30000},
+            utils: require('../../lib/utils/commonUtils'),
+            rpcError: require('../../errors/RpcError')
+        });
+        const txs = await dbBTC.getTransactions(btcData.address, 50, 0);
+        console.log(txs.length);
+    })
 });
