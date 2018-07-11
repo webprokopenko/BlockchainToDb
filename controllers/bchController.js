@@ -15,6 +15,17 @@ async function getBalance(address){
         new handlerErr(error);
     }
 }
+async function getBalanceNew(address){
+    const addr = Utils.isLegacyBCHAddress(address, bchConfig.network)
+        || Utils.isBitpayBCHAddress(address, bchConfig.network)
+        || Utils.isBCHAddress(address, bchConfig.network);
+    if(!addr) throw new Error('address not valid in BCH');
+    try {
+        return {balance: await gethBCHlocal.getBalanceNew(addr)};
+    } catch (error) {
+        new handlerErr(error);
+    }
+}
 async function sendRawTransaction(raw){
     try {
         const txid = await gethBCHlocal.sendRawTransaction(raw);
@@ -102,6 +113,7 @@ async function getAllTxList(address, page = 0){
 
 module.exports = {
     getBalance:             getBalance,
+    getBalanceNew:          getBalanceNew,
     sendRawTransaction:     sendRawTransaction,
     getTransactionById:     getRawTransaction,
     getUTXOs:               getUTXOs,

@@ -25,6 +25,18 @@ app.get('/getBalance/:address', (req, res, next) => {
             next(error)
         })
 });
+// get balanceNew by address
+app.get('/getBalanceNew/:address', (req, res, next) => {
+    const address = req.params.address;
+    btgController.getBalanceNew(address)
+        .then(balance => {
+            res.send(balance);
+
+        })
+        .catch(error => {
+            next(error)
+        })
+});
 // get listUTXOs by address
 app.get('/getUTXOs/:address', (req, res, next) => {
     const address = req.params.address;

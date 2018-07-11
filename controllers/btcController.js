@@ -13,6 +13,15 @@ async function getBalance(address){
         new handlerErr(error);
     }
 }
+async function getBalanceNew(address){
+    if(!Utils.isAddress(address, btcConfig.network))
+        throw new Error('Address not valid in Bitcoin');
+    try {
+        return {balance: await gethBTClocal.getBalanceNew(address)};
+    } catch (error) {
+        new handlerErr(error);
+    }
+}
 async function sendRawTransaction(raw){
     try {
         const txid = await gethBTClocal.sendRawTransaction(raw);
@@ -91,6 +100,7 @@ async function getAllTxList(address, page = 0){
 
 module.exports = {
     getBalance:             getBalance,
+    getBalanceNew:          getBalanceNew,
     sendRawTransaction:     sendRawTransaction,
     getTransactionById:     getRawTransaction,
     getUTXOs:               getUTXOs,
