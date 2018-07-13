@@ -5,7 +5,7 @@ const handlerErr = require(`${appRoot}/errors/HandlerErrors`);
 const btgTransaction = require(`${appRoot}/lib/mongodb/btgtransactions`);
 
 async function getBalance(address){
-    if(!Utils.isAddress(address, btgConfig.network))
+    if(!Utils.isAddressBTG(address, btgConfig.network))
         throw new Error('Address not valid in Bitcoin');
     try {
         return {balance: await gethBTGlocal.getBalance(address)};
@@ -14,7 +14,7 @@ async function getBalance(address){
     }
 }
 async function getBalanceNew(address){
-    if(!Utils.isAddress(address, btgConfig.network))
+    if(!Utils.isAddressBTG(address, btgConfig.network))
         throw new Error('Address not valid in Bitcoin');
     try {
         return {balance: await gethBTGlocal.getBalanceNew(address)};
@@ -43,7 +43,7 @@ async function getRawTransaction(txid){
 }
 async function getUTXOs(address){
     try{
-        if(!Utils.isAddress(address, btgConfig.network))
+        if(!Utils.isAddressBTG(address, btgConfig.network))
             throw new Error('Address not valid in Bitcoin');
 
         return {utxos: await gethBTGlocal.getUTXOs(address)};
@@ -53,7 +53,7 @@ async function getUTXOs(address){
 }
 async function getUTXOsP(address, page = 0) {
     try{
-        if(!Utils.isAddress(address, btgConfig.network))
+        if(!Utils.isAddressBTG(address, btgConfig.network))
             throw new Error('Address not valid in Bitcoin');
         if(page<0)
             throw new Error('Page invalid');
@@ -68,7 +68,7 @@ async function getUTXOsP(address, page = 0) {
 }
 async function getTxList(address){
     try{
-        if(!Utils.isAddress(address, btgConfig.network))
+        if(!Utils.isAddressBTG(address, btgConfig.network))
             throw new Error('Address not valid in Bitcoin');
         return {txs: await gethBTGlocal.getTxsByAddress(address)};
     }catch (error){
@@ -77,7 +77,7 @@ async function getTxList(address){
 }
 async function getAllTxList(address, page = 0){
     try {
-        if(!Utils.isAddress(address, btgConfig.network))
+        if(!Utils.isAddressBTG(address, btgConfig.network))
             throw new Error('Address not valid in Bitcoin');
         if(page<0)
             throw new Error('Page invalid');
