@@ -1,6 +1,6 @@
 const config = require('../config/config');
 const handlerErrors = require('../errors/HandlerErrors');
-const ControllerFactory = require('../lib/ControllerFactory');
+const ControllerFactory = require('../controllers/ControllerFactory');
 const controllerFactory = new ControllerFactory(config, appRoot, handlerErrors);
 const controllers = [];
 config.routes.api.forEach(api => {
@@ -28,8 +28,8 @@ function routeRun(req, res, next) {
     ) {
         res.status(404).send('Wrong request route');
     } else {
-        const controller = controllers.filter(controller => (
-            controller.code === route[3] && controller.apiVersion === route[2]
+        const controller = controllers.filter(controll => (
+            controll.code === route[3] && controll.apiVersion === route[2]
         ))[0];
         if (!controller || !controller[route[4]]) {
             res.status(404).send('Wrong request api');
@@ -37,6 +37,12 @@ function routeRun(req, res, next) {
             const params = route.slice(5);
             controller[route[4]](params)
                 .then(result => {
+                    if(result.headers) {
+                        result.headers.forEach(header => {
+                            res.setHeader(header.key, header.value);
+                        });
+                        result.headers = undefined;
+                    }
                     res.send(result);
                 })
                 .catch(error => {

@@ -15,7 +15,7 @@ module.exports = class HandlerErrors {
                 case 208: {
                     GethLoger
                         .error(`${this.listClient
-                            .get(ErrorObj.client)} ${new Date()}: ${ErrorObj} code: ${ErrorObj.codeErr}`);
+                            .get(ErrorObj.client)} ${new Date()}: ${ErrorObj.message} code: ${ErrorObj.codeErr}`);
                     throw new RpcError(ErrorObj.message, ErrorObj.codeErr, ErrorObj.status);
                 }
                 default:

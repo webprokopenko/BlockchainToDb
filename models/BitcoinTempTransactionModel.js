@@ -13,7 +13,10 @@ let BitcoinGoldTransaction = new Schema({
             type:       String
         },
         vout:           Number,
-        addresses:      [String],
+        addresses:{
+            type:   [String],
+            index:  true
+        },
         value:          Number,
         scriptSig: {
             asm:        String,

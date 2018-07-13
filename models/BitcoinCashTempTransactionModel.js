@@ -12,7 +12,10 @@ let BitcoinCashTransaction = new Schema({
         txid:{
             type:       String
         },
-        addresses:      [String],
+        addresses:{
+            type:   [String],
+            index:  true
+        },
         value:          Number,
         vout:           Number,
         scriptSig: {

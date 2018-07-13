@@ -1,2 +1,3 @@
-function ControllerBTC() {}
+function ControllerBTC() {
+}
 module.exports = ControllerBTC;
