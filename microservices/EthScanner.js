@@ -12,18 +12,21 @@ const dbEthertransactionsLib = require(`../lib/mongodb/ethtransactions.js`);
 const scannerError = require(`../errors/ScannerError`);
 const handlerErr = require(`../errors/HandlerErrors`);
 
-const requester = new cote.Requester({name: 'Requester'});
+const ScanLogModel = require('../lib/mongodb/scanLog');
 
-async function getGasFromTransactionHash(trHash){
+const requester = new cote.Requester({ name: 'Requester' });
+const subscriber = new cote.Subscriber({ name: 'arbitration subscriber' });
+
+async function getGasFromTransactionHash(trHash) {
     return new Promise((resolve, reject) => {
-        requester.send({type:'getGasFromTransactionHash', trHash: trHash}, (res) => {
+        requester.send({ type: 'getGasFromTransactionHash', trHash: trHash }, (res) => {
             resolve(res);
         });
     })
 }
-async function getBlockData(numBlock){
+async function getBlockData(numBlock) {
     return new Promise((resolve, reject) => {
-        requester.send({type:'getBlockData', blockNum: numBlock}, (res) => {
+        requester.send({ type: 'getBlockData', blockNum: numBlock }, (res) => {
             resolve(res);
         });
     })
@@ -42,7 +45,7 @@ async function getTransactionFromETH(numBlock) {
         transaction.hash = element.hash;
         const gas = await getGasFromTransactionHash(element.hash);
         let gasUse = math.bignumber(gas.gasUsed);
-        transaction.status = gas.status;
+        transaction.status = true;
         let gasPrice = math.bignumber(Units.convert(element.gasPrice, 'wei', 'eth'));
         transaction.fee = math.multiply(gasPrice, gasUse).toFixed();
         transaction.timestamp = utils.convertHexToInt(blockData.timestamp);
@@ -61,7 +64,7 @@ async function saveBlockTransactionFromTo(from, to, order) {
     console.log(`Scan from ${from} to ${to} starting... `);
     const taskQue = new Quequ(order);
     for (let i = from; i <= to; i++) {
-            taskQue.pushTask(async done => {
+        taskQue.pushTask(async done => {
             try {
                 let blockData = await getTransactionFromETH(i);
                 if (blockData) {
@@ -70,17 +73,86 @@ async function saveBlockTransactionFromTo(from, to, order) {
                     }));
                 }
                 console.log(`BlockNum: ${i}`);
+                if(i === to){
+                    console.log('Finish!');
+                    //requester.send({type: 'arbit action', lastBlock:i},(res) => {console.log(res);});
+                } 
                 done();
             } catch (error) {
-                new handlerErr (new scannerError(`saveBlockTransactionFromTo Error Message: ${error}`, i, 'eth'));
+                if(parseInt(error.code) !== 11000){
+                    new handlerErr(new scannerError(`saveBlockTransactionFromTo Error Message: ${error}`, i, 'eth'));
+                }
                 done();
-                
+
             }
+            done();
         })
     }
 }
+function getAllBadBlocksFromLogs() {
+    console.log(`Scan bad blocks starting... `);
+    return new Promise((resolve, reject) => {
+        ScanLogModel.getLogs()
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            })
+    })
+}
+async function parseBadBlocks() {
+    const taskQue = new Quequ(10);
+    taskQue.pushTask(async done => {
+        try {
+            let badBlocks = await getAllBadBlocksFromLogs();
+            if (badBlocks) {
+                await Promise.all(badBlocks.map(async (element) => {
+                    let blockData = await getTransactionFromETH(element.blockNum)
+                    if (blockData) {
+                        await Promise.all(blockData.map(async (tr) => {
+                            dbEthertransactionsLib.saveBlockTransactionToMongoDb(tr)
+                            .then(() => {
+                                ScanLogModel.setStatusTrueLogByBlockId(tr.blockNum);
+                                console.log(`Bad BlockNum: ${tr.blockNum}`);
+                            })
+                            .catch(e => {
+                                console.log('Not Save!!');
+                                ScanLogModel.setLastTryLogByBlockId(element.blockNum);
+                            })
+                        }));
+                    }
+                }));
+            }
+            done();
+        } catch (error) {
+            console.log(error);
+            done();
+        }
+    })
+}
+
 try {
-    saveBlockTransactionFromTo(300000,300020,10);    
+    requester.send({type: 'arbit action'},(res) => {console.log(res);});
+
+    subscriber.on('update range', (update) => {
+       console.log(update.from);
+       console.log(update.to);
+        saveBlockTransactionFromTo(321450, 321640 ,10);    
+    });
+
+    // getTransactionFromETH(300004)
+    //     .then(data=>{
+    //         console.log(data);
+    //     })
+    //     .catch(e=>{
+    //         console.log(e);
+    //     })
+
+    //parseBadBlocks();
+    //saveBlockTransactionFromTo(320140,320160,10);    
+    //ScanLogModel.setStatusTrueLogByBlockId(300003);
+
 } catch (error) {
     console.log(error);
 }
