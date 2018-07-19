@@ -140,6 +140,7 @@ if (argv) {
         })
     }
     if (argv.getblock && argv.getblock > 0) {
+        console.log('Get block');
         getETHRpc.getBlockData(argv.getblock).then(block => {
             console.log(block);
         })
