@@ -42,6 +42,7 @@ async function getTransactionFromETH(numBlock) {
         transaction.hash = element.hash;
         const gas = await getETHRpc.getGasFromTransactionHash(element.hash);
         let gasUse = math.bignumber(gas.gasUsed);
+        console.log(gas.status);
         transaction.status = gas.status;
         let gasPrice = math.bignumber(Units.convert(element.gasPrice, 'wei', 'eth'));
         transaction.fee = math.multiply(gasPrice, gasUse).toFixed();
@@ -139,6 +140,7 @@ if (argv) {
         })
     }
     if (argv.getblock && argv.getblock > 0) {
+        console.log('Get block');
         getETHRpc.getBlockData(argv.getblock).then(block => {
             console.log(block);
         })
