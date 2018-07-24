@@ -35,9 +35,11 @@ responder.on('arbit action', (req, cb) => {
     console.log(req);
     range.from = 320450;//await getLastBlockfromDB();
     range.to =  320640// await getLatestBlockfromEth();
-    if(req.lastBlock){
-        range.from = 330340;//await getLastBlockfromDB();
-        range.to =  340340// await getLatestBlockfromEth();
+    console.log(req.lastBLock);
+    if(req.lastBLock){
+        console.log('getLastBlock: !!' + req.lastBLock)
+        range.from = req.lastBLock;//await getLastBlockfromDB();
+        range.to =  320680// await getLatestBlockfromEth();
     }
     
 
