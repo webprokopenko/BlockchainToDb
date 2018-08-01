@@ -13,6 +13,15 @@ async function getBalance(address){
         new handlerErr(error);
     }
 }
+async function getBalanceNew(address){
+    if(!Utils.isAddress(address, ltcConfig.network))
+        throw new Error('Address not valid in Litecoin');
+    try {
+        return {balance: await gethLTClocal.getBalanceNew(address)};
+    } catch (error) {
+        new handlerErr(error);
+    }
+}
 async function sendRawTransaction(raw){
     try {
         const txid = await gethLTClocal.sendRawTransaction(raw);
@@ -76,7 +85,9 @@ async function getAllTxList(address, page = 0){
         const pages = Math.ceil(countTransaction/50);
         const pending = await ltcTransaction.getPendingTransactions(address);
         const transactionList = await ltcTransaction.getAllTransactionList(address, 50, page*50);
-
+        transactionList.map(tx => {
+            return ltcTransaction.calculateTransactionFee(tx._doc);
+        });
         return    {
             'pages': pages,
             'pending': pending,
@@ -94,5 +105,6 @@ module.exports = {
     getUTXOs:               getUTXOs,
     getUTXOsP:              getUTXOsP,
     getTxList:              getTxList,
-    getAllTxList:           getAllTxList
+    getAllTxList:           getAllTxList,
+    getBalanceNew:          getBalanceNew
 };

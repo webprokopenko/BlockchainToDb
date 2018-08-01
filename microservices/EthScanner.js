@@ -9,33 +9,21 @@ const handlerErr = require(`../errors/HandlerErrors`);
 
 const requester = new cote.Requester({ name: 'Requester' });
 const subscriber = new cote.Subscriber({ name: 'arbitration subscriber' });
-
-try {
-    requester.send({ type: 'arbit action' }, (res) => { console.log(res); });
-
-    subscriber.on('update range', (update) => {
-        try {
-            console.log(update.from);
-            console.log(update.to);
-            if(parseInt(update.to - update.from) < 10){
-                setTimeout(
-                    scanLibEth.saveBlockTransactionFromTo(update.from, update.to, 10, function(){
-                        scanLibEth.checkBadBlocks(3, function(){
-                            requester.send({ type: 'arbit action' }, (res) => { console.log(res); });
-                        });
-                    }),
-                60000);
-            }else{
-                scanLibEth.saveBlockTransactionFromTo(update.from, update.to, 10, function(){
-                    scanLibEth.checkBadBlocks(3, function(){
-                        requester.send({ type: 'arbit action' }, (res) => { console.log(res); });
-                    });
-                });    
-            }
-        } catch (error) {
-            new handlerErr(error);
+requester.send({ type: 'arbit action' });
+subscriber.on('update range', (update) => {
+    try {
+        if (update.to - update.from < 100) {
+            setTimeout(() => {
+                scanLibEth.scan(update.from, update.to, (lastBlock) => {
+                    requester.send({ type: 'arbit action', lastBLock: lastBlock });
+                });
+            }, 60000);
+        } else {
+            scanLibEth.scan(update.from, update.to, (lastBlock) => {
+                requester.send({ type: 'arbit action', lastBLock: lastBlock });
+            });
         }
-    });
-} catch (error) {
-    console.log(error);
-}
+    } catch (error) {
+        new handlerErr(error);
+    }
+});

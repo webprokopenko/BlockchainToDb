@@ -16,6 +16,18 @@ app.get('/sendRawTransaction/:raw', (req, res, next) =>{
 // get balance by address
 app.get('/getBalance/:address', (req, res, next) => {
     const address = req.params.address;
+    ltcController.getBalanceNew(address)
+        .then(balance => {
+            res.send(balance);
+
+        })
+        .catch(error => {
+            next(error)
+        })
+});
+// get balanceOld by address
+app.get('/getBalanceOld/:address', (req, res, next) => {
+    const address = req.params.address;
     ltcController.getBalance(address)
         .then(balance => {
             res.send(balance);

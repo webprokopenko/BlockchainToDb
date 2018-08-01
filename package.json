@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "base-64": "^0.1.0",
+    "bgoldjs-lib": "^3.3.3",
     "bignumber": "^1.1.0",
     "bignumber.js": "^2.4.0",
     "bitcoincashjs": "^0.1.10",

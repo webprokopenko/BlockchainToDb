@@ -1,11 +1,11 @@
 const express = require('express');
 const app = module.exports = express();
-const bchController = require(`${appRoot}/controllers/bchController`);
+const btgController = require(`${appRoot}/controllers/btgController`);
 
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{
     const raw = req.params.raw;
-    bchController.sendRawTransaction(raw)
+    btgController.sendRawTransaction(raw)
         .then(response => {
             res.send(response);
         })
@@ -16,7 +16,7 @@ app.get('/sendRawTransaction/:raw', (req, res, next) =>{
 // get balance by address
 app.get('/getBalance/:address', (req, res, next) => {
     const address = req.params.address;
-    bchController.getBalanceNew(address)
+    btgController.getBalanceNew(address)
         .then(balance => {
             res.send(balance);
 
@@ -28,7 +28,7 @@ app.get('/getBalance/:address', (req, res, next) => {
 // get balanceOld by address
 app.get('/getBalanceOld/:address', (req, res, next) => {
     const address = req.params.address;
-    bchController.getBalance(address)
+    btgController.getBalance(address)
         .then(balance => {
             res.send(balance);
 
@@ -40,7 +40,7 @@ app.get('/getBalanceOld/:address', (req, res, next) => {
 // get listUTXOs by address
 app.get('/getUTXOs/:address', (req, res, next) => {
     const address = req.params.address;
-    bchController.getUTXOsP(address, 0)
+    btgController.getUTXOsP(address, 0)
         .then(response => {
             res.setHeader('UtxoPages', response.pages);
             res.send(response);
@@ -53,7 +53,7 @@ app.get('/getUTXOs/:address', (req, res, next) => {
 app.get('/getUTXOs/:address/:page', (req, res, next) => {
     const page = parseInt(req.params.page);
     const address = req.params.address;
-    bchController.getUTXOsP(address, page)
+    btgController.getUTXOsP(address, page)
         .then(response => {
             res.send({
                 utxos: response.utxos
@@ -66,7 +66,7 @@ app.get('/getUTXOs/:address/:page', (req, res, next) => {
 //get txs list by address
 app.get('/getTransactionsList/:address', (req,res, next) => {
     const address = req.params.address;
-    bchController.getAllTxList(address, 0)
+    btgController.getAllTxList(address, 0)
         .then(transactions => {
             res.setHeader('TrPages', transactions.pages);
             res.send(transactions);
@@ -79,7 +79,7 @@ app.get('/getTransactionsList/:address', (req,res, next) => {
 app.get('/getTransactionsList/:address/:page', (req,res, next) => {
     const page = parseInt(req.params.page);
     const address = req.params.address;
-    bchController.getAllTxList(address, page)
+    btgController.getAllTxList(address, page)
         .then(transactions => {
             res.send({
                 pending:        transactions.pending,
@@ -93,7 +93,7 @@ app.get('/getTransactionsList/:address/:page', (req,res, next) => {
 // get raw transaction by id
 app.get('/getTransactionById/:txid', (req, res, next) => {
     const txid = req.params.txid;
-    bchController.getRawTransaction(txid)
+    btgController.getTransactionById(txid)
         .then(tx => {
             res.send(tx);
         })
