@@ -17,28 +17,25 @@ try {
         try {
             console.log(update.from);
             console.log(update.to);
-            //saveBlockTransactionFromTo(update.from, update.to ,10);
-            // scanLibEth.saveBlockTransactionFromTo(333000, 333300, 10, function(){
-            //     console.log('Save block finish')
-            // });    
-            scanLibEth.checkBadBlocks(3);
+            if(parseInt(update.to - update.from) < 10){
+                setTimeout(
+                    scanLibEth.saveBlockTransactionFromTo(update.from, update.to, 10, function(){
+                        scanLibEth.checkBadBlocks(3, function(){
+                            requester.send({ type: 'arbit action' }, (res) => { console.log(res); });
+                        });
+                    }),
+                60000);
+            }else{
+                scanLibEth.saveBlockTransactionFromTo(update.from, update.to, 10, function(){
+                    scanLibEth.checkBadBlocks(3, function(){
+                        requester.send({ type: 'arbit action' }, (res) => { console.log(res); });
+                    });
+                });    
+            }
         } catch (error) {
             new handlerErr(error);
         }
     });
-
-    // getTransactionFromETH(300004)
-    //     .then(data=>{
-    //         console.log(data);
-    //     })
-    //     .catch(e=>{
-    //         console.log(e);
-    //     })
-
-    //parseBadBlocks();
-    //saveBlockTransactionFromTo(320140,320160,10);    
-    //ScanLogModel.setStatusTrueLogByBlockId(300003);
-
 } catch (error) {
     console.log(error);
 }

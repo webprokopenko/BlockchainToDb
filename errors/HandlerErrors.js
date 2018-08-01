@@ -10,6 +10,9 @@ const intel = require('intel');
 const GethLoger =  intel.getLogger('GethError');
 GethLoger.setLevel(GethLoger.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/geth/error.log`));
 
+const config = require('./config/config.json');
+const telegramBot = require('node-telegram-bot-api');
+let botError = new telegramBot(config.telegram_token, {polling: true});
 
 module.exports = class HandlerErrors {
     constructor(ErrorObj) {
@@ -18,13 +21,14 @@ module.exports = class HandlerErrors {
             switch (ErrorObj.codeErr) {
                 case 208: {
                     GethLoger
-                        .error(`${this.listClient
-                            .get(ErrorObj.client)} ${new Date()}: ${ErrorObj} code: ${ErrorObj.codeErr}`);
+                        .error(`${this.listClient.get(ErrorObj.client)} ${new Date()}: ${ErrorObj} code: ${ErrorObj.codeErr}`);
+                    botError.sendMessage(config.telegram_chat_id, `${this.listClient.get(ErrorObj.client)} ${new Date()}: ${ErrorObj} code: ${ErrorObj.codeErr}`);
                     throw new RpcError(ErrorObj.message, ErrorObj.codeErr, ErrorObj.status);
                 }
                 default:
                     GethLoger
                         .error(`${this.listClient.get(ErrorObj.client)} ${new Date()}: ${ErrorObj} code: ${ErrorObj.codeErr}`);
+                        botError.sendMessage(config.telegram_chat_id, `${this.listClient.get(ErrorObj.client)} ${new Date()}: ${ErrorObj} code: ${ErrorObj.codeErr}`);    
                     throw new RpcError(`Service error`, ErrorObj.codeErr, ErrorObj.status)
             }
         }else if(ErrorObj instanceof ScannerError) {
@@ -37,7 +41,7 @@ module.exports = class HandlerErrors {
                     blockNum:ErrorObj.blockNum,
                     status:false
                 })
-                console.log(ErrorObj.message + ErrorObj.blockNum + ErrorObj.blockChain);
+                botError.sendMessage(config.telegram_chat_id, `${ErrorObj.message} ${ErrorObj.blockNum}  ${ErrorObj.blockChain}`);
         }else if (ErrorObj instanceof AppError) {
             throw new AppError(`Application error`, ErrorObj.codeErr, ErrorObj.status)
         }else {
