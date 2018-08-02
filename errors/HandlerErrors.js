@@ -10,7 +10,7 @@ const intel = require('intel');
 const GethLoger =  intel.getLogger('GethError');
 GethLoger.setLevel(GethLoger.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/geth/error.log`));
 
-const config = require('./config/config.json');
+const config = require('../config/config.json');
 const telegramBot = require('node-telegram-bot-api');
 let botError = new telegramBot(config.telegram_token, {polling: true});
 
