@@ -10,6 +10,9 @@ const intel = require('intel');
 const GethLoger =  intel.getLogger('GethError');
 GethLoger.setLevel(GethLoger.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/geth/error.log`));
 
+const ErrorLoger =  intel.getLogger('ErrorLoger');
+ErrorLoger.setLevel(ErrorLoger.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/error.log`));
+
 const config = require('../config/config.json');
 const telegramBot = require('node-telegram-bot-api');
 let botError = new telegramBot(config.telegram_token, {polling: true});
@@ -45,6 +48,9 @@ module.exports = class HandlerErrors {
         }else if (ErrorObj instanceof AppError) {
             throw new AppError(`Application error`, ErrorObj.codeErr, ErrorObj.status)
         }else {
+            ErrorLoger
+                .error(`${new Date()}: ${ErrorObj}`);
+                botError.sendMessage(config.telegram_chat_id, `${new Date()}: ${ErrorObj}`);
             throw ErrorObj;
         }
     }

@@ -1,34 +1,34 @@
 const cote = require('cote');
-const BitKind = require('../lib/BitKind');
-const config = require('../config/config.json').BTGRpc;
-//Mongoose
-global.mongoose = require('mongoose');
-mongoose.connect(require('../config/config.json').mongodbConnectionString);
-//BTG
-const BTGTransactionLib = require('../lib/mongodb/btgtransactions');
-const BGOLD = new BitKind(config, BTGTransactionLib, 'btg');
-
+const scanBTG = require('../lib/scanBlockchain/scanBTG');
 const requester = new cote.Requester({ name: 'Requester BTG' });
 const subscriber = new cote.Subscriber({ name: 'arbitration subscriber BTG' });
 
-requester.send({ type: 'start scann' });
-subscriber.on('update range', (update) => {
+requester.send({ type: 'start scan BTG' });
+subscriber.on('update range BTG', (update) => {
+    console.log('subscriber update range BTG');
     try {
         console.log('Update from: ' + update.from + 'Update to: ' + update.to)
         if (update.to - update.from < 100) {
             setTimeout(() => {
-                BGOLD.scan(update.from, update.to, (lastblock)=>{
-                    console.log('FINISH! SCAN LAST BLOCK: '+ lastblock);
-                    requester.send({ type: 'start scan', lastBLock: lastBlock });
+                scanBTG.scan(update.from, update.to, (lastBlock)=>{
+                    console.log('FINISH! SCAN LAST BLOCK: '+ lastBlock);
+                    requester.send({ type: 'start scan BTG', lastBlock: lastBlock });
+                    scanBTG.checkBadBlocks(10, () => {
+                        console.log('Check bad blocks finish');
+                    })
+                    scanBTG.checkDBTransactionByBlockNum()
+                        .then(data => {
+                            console.log('Finish check DB transaction by block num');
+                        })
                 })
             }, 60000);
         } else {
-            scanLibEth.scan(update.from, update.to, (lastBlock) => {
-                console.log('FINISH! SCAN LAST BLOCK: '+ lastblock);
-                requester.send({ type: 'start scan', lastBLock: lastBlock });
+            scanBTG.scan(update.from, update.to, (lastBlock) => {
+                console.log('FINISH! SCAN LAST BLOCK: '+ lastBlock);
+                requester.send({ type: 'start scan BTG', lastBlock: lastBlock });
             });
         }
     } catch (error) {
-        new handlerErr(error);
+        new handlerErr(new scannerError(`BGoldScanner Error Message: ${error}`, 0, 'btg'));
     }
 });
