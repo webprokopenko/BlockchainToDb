@@ -1,7 +1,7 @@
 const cote = require('cote');
 const BitKind = require('../lib/BitKind');
 const config = require('../config/config.json').BTGRpc;
-
+const handlerErr = require(`../errors/HandlerErrors`);
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(require(`../config/config.json`).mongodbConnectionString);
@@ -19,25 +19,36 @@ async function getLastBlockfromDB() {
             .then(lastBlock => {
                 resolve(lastBlock);
             })
+            .catch(error => {
+                reject(error);
+            })
     });
 }
 async function getLastBlockfromBlockchain() {
     return new Promise((resolve, reject) => {
-        BGOLD.getBlockCount()
+        BGOLD.Rpc.getBlockCount()
             .then(lastBlock => {
                 resolve(lastBlock);
+            })
+            .catch(error => {
+                reject(error);
             })
     });
 }
 
 responder.on('start scan BTG', async (req, cb) => {
-    let range = {}
-    if(req.lastBlock){
-         range.from = req.lastBlock;
-         range.to =  await getLastBlockfromBlockchain()
-    }else{
-        range.from = await getLastBlockfromDB();
-        range.to =  await getLastBlockfromBlockchain();
+    try {
+        let range = {}
+        if(req.lastBlock){
+             range.from = req.lastBlock;
+             range.to =  await getLastBlockfromBlockchain()
+        }else{
+            range.from = await getLastBlockfromDB();
+            range.to =  await getLastBlockfromBlockchain();
+        }
+        publisher.publish('update range BTG', range);    
+    } catch (error) {
+        new handlerErr(error)    
     }
-    publisher.publish('update range BTG', range);
+    
 })

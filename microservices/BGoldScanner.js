@@ -18,7 +18,7 @@ subscriber.on('update range BTG', (update) => {
                     })
                     scanBTG.checkDBTransactionByBlockNum()
                         .then(data => {
-                            console.log('Finish check DB transaction by block num');
+                            console.log('Finish check DB')
                         })
                 })
             }, 60000);
