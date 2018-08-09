@@ -1,106 +1,34 @@
-if(!global.appRoot) {
-    const path = require('path');
-    global.appRoot = path.resolve(__dirname);
-    global.appRoot = global.appRoot.replace('/exec','');
-}
-const Queue = require(`${appRoot}/lib/TaskQueue`);
-const mongodbConnectionString = require(`${appRoot}/config/config.json`).mongodbConnectionString;
-//Intel logger setup
-const intel = require('intel');
-const LoggerTransactionToDbScanBlock = intel.getLogger('transactionsToDbScan');
-const LoggerTransactionToDbError = intel.getLogger('transactionsToDbError');
-const LoggerTransactionToDbBadBlock = intel.getLogger('transactionsToDbBadBlock');
-LoggerTransactionToDbScanBlock.setLevel(LoggerTransactionToDbScanBlock.INFO)
-    .addHandler(new intel.handlers.File(`${appRoot}/logs/transactionsToDb/scanblock.log`));
-LoggerTransactionToDbBadBlock.setLevel(LoggerTransactionToDbBadBlock.INFO)
-    .addHandler(new intel.handlers.File(`${appRoot}/logs/transactionsToDb/badblock.log`));
-LoggerTransactionToDbError.setLevel(LoggerTransactionToDbError.ERROR)
-    .addHandler(new intel.handlers.File(`${appRoot}/logs/transactionsToDb/error.log`));
-//Mongoose
-global.mongoose = require('mongoose');
-mongoose.connect(mongodbConnectionString);
-let getRpc = null;
-let dbTransactionLib = null;
+const path = require('path');
+global.appRoot = path.resolve('../');
+//Arguments listener
+const argv = require('minimist')(process.argv.slice(2));
+const BitKindRpc = require('../lib/BitKindRpc');
+
 function _init(currency) {
-    const curr = {
-        'BTC': {
-            rpc: `${appRoot}/lib/bitcoin/getBTCbitcoin`,
-            dbLib: `${appRoot}/lib/mongodb/btctransactions`
-        },
-        'BCH': {
-            rpc: `${appRoot}/lib/bitcoin_cash/getBCHbitcoin_cash`,
-            dbLib: `${appRoot}/lib/mongodb/bchtransactions`
-        },
-        'BTG': {
-            rpc: `${appRoot}/lib/bitcoin_gold/getBTGbitcoin_gold`,
-            dbLib: `${appRoot}/lib/mongodb/btgtransactions`
-        },
-        'LTC': {
-            rpc: `${appRoot}/lib/litecoin/getLTClitecoin`,
-            dbLib: `${appRoot}/lib/mongodb/ltctransactions`
-        },
-        'ZEC': {
-            rpc: `${appRoot}/lib/zcash/getZECzcash`,
-            dbLib: `${appRoot}/lib/mongodb/zectransactions`
-        },
-        'XMR': {
-            rpc: `${appRoot}/lib/monero/getXMRmonero`,
-            dbLib: `${appRoot}/lib/mongodb/xmrtransactions`
-        }
-    };
-    if(!curr[currency]) {
-        getRpc = require(`${appRoot}/lib/bitcoin/getBTCbitcoin`);
-        dbTransactionLib = require(`${appRoot}/lib/mongodb/btctransactions`);
-    } else {
-        getRpc = require(curr[currency].rpc);
-        dbTransactionLib = require(curr[currency].dbLib);
+    switch (currency) {
+        case 'btg':
+            return {
+                Lib: require('../lib/scanBlockchain/scanBTG'),
+                Rpc: new BitKindRpc(require('../config/config.json').BTGRpc, 'btg')
+            }
+        default:
+            return require('../lib/scanBlockchain/scanBTG');
     }
 }
-async function saveBlockTransactionFromTo(from, to, order, currency, clearTemp = false) {
-    if(!getRpc || !dbTransactionLib) _init(currency);
-    const taskQue = new Queue(order);
-    for (let i = from; i <= to; i++) {
-        taskQue.pushTask(async done => {
-            try {
-                let blockData = await getRpc.getTransactionsFromBlock(i);
-                if (blockData) {
-                    await Promise.all(blockData.map(async (element) => {
-                        await dbTransactionLib.saveTransactionToMongoDb(element);
-                        if (clearTemp) await dbTransactionLib
-                            .removeTempTransaction(element.txid);
-                    }));
-                }
-                console.log(`BlockNum: ${i} ${currency}`);
-                done();
-            } catch (error) {
-                if(parseInt(error.code) !== 11000){
-                    LoggerTransactionToDbBadBlock.error(i);
-                    LoggerTransactionToDbError.error(`Bad block ${i} currency: ${currency} Error: saveBlockTransactionFromTo: ${error}`);
-                }
-                done();
-            }
+if (argv) {
+    if (argv.from && argv.to && argv.currency) {
+        console.log('Scan and save from to Started ..... ');
+        const ScanLib =  _init(argv.currency)
+        ScanLib.Lib.scan(argv.from, argv.to, ()=> {
+            console.log(`Save block ${argv.currency} from: ${argv.from} to: ${argv.to} FINISHED!!!`);
         })
     }
-}
-async function scanTxsToMongo(currency) {
-    try {
-        _init(currency);
-        const lastBlockN = await dbTransactionLib.getLastBlock();
-        const highestBlockN = await getRpc.getBlockCount();
-        if(highestBlockN > lastBlockN)
-            saveBlockTransactionFromTo(lastBlockN + 1, highestBlockN, 10, currency, true)
-                .then(() => {
-                    console.log('Scanning complete at ' + Date());
-                })
-                .catch(err => {
-                    LoggerTransactionToDbError.error(`Scannning error: ${err}`);
-                });
-    } catch (err) {
-        console.log(err);
+    else if(argv.getlastblock && argv.currency){
+        console.log('getlastblock Started ..... ');
+        const ScanLib =  _init(argv.currency);
+        ScanLib.Rpc.getBlockCount()
+            .then(lastBlock => {
+                console.log(lastBlock);
+            })
     }
 }
-
-module.exports = {
-    scanTxsToMongo:             scanTxsToMongo,
-    saveBlockTransactionFromTo: saveBlockTransactionFromTo
-};
