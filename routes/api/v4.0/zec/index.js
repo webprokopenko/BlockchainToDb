@@ -1,6 +1,6 @@
 const express = require('express');
 const app = module.exports = express();
-const zecController = require(`${appRoot}/controllers/zecController`);
+const zecController = require(`../../../../controllers/zecController`);
 
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{

@@ -1,8 +1,8 @@
-const gethBCHlocal = require(`${appRoot}/lib/bitcoin_cash/getBCHbitcoin_cash.js`);
-const Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`);
-const bchConfig = require(`${appRoot}/config/config.json`).BCHRpc;
+const gethBCHlocal = require(`../lib/bitcoin_cash/getBCHbitcoin_cash.js`);
+const Utils = require(`../lib/bitcoin/utilsBTC`);
+const bchConfig = require(`../config/config.json`).BCHRpc;
 const handlerErr = require('../errors/HandlerErrors');
-const bchTransaction = require(`${appRoot}/lib/mongodb/bchtransactions`);
+const bchTransaction = require(`../lib/mongodb/bchtransactions`);
 
 async function getBalance(address){
     const addr = Utils.isLegacyBCHAddress(address, bchConfig.network)

@@ -1,4 +1,4 @@
-const   gethXMRlocal = require(`${appRoot}/lib/monero/getXMRmonero.js`);
+const   gethXMRlocal = require(`../lib/monero/getXMRmonero.js`);
 //    xmrConfig = require(`${appRoot}/config/config.json`).XMRRpc;
 
 

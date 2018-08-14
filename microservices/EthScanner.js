@@ -1,8 +1,3 @@
-if (!global.appRoot) {
-    const path = require('path');
-    global.appRoot = path.resolve(__dirname);
-    global.appRoot = global.appRoot.replace('/microservices', '');
-}
 const cote = require('cote');
 const scanLibEth = require('../lib/scanBlockchain/scanETH');
 const handlerErr = require(`../errors/HandlerErrors`);

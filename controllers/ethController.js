@@ -1,7 +1,6 @@
-const ethTransaction = require(`${appRoot}/lib/mongodb/ethtransactions`);
-const gethETH = require(`${appRoot}/lib/ethereum/getETHRpc`);
-const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
-const contracts = require(`${appRoot}/lib/ethereum/contracts`);
+const ethTransaction = require(`../lib/mongodb/ethtransactions`);
+const gethETH = require(`../lib/ethereum/getETHRpc`);
+const utils = require(`../lib/ethereum/utilsETH`);
 const handlerErr = require('../errors/HandlerErrors');
 
 async function getTransactionList(address) {

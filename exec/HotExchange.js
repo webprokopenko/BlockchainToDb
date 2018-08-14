@@ -4,7 +4,7 @@ const mongodbConnectionString = require('../config/config.json').mongodbConnecti
 //Intel logger setup
 const intel = require('intel');
 const StatsError = intel.getLogger('StatsError');
-StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`./logs/stats/error.log`));
+StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`./error.log`));
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);

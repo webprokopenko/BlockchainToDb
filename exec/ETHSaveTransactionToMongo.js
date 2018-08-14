@@ -1,7 +1,4 @@
-
-const path = require('path');
-global.appRoot = path.resolve('../');
-const getETHRpc = require(`../lib/ethereum/getETHRpc`);
+const getETHRpc = require('../lib/ethereum/getETHRpc');
 const scanETH = require('../lib/scanBlockchain/scanETH');
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));

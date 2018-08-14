@@ -1,8 +1,8 @@
-const gethBTClocal = require(`${appRoot}/lib/bitcoin/getBTCbitcoin.js`);
-const Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`);
-const btcConfig = require(`${appRoot}/config/config.json`).BTCRpc;
-const handlerErr = require(`${appRoot}/errors/HandlerErrors`);
-const btcTransaction = require(`${appRoot}/lib/mongodb/btctransactions`);
+const gethBTClocal = require(`../lib/bitcoin/getBTCbitcoin.js`);
+const Utils = require(`../lib/bitcoin/utilsBTC`);
+const btcConfig = require(`../config/config.json`).BTCRpc;
+const handlerErr = require(`../errors/HandlerErrors`);
+const btcTransaction = require(`../lib/mongodb/btctransactions`);
 
 async function getBalance(address){
     if(!Utils.isAddress(address, btcConfig.network))

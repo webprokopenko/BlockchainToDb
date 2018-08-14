@@ -1,6 +1,6 @@
-const   gethZEClocal = require(`${appRoot}/lib/zcash/getZECzcash.js`),
-    Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`),
-    zecConfig = require(`${appRoot}/config/config.json`).ZECRpc;
+const   gethZEClocal = require(`../lib/zcash/getZECzcash.js`),
+    Utils = require(`../lib/bitcoin/utilsBTC`),
+    zecConfig = require(`../config/config.json`).ZECRpc;
 
 async function getBalance(address){
     if(!Utils.isZAddress(address, zecConfig.network))

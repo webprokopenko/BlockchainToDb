@@ -1,8 +1,8 @@
-const gethLTClocal = require(`${appRoot}/lib/litecoin/getLTClitecoin.js`);
-const Utils = require(`${appRoot}/lib/bitcoin/utilsBTC`);
-const ltcConfig = require(`${appRoot}/config/config.json`).LTCRpc;
-const handlerErr = require(`${appRoot}/errors/HandlerErrors`);
-const ltcTransaction = require(`${appRoot}/lib/mongodb/ltctransactions`);
+const gethLTClocal = require(`../lib/litecoin/getLTClitecoin.js`);
+const Utils = require(`../lib/bitcoin/utilsBTC`);
+const ltcConfig = require(`../config/config.json`).LTCRpc;
+const handlerErr = require(`../errors/HandlerErrors`);
+const ltcTransaction = require(`../lib/mongodb/ltctransactions`);
 
 async function getBalance(address){
     if(!Utils.isAddress(address, ltcConfig.network))

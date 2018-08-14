@@ -1,8 +1,3 @@
-if(!global.appRoot) {
-    const path = require('path');
-    global.appRoot = path.resolve(__dirname);
-    global.appRoot = global.appRoot.replace('/exec','');
-}
 const dbExchangeLib = require('../lib/mongodb/exchange.js');
 //Quequ
 const Quequ = require('../lib/TaskQueue');
@@ -13,7 +8,7 @@ const publicClient = new Gdax.PublicClient();
 //Intel logger setup
 const intel = require('intel');
 const StatsError = intel.getLogger('StatsError');
-StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/stats/error.log`));
+StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`./error.log`));
 
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));

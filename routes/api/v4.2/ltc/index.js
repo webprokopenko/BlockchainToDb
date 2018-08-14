@@ -1,6 +1,6 @@
 const express = require('express');
 const app = module.exports = express();
-const ltcController = require(`${appRoot}/controllers/ltcController`);
+const ltcController = require(`../../../../controllers/ltcController`);
 
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{

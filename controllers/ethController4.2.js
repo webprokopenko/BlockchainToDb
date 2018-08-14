@@ -1,7 +1,8 @@
-const ethTransaction = require(`${appRoot}/lib/mongodb/ethtransactions`);
-const gethETH = require(`${appRoot}/lib/ethereum/getETHRpc`);
-const utils = require(`${appRoot}/lib/ethereum/utilsETH`);
-const contracts = require(`${appRoot}/lib/ethereum/contracts`);
+const ethTransaction = require(`../lib/mongodb/ethtransactions`);
+const gethETH = require(`../lib/ethereum/getETHRpc`);
+const utils = require(`../lib/ethereum/utilsETH`);
+const contract = require(`../lib/ethereum/contracts`);
+const Contract = new contract();
 const handlerErr = require('../errors/HandlerErrors');
 
 async function getTransactionList(address) {
@@ -133,7 +134,7 @@ async function getTransactionFromHash(txHash) {
 }
 async function getTokenBalance(contractAddr, address) {
     try{
-        const contractAddress = contracts.get(contractAddr);
+        const contractAddress = contractAddr;
         if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract.');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
         const decimals = await gethETH.getContractDecimals(contractAddress);
@@ -145,7 +146,7 @@ async function getTokenBalance(contractAddr, address) {
 }
 async function getContractTransfers(contractAddr, address) {
     try{
-        const contractAddress = contracts.get(contractAddr);
+        const contractAddress = contractAddr;
         if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
         const decimals = await gethETH.getContractDecimals(contractAddress);
@@ -159,9 +160,19 @@ async function getContractTransfers(contractAddr, address) {
         new handlerErr(error);
     }
 }
+async function getTokenListBalance(bodyRequest){
+    try {
+        if(!Contract.validateRespTokenList(bodyRequest)) throw new Error('Wrong body request');
+        if(!utils.isAddress(bodyRequest.address)) throw new Error('Wrong address.');
+        const tokenList = await Contract.getTokenList(bodyRequest)
+        return tokenList;
+    } catch (error) {
+        new handlerErr(error);
+    }
+}
 async function getContractTransfersPage(contractAddr, address, page = 0) {
     try{
-        const contractAddress = contracts.get(contractAddr);
+        const contractAddress = contractAddr;
         if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract.');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
         if(page<0) throw new Error('Page invalid');
@@ -194,6 +205,7 @@ module.exports = {
     sendRawTransaction:         sendRawTransaction,
     getTransactionFromHash:     getTransactionFromHash,
     getTokenBalance:            getTokenBalance,
+    getTokenListBalance:        getTokenListBalance,
     getAllTransactionList:      getAllTransactionList,
     getContractTransfers:       getContractTransfers,
     getContractTransfersPage:   getContractTransfersPage

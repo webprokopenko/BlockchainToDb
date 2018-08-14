@@ -1,6 +1,6 @@
 const express = require('express');
 const app = module.exports = express();
-const ethController = require(`${appRoot}/controllers/ethController`);
+const ethController = require(`../../../../controllers/ethController`);
 
 app.get('/getTransactionsList/:address', (req, res, next) => {
     const address = req.params.address;

@@ -1,6 +1,6 @@
-const exchange = require(`${appRoot}/lib/mongodb/exchange`);
-const dbHotExchangeLib = require(`${appRoot}/lib/mongodb/hot_exchange.js`);
-const handlerErr = require(`${appRoot}/errors/HandlerErrors`);
+const exchange = require(`../lib/mongodb/exchange`);
+const dbHotExchangeLib = require(`../lib/mongodb/hot_exchange.js`);
+const handlerErr = require(`../errors/HandlerErrors`);
 
 async function getHotExchange(pair){
     try{

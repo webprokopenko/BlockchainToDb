@@ -1,6 +1,6 @@
 const express = require('express');
 const app = module.exports = express();
-const xmrController = require(`${appRoot}/controllers/xmrController`);
+const xmrController = require(`../../../../controllers/xmrController`);
 
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{

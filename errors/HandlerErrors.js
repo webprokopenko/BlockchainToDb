@@ -2,16 +2,13 @@ const AppError = require('./AppError');
 const RpcError = require('./RpcError');
 const ScannerError = require('./ScannerError');
 const ScanLogModel = require('../lib/mongodb/scanLog');
-
-const path = require('path');
-global.appRoot = path.resolve(__dirname + '/../');
 //Intel logger setup
 const intel = require('intel');
 const GethLoger =  intel.getLogger('GethError');
-GethLoger.setLevel(GethLoger.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/geth/error.log`));
+GethLoger.setLevel(GethLoger.ERROR).addHandler(new intel.handlers.File(`./error.log`));
 
 const ErrorLoger =  intel.getLogger('ErrorLoger');
-ErrorLoger.setLevel(ErrorLoger.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/error.log`));
+ErrorLoger.setLevel(ErrorLoger.ERROR).addHandler(new intel.handlers.File(`./error.log`));
 
 const config = require('../config/config.json');
 const telegramBot = require('node-telegram-bot-api');

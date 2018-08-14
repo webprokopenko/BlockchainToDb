@@ -19,7 +19,9 @@ if(process.argv.indexOf('-dev') > 0) {
 }
 // body parser set
 app.use(bodyParser.json({ type: 'text/plain' }));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json({type: 'json'}));
+app.use(bodyParser.urlencoded({extended: true}));
+
 //static file
 app.use(express.static(path.join(__dirname, 'public')));
 // add routes

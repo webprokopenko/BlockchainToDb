@@ -1,7 +1,3 @@
-//set global AppDirectory
-const path = require('path');
-global.appRoot = path.resolve('../');
-
 const cote = require('cote');
 const gethRPC = require('../lib/ethereum/getETHRpc');
 

@@ -1,8 +1,3 @@
-if(!global.appRoot) {
-    const path = require('path');
-    global.appRoot = path.resolve(__dirname);
-    global.appRoot = global.appRoot.replace('/exec','');
-}
 //Bitnifex lib
 const Bitfinex = require('../lib/stats/bitfinex.js');
 //Arguments listener
@@ -10,7 +5,7 @@ const argv = require('minimist')(process.argv.slice(2));
 //Intel logger setup
 const intel = require('intel');
 const StatsError = intel.getLogger('StatsError');
-StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${appRoot}/logs/stats/error.log`));
+StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`./error.log`));
 
 //Api url bitginex
 let url = 'https://api.bitfinex.com/v2';

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = module.exports = express();
-const ethController = require(`${appRoot}/controllers/ethController4.2`);
+const ethController = require(`../../../../controllers/ethController4.2`);
 
 app.get('/getTransactionsList/:address', (req, res, next) => {
     const address = req.params.address;
@@ -101,6 +101,17 @@ app.get('/getTokenBalance/:contractAddress/:address', (req, res, next) => {
         .catch(error => {
             next(error);
         })
+});
+app.post('/getTokenListBalance/', (req, res, next) => {
+    const bodyRequest = req.body;
+    ethController.getTokenListBalance(bodyRequest)
+        .then(tokenList => {
+            res.send(tokenList);
+        })
+        .catch(error => {
+            next(error);
+        })
+
 });
 app.get('/getContractTransfers/:contractAddress/:address', (req, res, next) => {
     const contractAddress = req.params.contractAddress;
