@@ -1,7 +1,7 @@
 const ethTransaction = require(`../lib/mongodb/ethtransactions`);
 const gethETH = require(`../lib/ethereum/getETHRpc`);
 const utils = require(`../lib/ethereum/utilsETH`);
-const contract = require(`../lib/ethereum/contracts`);
+const contract = require(`../lib/ethereum/ContractETH`);
 const Contract = new contract();
 const handlerErr = require('../errors/HandlerErrors');
 
@@ -163,7 +163,7 @@ async function getContractTransfers(contractAddr, address) {
 async function getTokenListBalance(bodyRequest){
     try {
         if(!Contract.validateRespTokenList(bodyRequest)) throw new Error('Wrong body request');
-        if(!utils.isAddress(bodyRequest.address)) throw new Error('Wrong address.');
+        if(!utils.isAddress(bodyRequest.address)) throw new Error('Wrong address ');
         const tokenList = await Contract.getTokenList(bodyRequest)
         return tokenList;
     } catch (error) {

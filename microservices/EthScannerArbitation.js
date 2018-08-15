@@ -1,47 +1,57 @@
 const cote = require('cote');
 const mongodbConnectionString = require(`../config/config.json`).mongodbConnectionString;
-const utils = require(`../lib/ethereum/utilsETH`);
+const handlerErr = require(`../errors/HandlerErrors`);
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
 //dbEthertransactionsLib
 const dbEthertransactionsLib = require(`../lib/mongodb/ethtransactions.js`);
-
-const responder = new cote.Responder({ name: 'arbitration scanner' });
-const publisher = new cote.Publisher({ name: 'arbitration publisher' });
-const EthDaemon = new cote.Requester({ name: 'Requester EthDaemon' });
-
-let range = {};
+const gethEth = require('../lib/ethereum/getETHRpc');
+const responder = new cote.Responder({ name: 'arbitration scanner ETH' });
+const publisher = new cote.Publisher({ name: 'arbitration publisher ETH' });
+// const EthDaemon = new cote.Requester({ name: 'Requester EthDaemon' });
 
 async function getLastBlockfromDB(){
     return new  Promise((resolve, reject) => {
         dbEthertransactionsLib.getLastMongoBlock()
             .then(last => {
                 resolve(last);
+            }).catch(e=>{
+                reject(e);
             })
         
     });
 }
 async function getLatestBlockfromEth() {
      return new Promise((resolve, reject) => {
-        EthDaemon.send({ type: 'getLatestBlock'}, (res) => {
-            resolve(parseInt(res.number, 16)) 
-        });
+         try {
+            gethEth.getBlockNumber()
+                .then(block =>{
+                    resolve(block);
+                })
+                .catch(e => {
+                    reject(e);
+                })
+         } catch (error) {
+             console.log('getLatestBlockfromEth');
+             reject(error);
+         }
     })
 }
-
-responder.on('arbit action', (req, cb) => {
-    console.log('arbit action');
-    console.log(req);
-    range.from = 320450;//await getLastBlockfromDB();
-    range.to =  320640// await getLatestBlockfromEth();
-    console.log(req.lastBLock);
-    if(req.lastBLock){
-        console.log('getLastBlock: !!' + req.lastBLock)
-        range.from = req.lastBLock;//await getLastBlockfromDB();
-        range.to =  320680// await getLatestBlockfromEth();
+responder.on('start scan ETH', async(req, cb) => {
+    try {
+        let range = {};
+        if(req.lastBLock){
+            console.log('getLastBlock: !!' + req.lastBLock)
+            range.from = req.lastBLock;
+            range.to = await getLatestBlockfromEth();
+        }else{
+            range.from = await getLastBlockfromDB();
+            range.to =  await getLatestBlockfromEth();
+        }    
+    } catch (error) {
+        new handlerErr(error) 
     }
     
-
-    publisher.publish('update range', range);
+    publisher.publish('update range ETH', range);
 });
