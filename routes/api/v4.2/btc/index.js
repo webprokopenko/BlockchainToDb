@@ -1,6 +1,42 @@
 const express = require('express');
 const app = module.exports = express();
 const btcController = require(`../../../../controllers/btcController`);
+/**
+  * @swagger
+  * definitions:
+  *   Transactions:
+  *     required:
+  *       - in
+  *       - out
+  *     properties:
+  *       in:
+  *         type: object
+  *       out:
+  *         type: object
+*/
+
+/**
+ * @swagger
+ * /getTransactionsList/address:
+ *   get:
+ *     description: Transactions list
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: address
+ *         description: Address ETH to get Transaction List.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *          description: Transactions List
+ *          schema:
+ *              type: object
+ *              $ref: '#/definitions/Transactions'
+ *         
+ *         
+ */
 
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{

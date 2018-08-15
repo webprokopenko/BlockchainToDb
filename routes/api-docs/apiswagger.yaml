@@ -1,0 +1,395 @@
+swagger: '2.0'
+info:
+  description: Triumf API service
+  version: 1.0.0
+  title: Triumf API
+  contact:
+    email: prokopenko.cnw@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: http://193.200.173.204/
+basePath: 
+paths:
+  api/v4.2/ETH/getGasPrice/:
+    get:
+      tags:
+      - getGasPrice
+      summary: Get gas price
+      operationId: getGasPrice
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/gasPrice'
+        500:
+          description: Service unavialable
+  api/v4.2/ETH/getTokenListBalance/:
+    post:
+      tags:
+        - getTokenListBalance
+      summary: get Balances of Token coins.
+      consumes:
+        - x-www-form-urlencoded
+    parameters:
+      - in: body
+        name: address
+        required: true
+        schema:
+          type: string
+      - in: body
+        name: tokens
+        required: true
+    responses:
+      200:
+        description: Success! 
+  api/v4.2/ETH/getGasLimit/:
+    get:
+      tags:
+      - getGasLimit
+      summary: Get gas limit
+      operationId: getGasLimit
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/gasLimit'
+        500:
+          description: Service unavialable
+  api/v4.2/ETH/getPriceLimit/:
+    get:
+      tags:
+      - getPriceLimit
+      summary: Get gas price and gas limit
+      operationId: getPriceLimit
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/priceLimit'
+        500:
+          description: Service unavialable
+  api/v4.2/ETH/getTransactionCount/{address}:
+    get:
+      tags:
+      - getTransactionCount
+      summary: Get the number of transactions sent from an address
+      operationId: getTransactionCount
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/TransactionCount'
+        500:
+          description: Service unavialable
+  api/v4.2/ETH/sendRawTransaction/{rawTransaction}:
+    get:
+      tags:
+      - sendRawTransaction
+      summary: Send and broadcast raw transaction
+      operationId: sendRawTransaction
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: rawTransaction
+        in: path
+        description: The serialized raw transaction in hex format
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/hash'
+        500:
+          description: Service unavialable
+  api/v4.2/ETH/getTransactionsList/{address}:
+    get:
+      tags:
+      - getTransactionsList
+      summary: Get address transactions
+      operationId: getTransactionsList
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transactionsList'
+        500:
+          description: Service unavialable
+  api/v4.2/ETH/getTransactionsList/{address}/{page}:
+    get:
+      tags:
+      - getTransactionsList by pages
+      summary: Get address transactions by page header {TrPages - integer}, pages number
+      operationId: getTransactionsListByPage
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      - name: page
+        in: path
+        description: The current transactions list page number
+        required: true
+        type: integer  
+      responses:
+        '200':
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transactionsList'
+        '500':
+          description: Service unavialable          
+  api/v4.2/ETH/getBalance/{address}:
+    get:
+      tags:
+      - getBalance
+      summary: Get address balance
+      operationId: getBalance
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/balance'
+        500:
+          description: Service unavialable
+  api/v4.2/ETH/getTransactionByHash/{hashTransaction}:
+    get:
+      tags:
+      - getTransactionFromHash
+      summary: Get Transaction object by Hash
+      operationId: getTransactionFromHash
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: hashTransaction
+        in: path
+        description: The hash of required transaction
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transaction'
+        500:
+          description: Service unavialable
+  api/v4.2/ETH/getTokenBalance/{contractAddress}/{address}:
+    get:
+      tags:
+      - getTokenBalance
+      summary: Get ETH ERC20 contract address balance
+      operationId: getTokenBalance
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: contractAddress
+        in: path
+        description: The ETH ERC20 contract address
+        required: true
+        type: string
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/tokens'
+        500:
+          description: Service unavialable      
+  api/v4.2/ETH/getContractTransfers/{contractAddress}/{address}:
+    get:
+      tags:
+      - getContractTransfers
+      summary: Get ERC20 Contract Transfers
+      operationId: getContractTransfers
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: contractAddress
+        in: path
+        description: The ETH ERC20 contract address
+        required: true
+        type: string
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transfers'
+        500:
+          description: Service unavialable           
+definitions:
+  transactionsList:
+    type: object
+    description: ETH transactions object, in - input transactions array, out - output transactions array, pending_in - pending input transactions array, pending_out - pending outcome transactions array
+    properties:
+      in:
+        type: array
+        items:
+          $ref: '#/definitions/transactionETH'
+      out:
+        type: array
+        items:
+          $ref: '#/definitions/transactionETH'
+      pending_in:
+        type: array
+        items:
+          $ref: '#/definitions/transactionETH'
+      pending_out:
+        type: array
+        items:
+          $ref: '#/definitions/transactionETH'    
+  transactionETH:
+    type: object
+    properties:
+        hash:
+          type: string
+        timestamp:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        value:
+          type: string
+        fee:
+          type: string
+        blockNum:
+          type: integer
+        input:
+          type: object
+          properties:
+            to:
+              type: string
+            value:
+              type: string
+            from:
+              type: string
+        status:
+          type: boolean
+  hash:
+    type: object
+    properties:
+      hash:
+        type: string
+        description: the transaction hash, or the zero hash if the transaction is not yet available
+  TransactionCount:
+    type: object
+    properties:
+      TransactionCount:
+        type: string
+        description: the number of transactions sent from an address, string of int format
+  balance:
+    type: object
+    properties:
+      balance:
+        type: string
+        description: balance value in wei, string of int format
+  tokens:
+    type: object
+    properties:
+      tokens:
+        type: string
+        description: tokens ammount, string of number format
+  transfers:
+    type: object
+    properties:
+      transfers:
+        type: array
+        items:
+          $ref: '#/definitions/transaction'
+  gasPrice:
+    type: object
+    properties:
+      gasPrice:
+        type: string
+        description: gas price value, string of int format
+      gasPriceHex:
+        type: string
+        description:  gas price value, string of hex format
+  gasLimit:
+    type: object
+    properties:
+      gasLimit:
+        type: string
+        description: gas limit value, string of int format
+      gasLimitHex:
+        type: string
+        description:  gas limit value, string of hex format  
+  priceLimit:
+    type: object
+    properties:
+      gasLimit:
+        type: string
+        description: gas limit value, string of int format
+      gasLimitHex:
+        type: string
+        description:  gas limit value, string of hex format
+      gasPrice:
+        type: string
+        description: gas price value, string of int format
+      gasPriceHex:
+        type: string
+        description:  gas price value, string of hex format  

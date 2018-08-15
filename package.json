@@ -30,9 +30,11 @@
     "node-telegram-bot-api": "^0.30.0",
     "npm": "^5.10.0",
     "request": "^2.85.0",
+    "swagger-ui-express": "^3.0.10",
     "utf8": "^3.0.0",
     "web3": "^0.20.1",
     "xmlhttprequest": "^1.8.0",
+    "yamljs": "^0.3.0",
     "zcash-bitcore-lib": "^0.13.20-rc3"
   },
   "devDependencies": {
