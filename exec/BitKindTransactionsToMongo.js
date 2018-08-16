@@ -11,13 +11,18 @@ function _init(currency) {
                 Lib: require('../lib/scanBlockchain/scanBTG'),
                 Rpc: new BitKindRpc(require('../config/config.json').BTGRpc, 'btg')
             }
+        case 'btc':
+            return {
+                Lib: require('../lib/scanBlockchain/scanBTC'),
+                Rpc: new BitKindRpc(require('../config/config.json').BTCRpc, 'btc')
+            }
         default:
             return require('../lib/scanBlockchain/scanBTG');
     }
 }
 if (argv) {
     if (argv.from && argv.to && argv.currency) {
-        console.log('Scan and save from to Started ..... ');
+        console.log('Scan and save from to Started ..... ' + argv.currency);
         const ScanLib =  _init(argv.currency)
         ScanLib.Lib.scan(argv.from, argv.to, ()=> {
             console.log(`Save block ${argv.currency} from: ${argv.from} to: ${argv.to} FINISHED!!!`);
