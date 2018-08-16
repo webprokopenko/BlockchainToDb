@@ -38,8 +38,9 @@ async function getLatestBlockfromEth() {
          }
     })
 }
-responder.on('start scan ETH', async(req, cb) => {
+responder.on('StartScanETH', async(req, cb) => {
     try {
+        console.log('StartScanETH');
         let range = {};
         if(req.lastBLock){
             console.log('getLastBlock: !!' + req.lastBLock)
@@ -48,10 +49,9 @@ responder.on('start scan ETH', async(req, cb) => {
         }else{
             range.from = await getLastBlockfromDB();
             range.to =  await getLatestBlockfromEth();
-        }    
+        }
+        publisher.publish('UpdateRangeETH', range); 
     } catch (error) {
         new handlerErr(error) 
     }
-    
-    publisher.publish('update range ETH', range);
 });
