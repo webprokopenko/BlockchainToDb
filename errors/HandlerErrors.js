@@ -35,16 +35,23 @@ module.exports = class HandlerErrors {
                     throw new RpcError(`Service error`, ErrorObj.codeErr, ErrorObj.status)
             }
         }else if(ErrorObj instanceof ScannerError) {
-            ScanLogModel.InsertLog(
-                {   
-                    blockchain:ErrorObj.blockChain,
-                    errorMessage:ErrorObj.message,
-                    dateTimeError:new Date(),
-                    dateLastScan:new Date(),
-                    blockNum:ErrorObj.blockNum,
-                    status:false
-                })
-                botError.sendMessage(config.telegram_chat_id, `${ErrorObj.message} ${ErrorObj.blockNum}  ${ErrorObj.blockChain}`);
+            try {
+                ScanLogModel.InsertLog(
+                    {   
+                        blockchain:ErrorObj.blockChain,
+                        errorMessage:ErrorObj.message,
+                        dateTimeError:new Date(),
+                        dateLastScan:new Date(),
+                        blockNum:ErrorObj.blockNum,
+                        status:false
+                    })
+                    botError.sendMessage(config.telegram_chat_id, `${ErrorObj.message} ${ErrorObj.blockNum}  ${ErrorObj.blockChain}`);    
+            } catch (error) {
+                if (parseInt(error.code) !== 11000) {
+                    botError.sendMessage(config.telegram_chat_id, `${error}`);    
+                }
+            }
+            
         }else if (ErrorObj instanceof AppError) {
             throw new AppError(`Application error`, ErrorObj.codeErr, ErrorObj.status)
         }else {
