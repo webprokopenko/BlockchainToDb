@@ -16,7 +16,7 @@ subscriber.on('UpdateRangeETH', (update) => {
                         console.log('Finish check bad blocks');
                     })
                 });
-            }, 60000);
+            }, 20000);
         } else {
             scanLibEth.scan(update.from, update.to, (lastBlock) => {
                 requester.send({ type: 'StartScanETH', lastBLock: lastBlock });
