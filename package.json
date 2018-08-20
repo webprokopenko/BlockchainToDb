@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "base-64": "^0.1.0",
+    "bcrypt": "^3.0.0",
     "bgoldjs-lib": "^3.3.3",
     "bignumber": "^1.1.0",
     "bignumber.js": "^2.4.0",
@@ -24,6 +25,7 @@
     "express": "^4.16.2",
     "gdax": "^0.5.1",
     "intel": "^1.2.0",
+    "jsonwebtoken": "^8.3.0",
     "mathjs": "^3.20.2",
     "minimist": "^1.2.0",
     "mongoose": "^5.0.1",
