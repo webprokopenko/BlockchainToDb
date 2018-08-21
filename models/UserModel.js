@@ -7,10 +7,12 @@ Schema = mongoose.Schema;
  */
 
  let UserSchema = new Schema({
-     fullName: {
+    currency: {
          type: String,
          trim: true,
-         required: true
+         required: true,
+         lowercase: true,
+         enum: ['usd', 'eur']
      },
      email: {
          type: String,

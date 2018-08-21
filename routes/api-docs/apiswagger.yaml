@@ -8,10 +8,10 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-host: http://193.200.173.204/
+host: 193.200.173.204/
 basePath: 
 paths:
-  api/v4.2/ETH/getGasPrice/:
+  /api/v4.2/ETH/getGasPrice/:
     get:
       tags:
       - getGasPrice
@@ -28,7 +28,7 @@ paths:
             $ref: '#/definitions/gasPrice'
         500:
           description: Service unavialable
-  api/v4.2/ETH/getTokenListBalance/:
+  /api/v4.2/ETH/getTokenListBalance/:
     post:
       tags:
         - getTokenListBalance
@@ -47,7 +47,7 @@ paths:
     responses:
       200:
         description: Success! 
-  api/v4.2/ETH/getGasLimit/:
+  /api/v4.2/ETH/getGasLimit/:
     get:
       tags:
       - getGasLimit
@@ -64,7 +64,7 @@ paths:
             $ref: '#/definitions/gasLimit'
         500:
           description: Service unavialable
-  api/v4.2/ETH/getPriceLimit/:
+  /api/v4.2/ETH/getPriceLimit/:
     get:
       tags:
       - getPriceLimit
@@ -81,7 +81,7 @@ paths:
             $ref: '#/definitions/priceLimit'
         500:
           description: Service unavialable
-  api/v4.2/ETH/getTransactionCount/{address}:
+  /api/v4.2/ETH/getTransactionCount/{address}:
     get:
       tags:
       - getTransactionCount
@@ -104,7 +104,7 @@ paths:
             $ref: '#/definitions/TransactionCount'
         500:
           description: Service unavialable
-  api/v4.2/ETH/sendRawTransaction/{rawTransaction}:
+  /api/v4.2/ETH/sendRawTransaction/{rawTransaction}:
     get:
       tags:
       - sendRawTransaction
@@ -127,7 +127,7 @@ paths:
             $ref: '#/definitions/hash'
         500:
           description: Service unavialable
-  api/v4.2/ETH/getTransactionsList/{address}:
+  /api/v4.2/ETH/getTransactionsList/{address}:
     get:
       tags:
       - getTransactionsList
@@ -150,7 +150,7 @@ paths:
             $ref: '#/definitions/transactionsList'
         500:
           description: Service unavialable
-  api/v4.2/ETH/getTransactionsList/{address}/{page}:
+  /api/v4.2/ETH/getTransactionsList/{address}/{page}:
     get:
       tags:
       - getTransactionsList by pages
@@ -178,7 +178,7 @@ paths:
             $ref: '#/definitions/transactionsList'
         '500':
           description: Service unavialable          
-  api/v4.2/ETH/getBalance/{address}:
+  /api/v4.2/ETH/getBalance/{address}:
     get:
       tags:
       - getBalance
@@ -201,7 +201,7 @@ paths:
             $ref: '#/definitions/balance'
         500:
           description: Service unavialable
-  api/v4.2/ETH/getTransactionByHash/{hashTransaction}:
+  /api/v4.2/ETH/getTransactionByHash/{hashTransaction}:
     get:
       tags:
       - getTransactionFromHash
@@ -224,7 +224,7 @@ paths:
             $ref: '#/definitions/transaction'
         500:
           description: Service unavialable
-  api/v4.2/ETH/getTokenBalance/{contractAddress}/{address}:
+  /api/v4.2/ETH/getTokenBalance/{contractAddress}/{address}:
     get:
       tags:
       - getTokenBalance
@@ -252,7 +252,7 @@ paths:
             $ref: '#/definitions/tokens'
         500:
           description: Service unavialable      
-  api/v4.2/ETH/getContractTransfers/{contractAddress}/{address}:
+  /api/v4.2/ETH/getContractTransfers/{contractAddress}/{address}:
     get:
       tags:
       - getContractTransfers

@@ -53,12 +53,15 @@ module.exports = class HandlerErrors {
             }
             
         }else if (ErrorObj instanceof AppError) {
-            throw new AppError(`Application error`, ErrorObj.codeErr, ErrorObj.status)
+            ErrorLoger
+                .error(`${new Date()}: ${ErrorObj}`);
+                botError.sendMessage(config.telegram_chat_id, `${new Date()}: ${ErrorObj}`);
+            throw ErrorObj
         }else {
             ErrorLoger
                 .error(`${new Date()}: ${ErrorObj}`);
                 botError.sendMessage(config.telegram_chat_id, `${new Date()}: ${ErrorObj}`);
-            throw ErrorObj;
+            throw new Error(ErrorObj);
         }
     }
     setSupportedRpcClient(){

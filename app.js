@@ -6,10 +6,13 @@ const http = require('http');
 const server = http.createServer(app);
 //set global AppDirectory
 global.appRoot = path.resolve(__dirname);
+global.AppError = require('./errors/AppError');
+global.handlerErr = require(`./errors/HandlerErrors`);
+global.config = require('./config/config.json');
 const mongoose = require('mongoose');
 const crontab = require('./crontab');
 //set global mongoose
-global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(require('./config/config.json').mongodbConnectionString));
+global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(config.mongodbConnectionString));
 // CORS enable
 const cors = require('cors');
 app.use(cors());
@@ -17,6 +20,7 @@ app.use(cors());
 if(process.argv.indexOf('-dev') > 0) {
     require('./test/SERVICES/run.js');
 }
+
 // body parser set
 app.use(bodyParser.json({ type: 'text/plain' }));
 app.use(bodyParser.json({type: 'json'}));
