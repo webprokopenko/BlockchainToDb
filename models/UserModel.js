@@ -10,6 +10,7 @@ Schema = mongoose.Schema;
     currency: {
          type: String,
          trim: true,
+         default: 'usd',
          required: true,
          lowercase: true,
          enum: ['usd', 'eur']
