@@ -128,24 +128,33 @@ paths:
         500:
           description: Service unavialable
   /api/v4.2/ETH/getTokenListBalance/:
+    tags:
+      - Get balances of tokens
     post:
-      tags:
-        - getTokenListBalance
-      summary: get Balances of Token coins.
+      summary: Balance of tokens
       consumes:
-        - x-www-form-urlencoded
-    parameters:
-      - in: body
-        name: address
-        required: true
-        schema:
-          type: string
-      - in: body
-        name: tokens
-        required: true
+        - text/plain
+      parameters:
+        - in: body
+          name: Token List Balance
+          description: Token List Balance
+          schema:
+            type: object
+            required:
+              - address
+              - tokens
+            properties:
+              address:
+                type: string
+                default: "0xb4016d8ca33ab5970b1acdc3fb9a63a123a30638"
+              tokens:
+                type: string
+                enum: ['ZRX', 'OMG', 'ZIL', 'REP', 'GNT', 'SNT', 'BNT', 'MCO', 'KNC', 'POWR', 'TUSD']
     responses:
       200:
-        description: Success! 
+        description: Success!
+      500:
+        description: Service unavialable 
   /api/v4.2/ETH/getGasLimit/:
     get:
       tags:

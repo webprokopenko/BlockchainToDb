@@ -5,12 +5,14 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 //set global AppDirectory
-global.appRoot = path.resolve(__dirname);
+global.AppRoot = __dirname;
+
 global.AppError = require('./errors/AppError');
 global.handlerErr = require(`./errors/HandlerErrors`);
 global.config = require('./config/config.json');
 const mongoose = require('mongoose');
 const crontab = require('./crontab');
+
 //set global mongoose
 global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(config.mongodbConnectionString));
 // CORS enable

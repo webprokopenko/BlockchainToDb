@@ -123,6 +123,7 @@ describe('Ethereum v4.0', () => {
       });
   });
 });
+
 describe('Ethereum v4.2', () => {
     describe('/GET ETH GasPrice', () => {
         it('it should GET Ethereum GasPrice', (done) => {
@@ -219,6 +220,22 @@ describe('Ethereum v4.2', () => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('tokens');
+                    done();
+                });
+        });
+    });
+    describe('/GET ETH Token List Balance', () => {
+        it('it should GET Ethereum address contract List balance', (done) => {
+            chai.request(server)
+                .post(`/api/v4.2/ETH/getTokenListBalance/`)
+                .set('content-type', 'application/x-www-form-urlencoded')
+                .send(`address=${TEST_DATA.contract.validAddress}`)
+                .send('tokens=ZRX')
+                .send('tokens=ZIL')
+                .send('tokens=REP')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
                     done();
                 });
         });
