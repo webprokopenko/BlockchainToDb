@@ -8,9 +8,108 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-host: 193.200.173.204/
+host: 127.0.0.1:2345/
 basePath: 
 paths:
+  /user/register:
+    tags:
+      - Create new user
+    post:
+      summary: Create a new user.
+      consumes:
+        - text/plain
+      parameters:
+        - in: body
+          name: user
+          description: The user to create.
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                format: email
+              password:
+                type: string
+      responses:
+        200:
+          description: Created  
+        500:
+          description: Service unavialable
+  /user/auth:
+    tags:
+      - Authenticate user
+    post:
+      summary: Authenticate a user.
+      consumes:
+        - text/plain
+      parameters:
+        - in: body
+          name: user auth
+          description: The user authenticate.
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                format: email
+              password:
+                type: string
+      responses:
+        200:
+          description: Created  
+        500:
+          description: Service unavialable
+  /user/currency:
+    tags:
+      - User Currency
+    patch:
+      summary: Update User currency.
+      consumes:
+        - text/plain  
+      parameters:
+        - in: body
+          name: user currency
+          description: Update the user currency.
+          schema:
+            type: object
+            required:
+              - currency
+            properties:
+              currency:
+                type: string
+        - in: header
+          name: Authorization
+          description: The token format - JWT {token} 
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success execute
+        500:
+          description: Service unavialable   
+    get:
+      summary: Get user currency
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: The token format - JWT {token} 
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+        500:
+          description: Service unavialable       
   /api/v4.2/ETH/getGasPrice/:
     get:
       tags:
@@ -127,7 +226,7 @@ paths:
             $ref: '#/definitions/hash'
         500:
           description: Service unavialable
-  /api/v4.2/ETH/getTransactionsList/{address}:
+  /api/v4.0/ETH/getTransactionsList/{address}:
     get:
       tags:
       - getTransactionsList
