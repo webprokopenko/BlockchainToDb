@@ -3,7 +3,8 @@ const app = module.exports = express();
 const ethController = require(`../../../../controllers/ethController4.2`);
 
 app.get('/getTransactionsList/:address', (req, res, next) => {
-    const address = req.params.address;
+    const address = req.params.address.toLowerCase();
+    console.log(address);
     ethController.getTransactionListPending(address)
         .then(transactions => {
             res.setHeader('TrPages', transactions.pages);
@@ -15,7 +16,7 @@ app.get('/getTransactionsList/:address', (req, res, next) => {
 });
 app.get('/getTransactionsList/:address/:page', (req, res, next) => {
     const page = parseInt(req.params.page);
-    const address = req.params.address;
+    const address = req.params.address.toLowerCase();
     ethController.getAllTransactionList(address, page)
         .then(transactions => {
             res.send(transactions.transactions);
@@ -52,7 +53,7 @@ app.get('/getPriceLimit', (req, res, next) => {
         })
 });
 app.get('/getBalance/:address', (req, res, next) => {
-    const address = req.params.address;
+    const address = req.params.address.toLowerCase();
     ethController.getBalance(address)
         .then(balance => {
             res.send(balance)
@@ -62,7 +63,7 @@ app.get('/getBalance/:address', (req, res, next) => {
         })
 });
 app.get('/getTransactionCount/:address', (req, res, next) => {
-    const address = req.params.address;
+    const address = req.params.address.toLowerCase();
     ethController.getTransactionCount(address)
         .then(transactionCount => {
             res.send(transactionCount)
@@ -92,8 +93,8 @@ app.get('/getTransactionByHash/:hashTransaction', (req, res, next) => {
         })
 });
 app.get('/getTokenBalance/:contractAddress/:address', (req, res, next) => {
-    const contractAddress = req.params.contractAddress;
-    const address = req.params.address;
+    const contractAddress = req.params.contractAddress.toLowerCase();
+    const address = req.params.address.toLowerCase();
     ethController.getTokenBalance(contractAddress, address)
         .then(tokens => {
             res.send(tokens)
@@ -114,8 +115,8 @@ app.post('/getTokenListBalance/', (req, res, next) => {
 
 });
 app.get('/getContractTransfers/:contractAddress/:address', (req, res, next) => {
-    const contractAddress = req.params.contractAddress;
-    const address = req.params.address;
+    const contractAddress = req.params.contractAddress.toLowerCase();
+    const address = req.params.address.toLowerCase();
     ethController.getContractTransfersPage(contractAddress, address, 0)
         .then(transfers => {
             res.send(transfers)
@@ -125,8 +126,8 @@ app.get('/getContractTransfers/:contractAddress/:address', (req, res, next) => {
         })
 });
 app.get('/getContractTransfers/:contractAddress/:address/:page', (req, res, next) => {
-    const contractAddress = req.params.contractAddress;
-    const address = req.params.address;
+    const contractAddress = req.params.contractAddress.toLowerCase();
+    const address = req.params.address.toLowerCase();
     const page = parseInt(req.params.page);
     ethController.getContractTransfersPage(contractAddress, address, page)
         .then(transfers => {

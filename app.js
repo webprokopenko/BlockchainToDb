@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 const crontab = require('./crontab');
 
 //set global mongoose
-global.mongoose = (global.mongoose ? global.mongoose : mongoose.createConnection(config.mongodbConnectionString));
+global.mongoose = (global.mongoose ? global.mongoose : mongoose.connect(config.mongodbConnectionString, {useNewUrlParser: true}));
 // CORS enable
 const cors = require('cors');
 app.use(cors());

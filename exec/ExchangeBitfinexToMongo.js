@@ -5,7 +5,7 @@ const argv = require('minimist')(process.argv.slice(2));
 //Intel logger setup
 const intel = require('intel');
 const StatsError = intel.getLogger('StatsError');
-StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`./error.log`));
+StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${global.AppRoot}/logs/error.log`));
 
 //Api url bitginex
 let url = 'https://api.bitfinex.com/v2';
