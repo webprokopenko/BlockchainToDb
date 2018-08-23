@@ -22,19 +22,10 @@ if (argv) {
         })
     }
     if (argv.saveblock && argv.saveblock > 0) {
-        getETHRpc.getBlockData(argv.saveblock)
-            .then(block => {
-                dbEthertransactionsLib.saveBlockTransactionToMongoDb(block)
-                    .then(res => {
-                        console.log(res);
-                    })
-                    .catch(e => {
-                        console.error('Error ' + e);
-                    })
-            })
-            .catch(e => {
-                console.log(e);
-            })
+        console.log('Scan and save from to Started ..... ');
+        scanETH.scan(argv.saveblock-1, argv.saveblock+1, ()=> {
+            console.log(`Save block from: ${argv.saveblock-1} to: ${argv.saveblock+1} FINISHED!!!`);
+        })
     }
 }
 

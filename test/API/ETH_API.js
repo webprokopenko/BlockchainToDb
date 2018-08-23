@@ -215,7 +215,7 @@ describe('Ethereum v4.2', () => {
     describe('/GET ETH Token Balance', () => {
         it('it should GET Ethereum address contract balance', (done) => {
             chai.request(server)
-                .get(`/api/v4.2/ETH/getTokenBalance/NBTT/${TEST_DATA.contract.validAddress}`)
+                .get(`/api/v4.2/ETH/getTokenBalance/${TEST_DATA.contract.validContract}/${TEST_DATA.contract.validAddress}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -243,7 +243,7 @@ describe('Ethereum v4.2', () => {
     describe('/GET ERC20 Contract Transfers', () => {
         it('it should GET all ERC20 Contract Transfers', (done) => {
             chai.request(server)
-                .get(`/api/v4.2/ETH/getContractTransfers/NBTT/${TEST_DATA.contract.validAddress}`)
+                .get(`/api/v4.2/ETH/getContractTransfers/${TEST_DATA.contract.validContract}/${TEST_DATA.contract.validAddress}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
