@@ -6,6 +6,7 @@ lib/db.js
 exec/SaveBitKindTransactionsToMongo.js
 .idea
 test/db_test/diagnostic.data/
+test/db_test
 crontab.js
 data
 dockerfiles
