@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-require('../models/userModel');
+require(`${AppRoot}/models/UserModel.js`);
 const User = mongoose.model('User');
 
 exports.register = async function (body) {
