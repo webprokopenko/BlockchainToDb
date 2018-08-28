@@ -8,7 +8,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-host: 193.200.173.204/
+host: 127.0.0.1:2345/
 basePath: 
 paths:
   /user/register:
@@ -110,6 +110,523 @@ paths:
           description: Success execute
         500:
           description: Service unavialable       
+  /api/v4.2/STATS/ETH-USD:
+    get:
+      tags:
+      - getHotExchange
+      summary: get Hot Exchange ETH-USD 
+      operationId: getHotExchange
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            type: object
+            properties:
+              pair: 
+                type: string
+              value:
+                type: float
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-USD:
+    get:
+      tags:
+      - getHotExchange
+      summary: get Hot Exchange BTC-USD 
+      operationId: getHotExchange
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            type: object
+            properties:
+              pair: 
+                type: string
+              value:
+                type: float
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-USD/GDAX/all:
+    get:
+      tags:
+      - getGdaxAll
+      summary: All gdax market BTC-USD rates 
+      operationId: getGdaxAll
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-EUR/GDAX/all:
+    get:
+      tags:
+      - getGdaxAll
+      summary: All gdax market BTC-EUR rates 
+      operationId: getGdaxAll
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable  
+  /api/v4.2/STATS/ETH-USD/GDAX/all:
+    get:
+      tags:
+      - getGdaxAll
+      summary: All gdax market ETH-USD rates 
+      operationId: getGdaxAll
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable     
+  /api/v4.2/STATS/ETH-EUR/GDAX/all:
+    get:
+      tags:
+      - getGdaxAll
+      summary: All gdax market ETH-EUR rates 
+      operationId: getGdaxAll
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable           
+  /api/v4.2/STATS/BTC-USD/GDAX/{countMonths}:
+    get:
+      tags:
+      - getGdax
+      summary: from now to countMonths gdax market BTC-USD rates 
+      operationId: getGdax
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: countMonths
+        in: path
+        description: Count months between 1-12
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable        
+  /api/v4.2/STATS/BTC-EUR/GDAX/{countMonths}:
+    get:
+      tags:
+      - getGdax
+      summary: from now to countMonths gdax market BTC-EUR rates 
+      operationId: getGdax
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: countMonths
+        in: path
+        description: Count months between 1-12
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable             
+  /api/v4.2/STATS/ETH-USD/GDAX/{countMonths}:
+    get:
+      tags:
+      - getGdax
+      summary: from now to countMonths gdax market ETH-USD rates 
+      operationId: getGdax
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: countMonths
+        in: path
+        description: Count months between 1-12
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/ETH-EUR/GDAX/{countMonths}:
+    get:
+      tags:
+      - getGdax
+      summary: from now to countMonths gdax market ETH-EUR rates 
+      operationId: getGdax
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: countMonths
+        in: path
+        description: Count months between 1-12
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-USD/GDAX/day:
+    get:
+      tags:
+      - getGdaxDay
+      summary: for last 24 hour gdax market BTC-USD rates
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-EUR/GDAX/day:
+    get:
+      tags:
+      - getGdaxDay
+      summary: for last 24 hour gdax market BTC-EUR rates
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/ETH-USD/GDAX/day:
+    get:
+      tags:
+      - getGdaxDay
+      summary: for last 24 hour gdax market ETH-USD rates
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/ETH-EUR/GDAX/day:
+    get:
+      tags:
+      - getGdaxDay
+      summary: for last 24 hour gdax market ETH-EUR rates
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable    
+  /api/v4.2/STATS/BTC-USD/BITFINEX/all:
+    get:
+      tags:
+      - getBitfinexAll
+      summary: All bitfinex market BTC-USD rates 
+      operationId: getBitfinexAll
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable                                                     
+  /api/v4.2/STATS/BTC-EUR/BITFINEX/all:
+    get:
+      tags:
+      - getBitfinexAll
+      summary: All bitfinex market BTC-EUR rates 
+      operationId: getBitfinexAll
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/ETH-USD/BITFINEX/all:
+    get:
+      tags:
+      - getBitfinexAll
+      summary: All bitfinex market ETH-USD rates 
+      operationId: getBitfinexAll
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/ETH-EUR/BITFINEX/all:
+    get:
+      tags:
+      - getBitfinexAll
+      summary: All bitfinex market ETH-EUR rates 
+      operationId: getBitfinexAll
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable 
+  /api/v4.2/STATS/BTC-USD/BITFINEX/{countMonths}:
+    get:
+      tags:
+      - getBitfinex
+      summary: from now to countMonths BITFINEX market BTC-USD rates 
+      operationId: getBitfinex
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: countMonths
+        in: path
+        description: Count months between 1-12
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-EUR/BITFINEX/{countMonths}:
+    get:
+      tags:
+      - getBitfinex
+      summary: from now to countMonths BITFINEX market BTC-EUR rates 
+      operationId: getBitfinex
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: countMonths
+        in: path
+        description: Count months between 1-12
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/ETH-USD/BITFINEX/{countMonths}:
+    get:
+      tags:
+      - getBitfinex
+      summary: from now to countMonths BITFINEX market ETH-USD rates 
+      operationId: getBitfinex
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: countMonths
+        in: path
+        description: Count months between 1-12
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-EUR/BITFINEX/{countMonths}:
+    get:
+      tags:
+      - getBitfinex
+      summary: from now to countMonths BITFINEX market ETH-EUR rates 
+      operationId: getBitfinex
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: countMonths
+        in: path
+        description: Count months between 1-12
+        required: true
+        type: number
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-USD/BITFINEX/day:
+    get:
+      tags:
+      - getBitfinexDay
+      summary: for last 24 hour bitfinex market BTC-USD rates
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/BTC-EUR/BITFINEX/day:
+    get:
+      tags:
+      - getBitfinexDay
+      summary: for last 24 hour bitfinex market BTC-EUR rates
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/ETH-USD/BITFINEX/day:
+    get:
+      tags:
+      - getBitfinexDay
+      summary: for last 24 hour bitfinex market ETH-USD rates
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/ETH-EUR/BITFINEX/day:
+    get:
+      tags:
+      - getBitfinexDay
+      summary: for last 24 hour bitfinex market ETH-EUR rates
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/candles'
+        500:
+          description: Service unavialable
+  /api/v4.2/STATS/markets:
+    get:
+      tags:
+      - markets
+      summary: all avialable markets 
+      # operationId: 
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success execute
+          schema:
+            type: array
+            properties:
+                market:
+                  type: object    
+                  properties:
+                    market:
+                      type: string
+                    pair:
+                      type: string
+        500:
+          description: Service unavialable                                                                                                                                                                                              
   /api/v4.2/ETH/getGasPrice/:
     get:
       tags:
@@ -126,7 +643,7 @@ paths:
           schema:
             $ref: '#/definitions/gasPrice'
         500:
-          description: Service unavialable
+          description: Service unavialable      
   /api/v4.2/ETH/getTokenListBalance/:
     tags:
       - Get balances of tokens
@@ -389,6 +906,25 @@ paths:
         500:
           description: Service unavialable           
 definitions:
+  candles:
+    type: array
+    items:
+      $ref: '#/definitions/candle'
+  candle:
+    type: object
+    properties:
+      time:
+        type: integer
+      pair:
+        type: string
+      low:
+        type: number
+      high:
+        type: number
+      open:
+        type: number
+      close:
+        type: number
   transactionsList:
     type: object
     description: ETH transactions object, in - input transactions array, out - output transactions array, pending_in - pending input transactions array, pending_out - pending outcome transactions array

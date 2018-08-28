@@ -3,6 +3,18 @@ const request = require('request');
 const app = module.exports = express();
 const statsController = require(`../../../../controllers/statsController`);
 
+app.get('/markets', (req, res, next)=>{
+    let markets = [
+        {'market':'BITFINEX','pair':'BTC-USD'},
+        {'market':'BITFINEX','pair':'ETH-USD'},
+        {'market':'GDAX','pair':'BTC-USD'},
+        {'market':'GDAX','pair':'BTC-EUR'},
+        {'market':'GDAX','pair':'ETH-USD'},
+        {'market':'GDAX','pair':'ETH-EUR'},
+    ]
+    res.send(markets);
+})
+
 app.get('/:pair', (req, res, next) => {
     const pair = req.params.pair;
     statsController.getHotExchange(pair)
@@ -309,14 +321,3 @@ app.get('/ETH-EUR/BITFINEX/:countMonths', (req, res, next) => {
             next(error);
         })
 });
-app.get('/markets', (req, res, next)=>{
-    let markets = [
-        {'market':'BITFINEX','pair':'BTC-USD'},
-        {'market':'BITFINEX','pair':'ETH-USD'},
-        {'market':'GDAX','pair':'BTC-USD'},
-        {'market':'GDAX','pair':'BTC-EUR'},
-        {'market':'GDAX','pair':'ETH-USD'},
-        {'market':'GDAX','pair':'ETH-EUR'},
-    ]
-    res.send(markets);
-})
