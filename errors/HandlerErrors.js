@@ -1,6 +1,7 @@
 const AppError = require('./AppError');
 const RpcError = require('./RpcError');
 const ScannerError = require('./ScannerError');
+const StatsError = require('./StatsError');
 const ScanLogModel = require('../lib/mongodb/scanLog');
 
 //Intel logger setup
@@ -10,6 +11,9 @@ GethLoger.setLevel(GethLoger.ERROR).addHandler(new intel.handlers.File(`${global
 
 const ErrorLoger =  intel.getLogger('ErrorLoger');
 ErrorLoger.setLevel(ErrorLoger.ERROR).addHandler(new intel.handlers.File(`${global.AppRoot}/logs/error.log`));
+
+const StatsLoger = intel.getLogger('StatsError');
+StatsLoger.setLevel(StatsLoger.ERROR).addHandler(new intel.handlers.File(`${global.AppRoot}/logs/stats.log`));
 
 const config = require('../config/config.json');
 const telegramBot = require('node-telegram-bot-api');
@@ -55,7 +59,12 @@ module.exports = class HandlerErrors {
                 .error(`${new Date()}: ${ErrorObj}`);
                 botError.sendMessage(config.telegram_chat_id, `${new Date()}: ${ErrorObj}`);
             throw ErrorObj
-        }else {
+        }else if(ErrorObj instanceof StatsError){
+            StatsLoger
+            .error(`${new Date()}: ${ErrorObj}`);
+            botError.sendMessage(config.telegram_chat_id, `${new Date()}: ${ErrorObj}`);
+        }
+        else {
             ErrorLoger
                 .error(`${new Date()}: ${ErrorObj}`);
                 botError.sendMessage(config.telegram_chat_id, `${new Date()}: ${ErrorObj}`);

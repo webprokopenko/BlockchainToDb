@@ -1,129 +1,77 @@
 const request = require('request');
-
+global.AppRoot = __dirname + '/../';
 const mongodbConnectionString = require('../config/config.json').mongodbConnectionString;
-//Intel logger setup
-const intel = require('intel');
-const StatsError = intel.getLogger('StatsError');
-StatsError.setLevel(StatsError.ERROR).addHandler(new intel.handlers.File(`${global.AppRoot}/logs/error.log`));
+
+const StatsError = require(`../errors/StatsError`);
+const handlerErr = require(`../errors/HandlerErrors`);
 //Mongoose
 global.mongoose = require('mongoose');
 mongoose.connect(mongodbConnectionString);
 const dbHotExchangeLib = require('../lib/mongodb/hot_exchange.js');
 
-    const url = 'https://api.coinmarketcap.com/v1/ticker/';
-
-function parseAndSaveETHUSD() {
-    request.get(url + 'ethereum/?convert=USD',
+function parseStatUSD(addUrl, pair){
+    const url = 'https://api.coinmarketcap.com/v/ticker/';
+    request.get(url + addUrl,
         async (error, response, body) => {
-            if (!body || body.length < 2) {
-                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
+            try {
+                if (!body || body.length < 2) {
+                    new handlerErr(new StatsError(`parseStat Error: Body empty pair: ${pair}`));
+                }
+                if (error) {
+                    new handlerErr(new StatsError(`parseStat Error: ${error}`));
+                }
+                body = JSON.parse(body) || {};
+                if (!body[0].price_usd) {
+                    new handlerErr(new StatsError(`parseStat pair: ${pair} Error: price_usd empty`));
+                }
+                console.log(body);
+                dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': pair, 'value': body[0].price_usd })
+                .catch(error=>new handlerErr(new StatsError(`parseStat saveHotExchangeToMongoDb pair:${pair}, error:  ${error}`)))                  
+            } catch (error) {
+                new handlerErr(new StatsError(`parseStatUSD Error: ${error}`));      
             }
-            if (error) {
-                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
-            }
-            body = JSON.parse(body) || {};
-
-            if (!body[0].price_usd) {
-                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
-            }
-            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'ETH-USD', 'value': body[0].price_usd })
-                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
         }
     );
+}
+function parseAndSaveETHUSD() {
+    parseStatUSD('ethereum/?convert=USD','ETH-USD');
 }
 function parseAndSaveBTCUSD(){
-    request.get(url + 'bitcoin/?convert=USD',
-        async (error, response, body) => {
-            if (!body || body.length < 2) {
-                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
-            }
-            if (error) {
-                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
-            }
-            body = JSON.parse(body) || {};
-
-            if (!body[0].price_usd) {
-                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
-            }
-            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'BTC-USD', 'value': body[0].price_usd })
-                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
-        }
-    );
+    parseStatUSD('bitcoin/?convert=USD','BTC-USD');
 }
 function parseAndSaveLTCUSD(){
-    request.get(url + 'litecoin/?convert=USD',
-        async (error, response, body) => {
-            if (!body || body.length < 2) {
-                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
-            }
-            if (error) {
-                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
-            }
-            body = JSON.parse(body) || {};
-
-            if (!body[0].price_usd) {
-                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
-            }
-            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'LTC-USD', 'value': body[0].price_usd })
-                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
-        }
-    );
+    parseStatUSD('litecoin/?convert=USD','LTC-USD');
 }
 function parseAndSaveBTGUSD(){
-    request.get(url + 'bitcoin-gold/?convert=USD',
-        async (error, response, body) => {
-            if (!body || body.length < 2) {
-                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
-            }
-            if (error) {
-                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
-            }
-            body = JSON.parse(body) || {};
-
-            if (!body[0].price_usd) {
-                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
-            }
-            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'BTG-USD', 'value': body[0].price_usd })
-                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
-        }
-    );
+    parseStatUSD('bitcoin-gold/?convert=USD','BTG-USD');
 }
 function parseAndSaveBCHUSD(){
-    request.get(url + 'bitcoin-cash/?convert=USD',
-        async (error, response, body) => {
-            if (!body || body.length < 2) {
-                return StatsError.error(`parseAndSaveETHUSD Error: Body empty : ${body}`)
-            }
-            if (error) {
-                return StatsError.error(`parseAndSaveETHUSD Error: ${error}`)
-            }
-            body = JSON.parse(body) || {};
-
-            if (!body[0].price_usd) {
-                return StatsError.error(`parseAndSaveETHUSD Error: price_usd empty`)
-            }
-            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'BCH-USD', 'value': body[0].price_usd })
-                    .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
-        }
-    );
+    parseStatUSD('bitcoin-cash/?convert=USD','BCH-USD');
 }
 function parseAndSaveUSDT() {
-    request.get(url.replace('/v1', '/v2') + '825/?convert=USD',
+    request.get('https://api.coinmarketcap.com/v2/ticker/825/?convert=USD',
         async (error, response, body) => {
-            if (!body) {
-                return StatsError.error(`parseAndSaveUSDT Error: Body empty : ${body}`)
+            try {
+                if(!response.headers["content-type"]==='application/json'){
+                    new handlerErr(new StatsError('parseAndSaveUSDT Error: content-type !== application/json '));
+                }
+                if (!body) {
+                    new handlerErr(new StatsError('parseAndSaveUSDT Error: Body empty '));
+                }
+                if (error) {
+                    new handlerErr(new StatsError(`parseAndSaveUSDT Error: ${error}`));
+                }
+                body = JSON.parse(body) || {};
+                if (!body.data || !body.data.quotes
+                    || !body.data.quotes.USD || !body.data.quotes.USD.price) {
+                        new handlerErr(new StatsError(`parseAndSaveUSDT Error: price empty`));
+                }
+                dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'USDT-USD', 'value': body.data.quotes.USD.price })
+                    .catch(error=>new handlerErr(new StatsError(`parseAndSaveUSDT saveHotExchangeToMongoDb ${error}`)))    
+            } catch (error) {
+                new handlerErr(new StatsError(`parseAndSaveUSDT Error: ${error}`));      
             }
-            if (error) {
-                return StatsError.error(`parseAndSaveUSDT Error: ${error}`)
-            }
-            body = JSON.parse(body) || {};
-
-            if (!body.data || !body.data.quotes
-                || !body.data.quotes.USD || !body.data.quotes.USD.price) {
-                return StatsError.error(`parseAndSaveUSDT Error: price empty`)
-            }
-            dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': 'USDT-USD', 'value': body.data.quotes.USD.price })
-                .catch(error=>StatsError.error(`saveHotExchangeToMongoDb ${error}`))
+            
         }
     );
 }
