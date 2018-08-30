@@ -10,7 +10,7 @@ mongoose.connect(mongodbConnectionString);
 const dbHotExchangeLib = require('../lib/mongodb/hot_exchange.js');
 
 function parseStatUSD(addUrl, pair){
-    const url = 'https://api.coinmarketcap.com/v/ticker/';
+    const url = 'https://api.coinmarketcap.com/v1/ticker/';
     request.get(url + addUrl,
         async (error, response, body) => {
             try {
@@ -24,7 +24,6 @@ function parseStatUSD(addUrl, pair){
                 if (!body[0].price_usd) {
                     new handlerErr(new StatsError(`parseStat pair: ${pair} Error: price_usd empty`));
                 }
-                console.log(body);
                 dbHotExchangeLib.saveHotExchangeToMongoDb({ 'time': Math.floor(new Date / 1000), 'pair': pair, 'value': body[0].price_usd })
                 .catch(error=>new handlerErr(new StatsError(`parseStat saveHotExchangeToMongoDb pair:${pair}, error:  ${error}`)))                  
             } catch (error) {
