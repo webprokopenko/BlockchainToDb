@@ -2,7 +2,7 @@ const getETHRpc = require('../lib/ethereum/getETHRpc');
 const scanETH = require('../lib/scanBlockchain/scanETH');
 //Arguments listener
 const argv = require('minimist')(process.argv.slice(2));
-
+global.AppRoot = path.resolve('../');
 if (argv) {
     if (argv.from && argv.to) {
         console.log('Scan and save from to Started ..... ');
