@@ -8,6 +8,7 @@ RUN apt-get install zlib1g-dev wget curl bsdmainutils automake
 RUN apt install -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test  
 RUN apt-get install g++-4 -y
+COPY ./start.sh /start.sh
 WORKDIR /var
 RUN git clone https://github.com/zcash/zcash.git
 WORKDIR /var/zcash
@@ -17,3 +18,4 @@ RUN ./zcutil/build.sh -j$(nproc)
 RUN mkdir -p ~/.zcash
 RUN echo "testnet=1 server=1 addnode=testnet.z.cash rpcuser=u rpcpassword=p rpcport=1531" >~/.zcash/zcash.conf
 EXPOSE 1531
+ENTRYPOINT ["/bin/bash","/start.sh"]
