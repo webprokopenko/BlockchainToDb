@@ -1,0 +1,9 @@
+version: '2'
+services:
+  bitcoind:
+    image: amacneil/bitcoin
+    # specify additional command line arguments here
+    command: bitcoind -rpcthreads=8 -rpcport=18332 -rpcuser=someusername -rpcpassword=somepassword -server -testnet**
+    ports:
+      # change to 18333 if running testnet
+      - "18333:18333"

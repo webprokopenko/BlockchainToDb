@@ -1,0 +1,9 @@
+version: '3.5'
+services:
+  zcashcompose:
+        build: 
+          context: .
+          dockerfile: Dockerfile
+        ports:
+            - 1531:1531
+        # command: "/var/zcash/src/zcashd -testnet=1 -server=1 -addnode=testnet.z.cash -rpcuser=u -rpcpassword=p -rpcport=1531 -rpcallowip=172.17.0.1"    
