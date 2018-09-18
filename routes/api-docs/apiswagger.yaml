@@ -381,6 +381,154 @@ paths:
             $ref: '#/definitions/transfers'
         500:
           description: Service unavialable           
+  /api/v4.2/BTC/sendRawTransaction/{rawTransaction}:
+    get:
+      tags:
+      - sendRawTransaction
+      summary: Send and broadcast raw transaction
+      operationId: sendRawTransaction
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: rawTransaction
+        in: path
+        description: The serialized raw transaction in hex format
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/hash'
+        500:
+          description: Service unavialable
+  /api/v4.2/BTC/getBalance/{address}:
+    get:
+      tags:
+      - getBalance
+      summary: Get address balance
+      operationId: getBalance
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for BTC wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/balance'
+        500:
+          description: Service unavialable
+  /api/v4.2/BTC/getTransactionsList/{address}:
+    get:
+      tags:
+      - getTransactionsList
+      summary: Get address transactions
+      operationId: getTransactionsList
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for BTC wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transactionsList'
+        500:
+          description: Service unavialable
+  /api/v4.2/BTC/getTransactionsList/{address}/{page}:
+    get:
+      tags:
+      - getTransactionsList by pages
+      summary: Get address transactions by page header {TrPages - integer}, pages number
+      operationId: getTransactionsListByPage
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for BTC wallet
+        required: true
+        type: string
+      - name: page
+        in: path
+        description: The current transactions list page number
+        required: true
+        type: integer  
+      responses:
+        '200':
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transactionsList'
+        '500':
+          description: Service unavialable
+  /api/v4.2/BTC/getUTXOs/{address}:
+    get:
+      tags:
+      - getUTXOs
+      summary: Get address UTXOs
+      operationId: getUTXOs
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for BTC wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transactionsList'
+        500:
+          description: Service unavialable          
+  /api/v4.2/BTC/getUTXOs/{address}/{page}:
+    get:
+      tags:
+      - getUTXOs by pages
+      summary: Get getUTXOs by page header {TrPages - integer}, pages number
+      operationId: getUTXOs by page
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for BTC wallet
+        required: true
+        type: string
+      - name: page
+        in: path
+        description: The current transactions list page number
+        required: true
+        type: integer  
+      responses:
+        '200':
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transactionsList'
+        '500':
+          description: Service unavialable        
   /api/v4.2/STATS/ETH-USD:
     get:
       tags:
