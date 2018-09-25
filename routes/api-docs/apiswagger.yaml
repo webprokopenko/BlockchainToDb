@@ -283,8 +283,31 @@ paths:
     get:
       tags:
       - getBalance
-      summary: Get address balance
+      summary: Get address balance in wei
       operationId: getBalance
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success execute
+          schema:
+            $ref: '#/definitions/balance'
+        500:
+          description: Service unavialable
+  /api/v4.2/ETH/getBalanceETH/{address}:
+    get:
+      tags:
+      - getBalance
+      summary: Get address balance in ETH
+      operationId: getBalanceETH
       consumes:
       - application/json
       produces:

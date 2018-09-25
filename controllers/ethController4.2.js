@@ -90,7 +90,17 @@ async function getBalance(address){
         throw new Error('address not valid in ETH');
     try {
         let balance = await gethETH.getBalance(address);
-        return {'balance':utils.convertHexToInt(balance)}
+        return {'balance': utils.convertHexToInt(balance)}
+    } catch (error) {
+        new handlerErr(error);
+    }
+}
+async function getBalanceETH(address){
+    if(!utils.isAddress(address))
+        throw new Error('address not valid in ETH');
+    try {
+        let balance = await gethETH.getBalance(address);
+        return {'balance': utils.convertToETHfromWei(utils.convertHexToInt(balance))}
     } catch (error) {
         new handlerErr(error);
     }
@@ -202,6 +212,7 @@ module.exports = {
     getGasLimit:                getGasLimit,
     getPriceLimit:              getPriceLimit,
     getBalance:                 getBalance,
+    getBalanceETH:              getBalanceETH,
     getTransactionCount:        getTransactionCount,
     sendRawTransaction:         sendRawTransaction,
     getTransactionFromHash:     getTransactionFromHash,

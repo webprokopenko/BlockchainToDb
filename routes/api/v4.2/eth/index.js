@@ -62,6 +62,16 @@ app.get('/getBalance/:address', (req, res, next) => {
             next(error);
         })
 });
+app.get('/getBalanceETH/:address', (req, res, next) => {
+    const address = req.params.address.toLowerCase();
+    ethController.getBalanceETH(address)
+        .then(balance => {
+            res.send(balance)
+        })
+        .catch(error => {
+            next(error);
+        })
+});
 app.get('/getTransactionCount/:address', (req, res, next) => {
     const address = req.params.address.toLowerCase();
     ethController.getTransactionCount(address)
