@@ -172,7 +172,6 @@ async function getContractTransfers(contractAddr, address) {
 }
 async function getTokenListBalance(bodyRequest){
     try {
-        console.log(bodyRequest)
         if(!Contract.validateRespTokenList(bodyRequest)) throw new Error('Wrong body request');
         if(!utils.isAddress(bodyRequest.address)) throw new Error('Wrong address ');
         const tokenList = await Contract.getTokenList(bodyRequest)

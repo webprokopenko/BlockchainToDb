@@ -4,6 +4,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../app.js');
 const should = chai.should();
+const utils = require('../../lib/ethereum/utilsETH');
 
 const TEST_DATA = require('../test-data.json');
 
@@ -57,10 +58,10 @@ describe('Ethereum v4.0', () => {
         });
     });
   });
-  describe('/GET ETH Balance', () => {
-    it('it should GET Ethereum Balance', (done) => {
+  describe('/GET ETH Balance in WEI', () => {
+    it('it should GET Ethereum Balance in WEI', (done) => {
       chai.request(server)
-        .get(`/api/v4.0/ETH/getBalance/${TEST_DATA.wallet.addres}`)
+        .get(`/api/v4.2/ETH/getBalance/${TEST_DATA.wallet.addres}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -173,8 +174,8 @@ describe('Ethereum v4.2', () => {
                 });
         });
     });
-    describe('/GET ETH Balance', () => {
-        it('it should GET Ethereum Balance', (done) => {
+    describe('/GET ETH Balance in WEI', () => {
+        it('it should GET Ethereum Balance in WEI', (done) => {
             chai.request(server)
                 .get(`/api/v4.2/ETH/getBalance/${TEST_DATA.wallet.addres}`)
                 .end((err, res) => {
@@ -185,6 +186,18 @@ describe('Ethereum v4.2', () => {
                 });
         });
     });
+    describe('/GET ETH Balance in ETH', () => {
+        it('it should GET Ethereum Balance in ETH', (done) => {
+          chai.request(server)
+            .get(`/api/v4.2/ETH/getBalanceETH/${TEST_DATA.wallet.addres}`)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('balance', utils.convertToETHfromWei(TEST_DATA.wallet.balance));
+              done();
+            });
+        });
+      });
     describe('/GET ETH Transaction List', () => {
         it('it should GET Ethereum Transaction List by address', (done) => {
             chai.request(server)
