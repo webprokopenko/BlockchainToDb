@@ -118,8 +118,8 @@ async function getTransactionCount(address){
 async function sendRawTransaction(rawTransaction){
     try{
         let transactionHash = await gethETH.sendRawTransaction(rawTransaction);
-        //await ethTransaction
-            //.saveTempTransaction(await getTransactionFromHash(transactionHash));
+        let transactionInfo = await getTransactionFromHash(transactionHash);
+        ethTransaction.saveTempTransaction(transactionInfo);
         return {hash: transactionHash};
     } catch (error){
         new handlerErr(error);
