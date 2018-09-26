@@ -278,7 +278,40 @@ paths:
           schema:
             $ref: '#/definitions/transactionsList'
         '500':
-          description: Service unavialable   
+          description: Service unavialable
+  /api/v4.2/ETH/getTransactionsListByRand/{address}/{from}/{count}:
+    get:
+      tags:
+      - getTransactionsList by rand
+      summary: Get address transactions by rand min value from 0, max value count = 50
+      operationId: getTransactionsList
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      - name: from
+        in: path
+        description: The current transactions list from transaction
+        required: true
+        type: integer  
+      - name: count
+        in: path
+        description: The current transactions list summary count transaction
+        required: true
+        type: integer  
+      responses:
+        '200':
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transactionsList'
+        '500':
+          description: Service unavialable            
   /api/v4.2/ETH/getTransactionsList/{address}:
     get:
       tags:
