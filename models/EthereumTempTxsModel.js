@@ -9,14 +9,13 @@ let BlockTransaction = new Schema({
     timestamp:  String,
     from:       {
         type: String,
-        index: { unique: true }
+        index: { unique: false }
     },
     to:         {
         type: String,
-        index: { unique: true }
+        index: { unique: false }
     },
     value:      String,
-    fee:        String,
     blockNum:   Number
 });
 
