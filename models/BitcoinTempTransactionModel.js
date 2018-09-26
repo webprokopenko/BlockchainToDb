@@ -15,7 +15,7 @@ let BitcoinGoldTransaction = new Schema({
         vout:           Number,
         addresses:      {
             type:   [String],
-            index:  true
+            index: { unique: false } 
         },
         value:          Number,
         scriptSig: {
@@ -35,7 +35,7 @@ let BitcoinGoldTransaction = new Schema({
             tipe:       String,
             addresses:{
                 type:   [String],
-                index:  true
+                index: { unique: false }
             }
         }
     }]
