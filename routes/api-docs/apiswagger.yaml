@@ -278,7 +278,30 @@ paths:
           schema:
             $ref: '#/definitions/transactionsList'
         '500':
-          description: Service unavialable          
+          description: Service unavialable   
+  /api/v4.2/ETH/getTransactionsList/{address}:
+    get:
+      tags:
+      - getTransactionsList First Page
+      summary: Get address transactions  header {TrPages - integer}, pages number
+      operationId: getTransactionsList
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: address
+        in: path
+        description: The address for ETH wallet
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success execute
+          schema:
+            $ref: '#/definitions/transactionsList'
+        '500':
+          description: Service unavialable               
   /api/v4.2/ETH/getBalance/{address}:
     get:
       tags:
@@ -1091,7 +1114,7 @@ definitions:
         type: number
   transactionsList:
     type: object
-    description: ETH transactions object, in - input transactions array, out - output transactions array, pending_in - pending input transactions array, pending_out - pending outcome transactions array
+    description: ETH transactions object, in - input transactions array, out - output transactions array, pending - pending transactions array
     properties:
       in:
         type: array
