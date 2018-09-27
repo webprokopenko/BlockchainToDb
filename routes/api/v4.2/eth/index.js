@@ -37,7 +37,18 @@ app.get('/getTransactionsListByRand/:address/:from/:count', (req, res, next) => 
             next(error)
         })
 });
-
+app.get('/getTransactionsListRange/:address/:start/:count', (req, res, next) => {
+    const address = req.params.address.toLowerCase();
+    const start = parseInt(req.params.start);
+    const count = parseInt(req.params.count);
+    ethController.getTransactionListRange(address, start, count)
+        .then(transactions => {
+            res.send(transactions.transactions);
+        })
+        .catch(error => {
+            next(error)
+        })
+});
 app.get('/getGasPrice', (req, res, next) => {
     ethController.getGasPrice()
         .then(gasPrice => {

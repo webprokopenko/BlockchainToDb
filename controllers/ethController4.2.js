@@ -79,6 +79,24 @@ async function getTransactionListByRange(address, from, count) {
     }
 
 }
+async function getTransactionListRange(address, start=0, count=1){
+    try {
+        if(!utils.isAddress(address))
+            throw new Error('Address not valid in Ethereum');
+        if(start<0)
+            throw new Error('Start search position invalid');
+        if(count<0 || count >50)
+            throw new Error('Number of results can not be more than 50');
+
+        const transactionList = await ethTransaction.getAllTransactionList(address, count, start);
+
+        return    {
+            'transactions': transactionList
+        }
+    } catch (error) {
+        new handlerErr(error);
+    }
+}
 async function getGasPrice() {
     try {
         let gasPrice = await gethETH.getGasPrice();
@@ -227,6 +245,7 @@ module.exports = {
     getTransactionList: getTransactionList,
     getTransactionListPending: getTransactionListPending,
     getTransactionListByRange: getTransactionListByRange,
+    getTransactionListRange: getTransactionListRange,
     getGasPrice: getGasPrice,
     getGasLimit: getGasLimit,
     getPriceLimit: getPriceLimit,
