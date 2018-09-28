@@ -91,7 +91,7 @@ app.get('/getTransactionsList/:address/:page', (req,res, next) => {
         })
 });
 //get txs list by address by range
-app.get('/getTransactionsList/:address/:from/:count', (req,res, next) => {
+app.get('/getTransactionsListRange/:address/:from/:count', (req,res, next) => {
     const from = parseInt(req.params.from);
     const count = parseInt(req.params.count);
     const address = req.params.address;
