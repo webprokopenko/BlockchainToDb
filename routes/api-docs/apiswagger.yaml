@@ -228,7 +228,7 @@ paths:
             $ref: '#/definitions/hash'
         500:
           description: Service unavialable
-  /api/v4.0/ETH/getTransactionsList/{address}:
+  /api/v4.2/ETH/getTransactionsList/{address}:
     get:
       tags:
       - getTransactionsList
