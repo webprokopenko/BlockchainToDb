@@ -213,6 +213,20 @@ describe('Ethereum v4.2', () => {
                 });
         });
     });
+    describe('/GET ETH Transaction List by Range', () => {
+        it('it should GET Ethereum Range Transaction List by address', (done) => {
+            chai.request(server)
+                .get(`/api/v4.2/ETH/getTransactionsListByRand/${TEST_DATA.wallet.addres}/0/50`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.all.keys('pending', 'transactions');
+                    res.body.pending.should.be.a('array');
+                    res.body.transactions.should.be.a('array');
+                    done();
+                });
+        });
+    });
     describe('/GET ETH Transaction from Hash', () => {
         it('it should GET Ethereum Transaction from Hash', (done) => {
             chai.request(server)
