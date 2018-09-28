@@ -1,42 +1,6 @@
 const express = require('express');
 const app = module.exports = express();
 const btcController = require(`../../../../controllers/btcController`);
-/**
-  * @swagger
-  * definitions:
-  *   Transactions:
-  *     required:
-  *       - in
-  *       - out
-  *     properties:
-  *       in:
-  *         type: object
-  *       out:
-  *         type: object
-*/
-
-/**
- * @swagger
- * /getTransactionsList/address:
- *   get:
- *     description: Transactions list
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: address
- *         description: Address ETH to get Transaction List.
- *         in: formData
- *         required: true
- *         type: string
- *     responses:
- *       200:
- *          description: Transactions List
- *          schema:
- *              type: object
- *              $ref: '#/definitions/Transactions'
- *         
- *         
- */
 
 // send raw transaction
 app.get('/sendRawTransaction/:raw', (req, res, next) =>{
@@ -120,6 +84,21 @@ app.get('/getTransactionsList/:address/:page', (req,res, next) => {
             res.send({
                 pending:        transactions.pending,
                 transactions:   transactions.transactions
+            });
+        })
+        .catch(error => {
+            next(error)
+        })
+});
+//get txs list by address by range
+app.get('/getTransactionsList/:address/:from/:count', (req,res, next) => {
+    const from = parseInt(req.params.from);
+    const count = parseInt(req.params.count);
+    const address = req.params.address;
+    btcController.getTxListByRand(address, count, from)
+        .then(transactions => {
+            res.send({
+                transactions
             });
         })
         .catch(error => {

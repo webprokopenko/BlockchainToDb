@@ -97,6 +97,28 @@ async function getAllTxList(address, page = 0){
         new handlerErr(error);
     }
 }
+async function getTxListByRand(address, count, from){
+    try {
+        if(!Utils.isAddress(address, btcConfig.network))
+            throw new Error('Address not valid in Bitcoin');
+        if(count<=0 || count>50)
+            throw new Error('Count invalid');
+        if(from<0)
+            throw new Error('From invalid');
+        
+        const pending = await btcTransaction.getPendingTransactions(address);
+        const transactionList = await btcTransaction.getAllTransactionList(address, count, from);
+        transactionList.map(tx => {
+            return btcTransaction.calculateTransactionFee(tx._doc);
+        });
+        return    {
+            'pending': pending,
+            'transactions': transactionList
+        }
+    } catch (error) {
+        new handlerErr(error);
+    }
+}
 
 module.exports = {
     getBalance:             getBalance,
@@ -106,5 +128,6 @@ module.exports = {
     getUTXOs:               getUTXOs,
     getUTXOsP:              getUTXOsP,
     getTxList:              getTxList,
-    getAllTxList:           getAllTxList
+    getAllTxList:           getAllTxList,
+    getTxListByRand:        getTxListByRand
 };
