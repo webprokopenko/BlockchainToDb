@@ -168,7 +168,7 @@ async function getTokenBalance(contractAddr, address) {
         if (!utils.isAddress(address)) throw new Error('Wrong address.');
         const decimals = await gethETH.getContractDecimals(contractAddress);
         const tokens = await gethETH.getTokens(contractAddress, address);
-        return { 'tokens': tokens.dividedBy(10 ** decimals.toNumber()) };
+        return { 'tokens': tokens.dividedBy(10 ** decimals.toNumber()).toFixed() };
     } catch (error) {
         new handlerErr(error);
     }
