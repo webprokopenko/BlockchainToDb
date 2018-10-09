@@ -13,6 +13,10 @@ const btcData = {
         'timestamp' ,'blockhash' ,'blockheight', 'txid', 'version', 'locktime', 'size',
         'vin', 'vout'
     ],
+    transactionKeys_v42: [
+        'timestamp' ,'blockhash' ,'blockheight', 'txid', 'version', 'locktime', 'size',
+        'vin', 'vout', 'fee', 'vinAmmount', 'voutAmmount'
+    ],
     rawTransactionKeys: [
         'time' ,'blockhash' ,'blocktime', 'txid', 'version', 'locktime', 'size',
         'vin', 'vout', 'vsize','confirmations', 'hex', 'hash'
@@ -100,7 +104,7 @@ describe('Bitcoin apiv4.2', () => {
                     res.body.transactions.should.be.a('array');
                     if (res.body.transactions.length > 0) {
                         res.body.transactions[0].should.be.a('object');
-                        res.body.transactions[0].should.have.all.keys(btcData.transactionKeys);
+                        res.body.transactions[0].should.have.all.keys(btcData.transactionKeys_v42);
                     }
                     done();
                 });
@@ -132,6 +136,27 @@ describe('Bitcoin apiv4.2', () => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys(btcData.rawTransactionKeys);
+                    done();
+                });
+        })
+    });
+    describe('/GET BTC getTransactionByRand', () => {
+        it('it should GET Bitcoin raw transaction by rand', done => {
+            chai.request(server)
+                .get('/api/v4.2/BTC/getTransactionsListByRand/' + btcData.address + '/2/2')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.all.keys('transactions');
+                    if (res.body.transactions.length > 0) {
+                        res.body.transactions.should.have.all.keys('pending', 'transactions');
+                        res.body.transactions.pending.should.be.a('array');
+                        res.body.transactions.transactions.should.be.a('array');
+                        if (res.body.transactions.transactions.length > 0) {
+                            res.body.transactions[0].should.be.a('object');
+                            res.body.transactions[0].should.have.all.keys(btcData.transactionKeys_v42);
+                        }
+                    }
                     done();
                 });
         })
