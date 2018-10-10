@@ -39,6 +39,7 @@ describe('Bitcoin apiv4.0', () => {
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('balance');
                     res.body.balance.should.be.a('number');
+                    res.body.balance.should.be.above(0);
                     done();
                 });
         })
@@ -52,6 +53,7 @@ describe('Bitcoin apiv4.0', () => {
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('utxos');
                     res.body.utxos.should.be.a('array');
+                    res.body.utxos.length.should.be.above(0);
                     if(res.body.utxos.length > 0) {
                         res.body.utxos[0].should.be.a('object');
                         res.body.utxos[0].should.have.all.keys(btcData.utoxsKeys);
@@ -68,6 +70,7 @@ describe('Bitcoin apiv4.0', () => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('txs');
+                    res.body.txs.length.should.be.above(0);
                     if(res.body.txs.length > 0) {
                         res.body.txs[0].should.be.a('object');
                         res.body.txs[0].should.have.all.keys(btcData.transactionKeys);
@@ -87,6 +90,7 @@ describe('Bitcoin apiv4.2', () => {
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('balance');
                     res.body.balance.should.be.a('number');
+                    res.body.balance.should.be.above(0);
                     done();
                 });
         })
@@ -102,6 +106,7 @@ describe('Bitcoin apiv4.2', () => {
                     res.body.pages.should.be.a('number');
                     res.body.pending.should.be.a('array');
                     res.body.transactions.should.be.a('array');
+                    res.body.transactions.length.should.be.above(0);
                     if (res.body.transactions.length > 0) {
                         res.body.transactions[0].should.be.a('object');
                         res.body.transactions[0].should.have.all.keys(btcData.transactionKeys_v42);
@@ -120,6 +125,7 @@ describe('Bitcoin apiv4.2', () => {
                     res.body.should.have.all.keys(['pages', 'utxos']);
                     res.body.pages.should.be.a('number');
                     res.body.utxos.should.be.a('array');
+                    res.body.utxos.length.should.be.above(0);
                     if(res.body.utxos.length > 0) {
                         res.body.utxos[0].should.be.a('object');
                         res.body.utxos[0].should.have.all.keys(btcData.utoxsKeys);
@@ -145,6 +151,7 @@ describe('Bitcoin apiv4.2', () => {
             chai.request(server)
                 .get('/api/v4.2/BTC/getTransactionsListByRand/' + btcData.address + '/2/2')
                 .end((err, res) => {
+                    console.log('---', res.body );
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.all.keys('transactions');
@@ -152,6 +159,7 @@ describe('Bitcoin apiv4.2', () => {
                         res.body.transactions.should.have.all.keys('pending', 'transactions');
                         res.body.transactions.pending.should.be.a('array');
                         res.body.transactions.transactions.should.be.a('array');
+                        res.body.transactions.transactions.length.should.be.below(0);
                         if (res.body.transactions.transactions.length > 0) {
                             res.body.transactions[0].should.be.a('object');
                             res.body.transactions[0].should.have.all.keys(btcData.transactionKeys_v42);
