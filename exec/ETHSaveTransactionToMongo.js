@@ -17,7 +17,7 @@ if (argv) {
         })
     }
     if (argv.getblock && argv.getblock > 0) {
-        console.log('Get block');
+        console.log('Get block : ' + argv.getblock);
         getETHRpc.getBlockData(argv.getblock).then(block => {
             console.log(block);
         })
