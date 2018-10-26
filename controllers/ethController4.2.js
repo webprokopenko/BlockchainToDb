@@ -208,12 +208,7 @@ async function getContractTransfersPage(contractAddr, address, page = 0) {
 
         const countTransaction = await ethTransaction.getCountTransaction(address);
         const pages = Math.floor(countTransaction / 50);
-        const decimals = await gethETH.getContractDecimals(contractAddress);
         const transfers = await ethTransaction.getContractTransfers(contractAddress, address, 50, page * 50);
-        transfers.forEach(tr => {
-            tr.input.value = utils.toBigNumber(tr.input.value)
-                .dividedBy(10 ** decimals.toNumber()).toString();
-        });
         return {
             pages: pages,
             transfers: transfers
