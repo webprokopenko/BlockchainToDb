@@ -146,12 +146,7 @@ async function getContractTransfers(contractAddress, address) {
     try{
         if(!utils.isAddress(contractAddress)) throw new Error ('Wrong contract address.');
         if(!utils.isAddress(address)) throw new Error('Wrong address.');
-        const decimals = await gethETH.getContractDecimals(contractAddress);
         const transfers = await ethTransaction.getContractTransfers(contractAddress, address);
-        transfers.forEach(tr => {
-            tr.input.value = utils.toBigNumber(tr.input.value)
-                .dividedBy(10 ** decimals.toNumber()).toString();
-        });
         return {'transfers': transfers};
     } catch(error){
         new handlerErr(error);
@@ -165,12 +160,7 @@ async function getContractTransfersPage(contractAddress, address, page = 0) {
 
         const countTransaction = await ethTransaction.getCountTransaction(address);
         const pages = Math.floor(countTransaction/50);
-        const decimals = await gethETH.getContractDecimals(contractAddress);
         const transfers = await ethTransaction.getContractTransfers(contractAddress, address, 50, page * 50);
-        transfers.forEach(tr => {
-            tr.input.value = utils.toBigNumber(tr.input.value)
-                .dividedBy(10 ** decimals.toNumber()).toString();
-        });
         return {
             pages: pages,
             transfers: transfers

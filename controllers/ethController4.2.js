@@ -178,12 +178,7 @@ async function getContractTransfers(contractAddr, address) {
         const contractAddress = contractAddr;
         if (!utils.isAddress(contractAddress)) throw new Error('Wrong contract');
         if (!utils.isAddress(address)) throw new Error('Wrong address.');
-        const decimals = await gethETH.getContractDecimals(contractAddress);
         const transfers = await ethTransaction.getContractTransfers(contractAddress, address);
-        transfers.forEach(tr => {
-            tr.input.value = utils.toBigNumber(tr.input.value)
-                .dividedBy(10 ** decimals.toNumber()).toString();
-        });
         return { 'transfers': transfers };
     } catch (error) {
         new handlerErr(error);
